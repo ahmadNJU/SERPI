@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Economic and Regional Policy Interactions — Journal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pine:#22433A; --pine-deep:#15302A; --brass:#9A7B3C; --brass-soft:#B79A5E;
+    --text:#1C1F1B; --muted:#5E635B; --paper:#ffffff; --panel:#F4F5F1; --panel-2:#ECEEE6;
+    --line:#DCDDD3; --maxw:1140px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--text);font-family:"Source Sans 3",system-ui,sans-serif;font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased;}
+  a{color:var(--pine);}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 32px;}
+  h1,h2,h3,h4{font-family:"Spectral",Georgia,serif;font-weight:500;line-height:1.16;color:var(--pine);margin:0;}
+  .kicker{font-family:"Source Sans 3",sans-serif;font-size:.74rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--brass);margin-bottom:14px;}
+  .rule{width:46px;height:2px;background:var(--brass);border:0;margin:18px 0 26px;}
+  .ph{color:var(--brass);font-style:italic;font-size:.92em;}
+
+  .btn{display:inline-block;font-family:"Source Sans 3";font-size:.86rem;font-weight:600;letter-spacing:.02em;text-decoration:none;padding:12px 24px;border:1px solid var(--pine);border-radius:1px;transition:.18s;cursor:pointer;}
+  .btn-primary{background:var(--pine);color:#fff;}
+  .btn-primary:hover{background:var(--pine-deep);border-color:var(--pine-deep);}
+  .btn-ghost{background:transparent;color:var(--pine);}
+  .btn-ghost:hover{background:var(--pine);color:#fff;}
+
+  /* top bar */
+  .topbar{border-bottom:1px solid var(--line);background:#fff;position:sticky;top:0;z-index:50;}
+  .topbar .wrap{display:flex;align-items:center;justify-content:space-between;height:70px;gap:24px;}
+  .brandline{display:flex;flex-direction:column;line-height:1.12;}
+  .brandline .pub{font-size:.62rem;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);}
+  .brandline .jt{font-family:"Spectral",serif;font-weight:500;font-size:1.08rem;color:var(--pine);}
+  nav.main{display:flex;gap:24px;align-items:center;}
+  nav.main a{font-size:.85rem;font-weight:500;text-decoration:none;color:var(--text);}
+  nav.main a:hover{color:var(--brass);}
+  .menu-toggle{display:none;background:none;border:0;font-size:1.5rem;color:var(--pine);cursor:pointer;}
+
+  /* hero */
+  .hero{background:linear-gradient(#fff,#fbfbf9);border-bottom:1px solid var(--line);}
+  .hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:center;padding:78px 32px;}
+  .hero h1{font-size:clamp(2.2rem,4.6vw,3.3rem);font-weight:500;margin-bottom:8px;line-height:1.12;}
+  .hero .sub{font-family:"Spectral",serif;font-style:italic;font-size:1.3rem;color:var(--brass);margin-bottom:22px;}
+  .hero p.lede{font-family:"Spectral",serif;font-size:1.18rem;color:#34382f;max-width:48ch;margin-bottom:28px;line-height:1.55;}
+  .hero-cta{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:30px;}
+  .hero-meta{display:flex;gap:34px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:20px;}
+  .hero-meta .k{font-size:.66rem;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin-bottom:5px;display:block;}
+  .hero-meta .v{font-family:"Spectral",serif;font-size:1.04rem;color:var(--pine);}
+
+  /* journal cover plate */
+  .plate{border:1px solid var(--line);background:#fff;box-shadow:14px 14px 0 -1px var(--panel-2);border-radius:2px;padding:38px 34px;text-align:center;}
+  .plate .emblem{width:78px;height:78px;margin:0 auto 20px;display:block;}
+  .plate .pp{font-size:.64rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--brass);margin-bottom:16px;}
+  .plate .pt{font-family:"Spectral",serif;font-size:1.62rem;font-weight:500;color:var(--pine);line-height:1.16;margin-bottom:14px;}
+  .plate .pdiv{width:40px;height:1px;background:var(--brass);margin:0 auto 14px;}
+  .plate .pv{font-size:.9rem;color:var(--muted);}
+  .plate .pissn{margin-top:18px;border-top:1px solid var(--line);padding-top:14px;font-size:.78rem;letter-spacing:.04em;color:var(--muted);}
+
+  /* facts band */
+  .facts{background:var(--pine);color:#eef1ec;}
+  .facts .wrap{display:grid;grid-template-columns:repeat(4,1fr);}
+  .fact{padding:30px 24px;border-right:1px solid rgba(255,255,255,.13);}
+  .fact:last-child{border-right:0;}
+  .fact .k{font-size:.66rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--brass-soft);margin-bottom:9px;}
+  .fact .v{font-family:"Spectral",serif;font-size:1.14rem;color:#fff;}
+
+  /* sections */
+  section.block{padding:88px 0;border-bottom:1px solid var(--line);}
+  section.block.alt{background:var(--panel);}
+  .block h2{font-size:clamp(1.7rem,3.2vw,2.35rem);font-weight:500;max-width:24ch;}
+  .lead{display:grid;grid-template-columns:0.85fr 1.15fr;gap:56px;}
+  .prose p{margin:0 0 16px;color:#34382f;}.prose p:last-child{margin-bottom:0;}
+  .scope-list{list-style:none;padding:0;margin:14px 0 0;}
+  .scope-list li{padding:14px 0;border-top:1px solid var(--line);padding-left:22px;position:relative;color:#34382f;}
+  .scope-list li::before{content:"";position:absolute;left:0;top:22px;width:9px;height:1px;background:var(--brass);}
+
+  /* editorial */
+  .eic{display:flex;gap:22px;align-items:flex-start;border:1px solid var(--line);background:#fff;padding:30px;border-radius:2px;}
+  .eic .badge{width:54px;height:54px;flex:none;}
+  .eic .role{font-size:.7rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--brass);margin-bottom:6px;}
+  .eic .name{font-family:"Spectral",serif;font-size:1.55rem;font-weight:500;color:var(--pine);line-height:1.1;}
+  .eic .aff{color:var(--muted);font-size:.95rem;margin-top:6px;}
+  .board-note{margin-top:22px;border-left:3px solid var(--brass);background:var(--panel-2);padding:18px 22px;font-size:.95rem;color:#34382f;}
+
+  /* ethics cards */
+  .tgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px;margin-top:8px;}
+  .tcard{border:1px solid var(--line);background:#fff;padding:28px;border-radius:2px;}
+  .tcard .tl{font-size:.66rem;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--brass);margin-bottom:12px;}
+  .tcard h3{font-size:1.24rem;margin-bottom:9px;}
+  .tcard p{font-size:.95rem;color:#43473e;margin:0;}
+
+  /* indexing */
+  .idx-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px;}
+  .chip{font-size:.82rem;font-weight:500;padding:9px 16px;border:1px solid var(--line);border-radius:1px;background:#fff;color:var(--pine);}
+  .chip.future{border-style:dashed;color:var(--muted);background:transparent;}
+  .honest{margin-top:22px;font-size:.92rem;color:var(--muted);max-width:64ch;font-style:italic;}
+
+  /* authors steps */
+  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:26px;margin-top:30px;}
+  .step{border-top:2px solid var(--pine);padding-top:16px;}
+  .step .sn{font-family:"Spectral",serif;font-size:1.1rem;color:var(--brass);font-weight:600;}
+  .step h3{font-size:1.12rem;margin:6px 0 6px;}
+  .step p{font-size:.92rem;color:#43473e;margin:0;}
+
+  /* footer */
+  footer{background:var(--pine-deep);color:#c4cdc4;padding:66px 0 30px;}
+  footer .grid{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:44px;}
+  footer h4{font-size:.66rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--brass-soft);margin:0 0 16px;font-family:"Source Sans 3",sans-serif;}
+  footer a{color:#c4cdc4;text-decoration:none;display:block;margin-bottom:9px;font-size:.92rem;}
+  footer a:hover{color:#fff;}
+  footer .own{font-size:.92rem;line-height:1.7;color:#aab4aa;}
+  footer .own strong{color:#fff;font-family:"Spectral",serif;font-weight:500;font-size:1.05rem;}
+  .footnote{border-top:1px solid rgba(255,255,255,.13);margin-top:46px;padding-top:22px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;font-size:.8rem;color:#8d978d;}
+
+  @media (max-width:880px){
+    .hero .wrap{grid-template-columns:1fr;gap:40px;}
+    .plate{order:-1;max-width:420px;}
+    .lead{grid-template-columns:1fr;gap:24px;}
+    .tgrid{grid-template-columns:1fr;}
+    .facts .wrap{grid-template-columns:repeat(2,1fr);}
+    .fact:nth-child(2){border-right:0;}
+    .fact:nth-child(1),.fact:nth-child(2){border-bottom:1px solid rgba(255,255,255,.13);}
+    .steps{grid-template-columns:1fr 1fr;}
+    footer .grid{grid-template-columns:1fr;}
+    nav.main{display:none;position:absolute;top:70px;left:0;right:0;background:#fff;flex-direction:column;align-items:flex-start;padding:20px 32px;border-bottom:1px solid var(--line);gap:18px;}
+    nav.main.open{display:flex;}
+    .menu-toggle{display:block;}
+  }
+  @media (max-width:560px){.steps{grid-template-columns:1fr;}.facts .wrap{grid-template-columns:1fr;}.fact{border-right:0;border-bottom:1px solid rgba(255,255,255,.13);}.fact:last-child{border-bottom:0;}}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;}}
+  :focus-visible{outline:2px solid var(--brass);outline-offset:3px;}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<header class="topbar">
+  <div class="wrap">
+    <div class="brandline">
+      <a class="pub" href="index.html" style="text-decoration:none;">Society for Economic &amp; Regional Policy Interactions</a>
+      <span class="jt">Economic &amp; Regional Policy Interactions</span>
+    </div>
+    <button class="menu-toggle" aria-label="Toggle menu" onclick="document.getElementById('nav').classList.toggle('open')">&#9776;</button>
+    <nav class="main" id="nav">
+      <a href="#scope">Aims &amp; Scope</a>
+      <a href="#editorial">Editorial Board</a>
+      <a href="#ethics">Ethics &amp; Review</a>
+      <a href="#indexing">Indexing</a>
+      <a href="#authors">For Authors</a>
+      <a class="btn btn-primary" href="#authors">Submit</a>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <div class="kicker">Peer-reviewed &middot; Open access</div>
+      <h1>Economic and Regional Policy Interactions</h1>
+      <div class="sub">Where modern economics meets regional policy.</div>
+      <p class="lede">A peer-reviewed journal publishing theoretical and empirical research, and reviews, that bridge the pillars of modern economics and regional economics — to answer the policy questions neither discipline can answer alone.</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="#authors">Submit a manuscript</a>
+        <a class="btn btn-ghost" href="#scope">Aims &amp; scope</a>
+      </div>
+      <div class="hero-meta">
+        <div><span class="k">Editor-in-Chief</span><span class="v">Ahmad Nawaz</span></div>
+        <div><span class="k">ISSN</span><span class="v"><span class="ph">[pending]</span></span></div>
+        <div><span class="k">First issue</span><span class="v"><span class="ph">[2026]</span></span></div>
+      </div>
+    </div>
+
+    <!-- journal cover plate -->
+    <div class="plate">
+      <svg class="emblem" viewBox="0 0 80 80" aria-hidden="true">
+        <circle cx="40" cy="40" r="37" fill="none" stroke="#22433A" stroke-width="1.3"/>
+        <circle cx="40" cy="40" r="31" fill="none" stroke="#9A7B3C" stroke-width="0.8"/>
+        <g fill="none" stroke="#22433A" stroke-width="1.2" opacity="0.72">
+          <path d="M28,48 C36,36 44,38 52,30"/>
+          <path d="M28,48 C40,52 48,44 52,34"/>
+          <path d="M52,30 C56,40 52,48 44,52"/>
+        </g>
+        <circle cx="28" cy="48" r="2.8" fill="#22433A"/>
+        <circle cx="52" cy="30" r="3.4" fill="#9A7B3C"/>
+        <circle cx="44" cy="52" r="2.4" fill="#22433A"/>
+      </svg>
+      <div class="pp">The Journal of the Society</div>
+      <div class="pt">Economic &amp; Regional Policy Interactions</div>
+      <div class="pdiv"></div>
+      <div class="pv">Volume 1 &middot; Quarterly &middot; Open Access</div>
+      <div class="pissn">ISSN <span class="ph">[pending]</span> &nbsp;&middot;&nbsp; e-ISSN <span class="ph">[pending]</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- FACTS BAND -->
+<div class="facts">
+  <div class="wrap">
+    <div class="fact"><div class="k">Peer review</div><div class="v">Double-anonymized</div></div>
+    <div class="fact"><div class="k">Access model</div><div class="v">Full Open Access</div></div>
+    <div class="fact"><div class="k">Frequency</div><div class="v">Quarterly &middot; 4/yr</div></div>
+    <div class="fact"><div class="k">Article charges</div><div class="v">None at launch</div></div>
+  </div>
+</div>
+
+<!-- AIMS & SCOPE -->
+<section class="block" id="scope">
+  <div class="wrap">
+    <div class="lead">
+      <div>
+        <div class="kicker">Aims &amp; Scope</div>
+        <h2>A bridge between two ways of seeing the economy.</h2>
+        <hr class="rule">
+      </div>
+      <div class="prose">
+        <p>Economic and Regional Policy Interactions publishes high-quality theoretical and empirical research, and review articles, that build bridges between the pillars of modern economics and regional economics.</p>
+        <p>We are interested in work that uses the principles of <em>both</em> disciplines to answer policy-relevant questions — where macroeconomic theory, spatial and regional analysis, and applied policy meet.</p>
+        <ul class="scope-list">
+          <li>Regional dimensions of macroeconomic and development policy</li>
+          <li>Spatial economics, agglomeration, and regional disparities</li>
+          <li>Trade, migration, and inter-regional spillovers</li>
+          <li>Fiscal, monetary, and structural policy across regions</li>
+          <li>Empirical evaluation of place-based and regional interventions</li>
+        </ul>
+        <p style="margin-top:18px;font-size:.88rem;color:var(--muted);"><span class="ph">Scope is illustrative and will be finalised with the editorial board.</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDITORIAL -->
+<section class="block alt" id="editorial">
+  <div class="wrap">
+    <div class="lead">
+      <div>
+        <div class="kicker">Editorial Leadership</div>
+        <h2>Led by active scholars, governed by the Society.</h2>
+        <hr class="rule">
+        <p class="prose">The journal's editorial direction is independent of, and accountable to, the Society for Economic and Regional Policy Interactions.</p>
+      </div>
+      <div>
+        <div class="eic">
+          <svg class="badge" viewBox="0 0 40 40" aria-hidden="true">
+            <circle cx="20" cy="20" r="18.5" fill="none" stroke="#22433A" stroke-width="1.3"/>
+            <circle cx="20" cy="20" r="14.5" fill="none" stroke="#9A7B3C" stroke-width="0.8"/>
+            <circle cx="20" cy="20" r="3.2" fill="#9A7B3C"/>
+            <circle cx="13" cy="16" r="2" fill="#22433A"/><circle cx="27" cy="16" r="2" fill="#22433A"/><circle cx="20" cy="28" r="2" fill="#22433A"/>
+            <path d="M13,16 L20,20 L27,16 M20,20 L20,28" stroke="#22433A" stroke-width="0.9" fill="none" opacity="0.7"/>
+          </svg>
+          <div>
+            <div class="role">Editor-in-Chief</div>
+            <div class="name">Ahmad Nawaz</div>
+            <div class="aff"><span class="ph">[Institution, country &middot; ORCID]</span></div>
+          </div>
+        </div>
+        <div class="board-note"><strong>Editorial board — in formation.</strong> We are recruiting Associate Editors and an international Editorial &amp; Advisory Board with verifiable affiliations and ORCID identifiers. Names will be published here as appointments are confirmed.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ETHICS & PEER REVIEW -->
+<section class="block" id="ethics">
+  <div class="wrap">
+    <div class="kicker">Ethics &amp; Peer Review</div>
+    <h2>Transparent by design.</h2>
+    <hr class="rule">
+    <p class="prose" style="max-width:62ch;margin-bottom:30px;">Every policy below is public because trust is built in the open. Our standards follow the Committee on Publication Ethics (COPE).</p>
+    <div class="tgrid">
+      <div class="tcard"><div class="tl">Peer review</div><h3>Double-anonymized review</h3><p>Each submission is screened editorially, then sent to at least two independent expert reviewers. Author and reviewer identities are mutually concealed, and the full workflow is published.</p></div>
+      <div class="tcard"><div class="tl">Publication ethics</div><h3>COPE-aligned standards</h3><p>A public Publication Ethics &amp; Malpractice Statement covers authorship, competing interests, corrections, retractions, and complaints.</p></div>
+      <div class="tcard"><div class="tl">Integrity</div><h3>Plagiarism screening</h3><p>All manuscripts are checked with recognised similarity-detection software before review, against a stated threshold policy.</p></div>
+      <div class="tcard"><div class="tl">Generative AI</div><h3>AI use disclosure</h3><p>Authors must disclose any use of generative AI. AI tools cannot be listed as authors. Our policy describes acceptable use in writing and review.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- INDEXING -->
+<section class="block alt" id="indexing">
+  <div class="wrap">
+    <div class="lead">
+      <div>
+        <div class="kicker">Indexing &amp; Discoverability</div>
+        <h2>Built to be found — and built to be trusted.</h2>
+        <hr class="rule">
+        <p class="prose">Every article receives a permanent DOI and complete metadata, with English abstracts and JEL classification codes, so research is discoverable wherever economists work.</p>
+      </div>
+      <div>
+        <p style="font-size:.72rem;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin:0 0 10px;">Active from launch</p>
+        <div class="idx-row">
+          <span class="chip">Crossref &middot; DOI</span><span class="chip">Google Scholar</span><span class="chip">RePEc / IDEAS</span><span class="chip">ORCID</span>
+        </div>
+        <p style="font-size:.72rem;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin:24px 0 10px;">Targets we are working toward</p>
+        <div class="idx-row">
+          <span class="chip future">DOAJ</span><span class="chip future">EconLit (AEA)</span><span class="chip future">HEC HJRS</span><span class="chip future">Scopus</span><span class="chip future">Web of Science</span>
+        </div>
+        <p class="honest">We state our indexing status honestly. Items marked as targets are goals we are building toward through a sustained, peer-reviewed publication record — they are not current affiliations, and will be listed here only once achieved.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOR AUTHORS -->
+<section class="block" id="authors">
+  <div class="wrap">
+    <div class="kicker">For Authors</div>
+    <h2>Submit your work.</h2>
+    <hr class="rule">
+    <p class="prose" style="max-width:62ch;">We welcome original research, empirical studies, and review articles within scope. Submissions are managed through our online editorial system.</p>
+    <div class="steps">
+      <div class="step"><div class="sn">I.</div><h3>Prepare</h3><p>Follow the author guidelines; include an English abstract, keywords, and JEL codes.</p></div>
+      <div class="step"><div class="sn">II.</div><h3>Submit</h3><p>Upload via the online system with a cover letter and anonymized manuscript.</p></div>
+      <div class="step"><div class="sn">III.</div><h3>Review</h3><p>Editorial screening, then double-anonymized review by at least two experts.</p></div>
+      <div class="step"><div class="sn">IV.</div><h3>Publish</h3><p>Accepted articles are typeset, assigned a DOI, and published open access.</p></div>
+    </div>
+    <div style="margin-top:36px;">
+      <a class="btn btn-primary" href="#">Open the submission system</a>
+      <a class="btn btn-ghost" href="#" style="margin-left:8px;">Author guidelines</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="grid">
+      <div>
+        <h4>Published by</h4>
+        <p class="own"><strong><a href="index.html" style="color:#fff;text-decoration:none;">Society for Economic and Regional Policy Interactions</a></strong><br>
+        The Society owns and governs this journal, sets its policies, and safeguards its editorial independence and continuity.</p>
+      </div>
+      <div>
+        <h4>The Journal</h4>
+        <a href="#scope">Aims &amp; Scope</a>
+        <a href="#editorial">Editorial Board</a>
+        <a href="#ethics">Ethics &amp; Peer Review</a>
+        <a href="#indexing">Indexing</a>
+        <a href="#authors">For Authors</a>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <a href="mailto:editor@[domain]">editor@[your-domain]</a>
+        <a href="#">[Editorial office address]</a>
+        <a href="index.html">Society website</a>
+      </div>
+    </div>
+    <div class="footnote">
+      <span>&copy; 2026 Society for Economic and Regional Policy Interactions. Articles published open access under CC BY 4.0.</span>
+      <span>ISSN [pending] &middot; e-ISSN [pending]</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.querySelectorAll('#nav a').forEach(function(a){a.addEventListener('click',function(){document.getElementById('nav').classList.remove('open');});});
+</script>
+</body>
+</html>

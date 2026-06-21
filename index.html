@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Society for Economic and Regional Policy Interactions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pine:#22433A; --pine-deep:#15302A; --brass:#9A7B3C; --brass-soft:#B79A5E;
+    --text:#1C1F1B; --muted:#5E635B; --paper:#ffffff; --panel:#F4F5F1; --panel-2:#ECEEE6;
+    --line:#DCDDD3; --maxw:1140px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--text);font-family:"Source Sans 3",system-ui,sans-serif;font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased;}
+  a{color:var(--pine);}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 32px;}
+  h1,h2,h3,h4{font-family:"Spectral",Georgia,serif;font-weight:500;line-height:1.16;color:var(--pine);margin:0;letter-spacing:0;}
+  .kicker{font-family:"Source Sans 3",sans-serif;font-size:.74rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--brass);margin-bottom:14px;}
+  .rule{width:46px;height:2px;background:var(--brass);border:0;margin:18px 0 26px;}
+  .rule.center{margin-left:auto;margin-right:auto;}
+  .ph{color:var(--brass);font-style:italic;font-size:.92em;}
+
+  /* buttons */
+  .btn{display:inline-block;font-family:"Source Sans 3";font-size:.86rem;font-weight:600;letter-spacing:.02em;text-decoration:none;padding:12px 24px;border:1px solid var(--pine);border-radius:1px;transition:.18s;cursor:pointer;}
+  .btn-primary{background:var(--pine);color:#fff;}
+  .btn-primary:hover{background:var(--pine-deep);border-color:var(--pine-deep);}
+  .btn-ghost{background:transparent;color:var(--pine);}
+  .btn-ghost:hover{background:var(--pine);color:#fff;}
+
+  /* top bar */
+  .topbar{border-bottom:1px solid var(--line);background:#fff;position:sticky;top:0;z-index:50;}
+  .topbar .wrap{display:flex;align-items:center;justify-content:space-between;height:70px;gap:24px;}
+  .lockup{display:flex;align-items:center;gap:14px;}
+  .lockup .nm{font-family:"Spectral",serif;font-weight:500;font-size:1.02rem;line-height:1.12;color:var(--pine);}
+  nav.main{display:flex;gap:26px;align-items:center;}
+  nav.main a{font-size:.86rem;font-weight:500;text-decoration:none;color:var(--text);}
+  nav.main a:hover{color:var(--brass);}
+  .menu-toggle{display:none;background:none;border:0;font-size:1.5rem;color:var(--pine);cursor:pointer;}
+
+  /* hero */
+  .hero{background:linear-gradient(#fff,#fbfbf9);border-bottom:1px solid var(--line);}
+  .hero .wrap{padding:78px 32px 70px;text-align:center;max-width:860px;}
+  .seal{width:138px;height:138px;margin:0 auto 30px;display:block;}
+  .hero h1{font-size:clamp(2.1rem,4.4vw,3.1rem);font-weight:500;margin:0 auto 8px;max-width:18ch;}
+  .estab{font-size:.8rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:22px;}
+  .hero p.lede{font-family:"Spectral",serif;font-size:1.22rem;font-weight:400;color:#3a3f38;max-width:60ch;margin:0 auto 30px;line-height:1.55;}
+  .hero-cta{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;}
+
+  /* facts band */
+  .facts{background:var(--pine);color:#eef1ec;}
+  .facts .wrap{display:grid;grid-template-columns:repeat(3,1fr);}
+  .fact{padding:30px 26px;border-right:1px solid rgba(255,255,255,.13);}
+  .fact:last-child{border-right:0;}
+  .fact .k{font-size:.68rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--brass-soft);margin-bottom:9px;}
+  .fact .v{font-family:"Spectral",serif;font-size:1.16rem;line-height:1.3;color:#fff;}
+
+  /* sections */
+  section.block{padding:88px 0;border-bottom:1px solid var(--line);}
+  section.block.alt{background:var(--panel);}
+  .block h2{font-size:clamp(1.7rem,3.2vw,2.35rem);font-weight:500;max-width:24ch;}
+  .lead{display:grid;grid-template-columns:0.85fr 1.15fr;gap:56px;}
+  .prose p{margin:0 0 16px;color:#34382f;}
+  .prose p:last-child{margin-bottom:0;}
+
+  /* objectives */
+  .obj{display:grid;grid-template-columns:repeat(3,1fr);gap:34px;margin-top:8px;}
+  .obj .o{border-top:2px solid var(--pine);padding-top:18px;}
+  .obj .o h3{font-size:1.28rem;margin-bottom:8px;}
+  .obj .o p{font-size:.96rem;color:#43473e;margin:0;}
+
+  /* governance */
+  .founder{display:flex;align-items:flex-start;gap:22px;border:1px solid var(--line);background:#fff;padding:28px 30px;border-radius:2px;margin-bottom:40px;}
+  .founder .badge{width:54px;height:54px;flex:none;}
+  .founder .role{font-size:.72rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--brass);margin-bottom:6px;}
+  .founder .name{font-family:"Spectral",serif;font-size:1.55rem;font-weight:500;color:var(--pine);line-height:1.1;}
+  .founder .aff{color:var(--muted);font-size:.95rem;margin-top:6px;}
+  .board h3.sub{font-size:1.35rem;margin-bottom:4px;}
+  .board .note{font-size:.86rem;color:var(--muted);margin-bottom:18px;}
+  .members{list-style:none;margin:0;padding:0;}
+  .members li{display:flex;justify-content:space-between;gap:24px;align-items:baseline;padding:16px 0;border-top:1px solid var(--line);}
+  .members li:last-child{border-bottom:1px solid var(--line);}
+  .members .mn{font-family:"Spectral",serif;font-size:1.12rem;color:var(--pine);}
+  .members .ma{font-size:.92rem;color:var(--muted);text-align:right;max-width:54%;}
+  .caption{font-size:.84rem;color:var(--muted);margin-top:16px;font-style:italic;}
+
+  /* academic resources */
+  .res{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:8px;}
+  .rcard{border:1px solid var(--line);background:#fff;padding:26px;border-radius:2px;display:flex;flex-direction:column;}
+  .rcard .rl{font-size:.68rem;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--brass);margin-bottom:12px;}
+  .rcard h3{font-size:1.18rem;margin-bottom:9px;}
+  .rcard p{font-size:.93rem;color:#43473e;margin:0 0 16px;flex:1;}
+  .rcard a.lnk{font-size:.86rem;font-weight:600;color:var(--pine);text-decoration:none;border-bottom:1px solid var(--brass);padding-bottom:2px;align-self:flex-start;}
+  .rcard a.lnk:hover{color:var(--brass);}
+
+  /* journal band */
+  .journal{background:var(--pine);color:#e9ede8;}
+  .journal .wrap{display:grid;grid-template-columns:1fr 1fr;gap:54px;align-items:center;padding:84px 32px;}
+  .journal .kicker{color:var(--brass-soft);}
+  .journal h2{color:#fff;}
+  .journal .rule{background:var(--brass-soft);}
+  .journal p{color:#cdd5cd;margin:0 0 26px;}
+  .journal .btn-primary{background:var(--brass);border-color:var(--brass);}
+  .journal .btn-primary:hover{background:#876a30;border-color:#876a30;}
+  .jcard{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.18);border-radius:3px;padding:34px;}
+  .jcard .pub{font-size:.66rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--brass-soft);margin-bottom:14px;}
+  .jcard .jt{font-family:"Spectral",serif;font-size:1.7rem;font-weight:500;color:#fff;line-height:1.12;margin-bottom:12px;}
+  .jcard .jd{font-size:.95rem;color:#cdd5cd;margin:0;}
+  .jcard .meta{display:flex;gap:28px;flex-wrap:wrap;margin-top:22px;border-top:1px solid rgba(255,255,255,.15);padding-top:18px;}
+  .jcard .meta .k{font-size:.6rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--brass-soft);display:block;margin-bottom:4px;}
+  .jcard .meta .v{font-family:"Spectral",serif;color:#fff;font-size:1rem;}
+
+  /* membership */
+  .tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:10px;border:1px solid var(--line);border-radius:2px;overflow:hidden;background:#fff;}
+  .tier{padding:28px;border-right:1px solid var(--line);}
+  .tier:last-child{border-right:0;}
+  .tier .tl{font-size:.68rem;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--brass);margin-bottom:10px;}
+  .tier h3{font-size:1.2rem;margin-bottom:8px;}
+  .tier p{font-size:.92rem;color:#43473e;margin:0;}
+
+  /* footer */
+  footer{background:var(--pine-deep);color:#c4cdc4;padding:66px 0 30px;}
+  footer .grid{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:44px;}
+  footer h4{font-size:.66rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--brass-soft);margin:0 0 16px;font-family:"Source Sans 3",sans-serif;}
+  footer a{color:#c4cdc4;text-decoration:none;display:block;margin-bottom:9px;font-size:.92rem;}
+  footer a:hover{color:#fff;}
+  footer .own{font-size:.92rem;line-height:1.7;color:#aab4aa;}
+  footer .own strong{color:#fff;font-family:"Spectral",serif;font-weight:500;font-size:1.05rem;}
+  .footnote{border-top:1px solid rgba(255,255,255,.13);margin-top:46px;padding-top:22px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;font-size:.8rem;color:#8d978d;}
+
+  @media (max-width:880px){
+    .lead{grid-template-columns:1fr;gap:24px;}
+    .obj,.res,.tiers{grid-template-columns:1fr;}
+    .tier{border-right:0;border-bottom:1px solid var(--line);}.tier:last-child{border-bottom:0;}
+    .facts .wrap{grid-template-columns:1fr;}
+    .fact{border-right:0;border-bottom:1px solid rgba(255,255,255,.13);}.fact:last-child{border-bottom:0;}
+    .journal .wrap{grid-template-columns:1fr;}
+    .members .ma{max-width:50%;}
+    footer .grid{grid-template-columns:1fr;}
+    nav.main{display:none;position:absolute;top:70px;left:0;right:0;background:#fff;flex-direction:column;align-items:flex-start;padding:20px 32px;border-bottom:1px solid var(--line);gap:18px;}
+    nav.main.open{display:flex;}
+    .menu-toggle{display:block;}
+  }
+  @media (max-width:560px){.res{grid-template-columns:1fr;}.members li{flex-direction:column;gap:4px;}.members .ma{text-align:left;max-width:100%;}}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;}}
+  :focus-visible{outline:2px solid var(--brass);outline-offset:3px;}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<header class="topbar">
+  <div class="wrap">
+    <div class="lockup">
+      <svg width="38" height="38" viewBox="0 0 40 40" aria-hidden="true">
+        <circle cx="20" cy="20" r="18.5" fill="none" stroke="#22433A" stroke-width="1.3"/>
+        <circle cx="20" cy="20" r="15" fill="none" stroke="#9A7B3C" stroke-width="0.8"/>
+        <g fill="none" stroke="#22433A" stroke-width="1" opacity="0.85">
+          <path d="M13,24 C17,19 20,15 27,15"/>
+          <path d="M13,24 C19,26 24,23 27,18"/>
+        </g>
+        <circle cx="13" cy="24" r="2.1" fill="#9A7B3C"/>
+        <circle cx="27" cy="15" r="2.6" fill="#22433A"/>
+        <circle cx="27" cy="18" r="1.6" fill="#22433A"/>
+      </svg>
+      <span class="nm">Society for Economic &amp;<br>Regional Policy Interactions</span>
+    </div>
+    <button class="menu-toggle" aria-label="Toggle menu" onclick="document.getElementById('nav').classList.toggle('open')">&#9776;</button>
+    <nav class="main" id="nav">
+      <a href="#about">About</a>
+      <a href="#objectives">Objectives</a>
+      <a href="#governance">Governance</a>
+      <a href="#resources">Resources</a>
+      <a href="#journal">Journal</a>
+      <a class="btn btn-primary" href="#membership">Join the Society</a>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap">
+    <!-- formal society seal -->
+    <svg class="seal" viewBox="0 0 200 200" role="img" aria-label="Seal of the Society for Economic and Regional Policy Interactions, established 2026">
+      <defs><path id="topArc" d="M30,100 A70,70 0 0 0 170,100"/></defs>
+      <circle cx="100" cy="100" r="94" fill="none" stroke="#22433A" stroke-width="1.4"/>
+      <circle cx="100" cy="100" r="88" fill="none" stroke="#9A7B3C" stroke-width="0.8"/>
+      <circle cx="100" cy="100" r="60" fill="none" stroke="#22433A" stroke-width="1"/>
+      <text font-family="Source Sans 3, sans-serif" font-size="9" font-weight="600" letter-spacing="3" fill="#22433A">
+        <textPath href="#topArc" startOffset="50%" text-anchor="middle">ESTABLISHED 2026</textPath>
+      </text>
+      <!-- regional-interaction emblem -->
+      <g fill="none" stroke="#22433A" stroke-width="1.3" opacity="0.7">
+        <path d="M78,86 C92,72 112,74 122,84"/>
+        <path d="M122,84 C130,98 124,114 110,120"/>
+        <path d="M110,120 C96,126 82,120 78,108"/>
+        <path d="M78,108 C72,98 72,92 78,86"/>
+        <path d="M78,86 C96,100 104,104 122,84"/>
+        <path d="M78,108 C98,100 104,96 110,120"/>
+      </g>
+      <circle cx="78" cy="86" r="3.4" fill="#22433A"/>
+      <circle cx="122" cy="84" r="4.4" fill="#9A7B3C"/>
+      <circle cx="110" cy="120" r="3.2" fill="#22433A"/>
+      <circle cx="78" cy="108" r="2.8" fill="#22433A"/>
+      <rect x="96" y="170" width="8" height="8" transform="rotate(45 100 174)" fill="#9A7B3C"/>
+    </svg>
+
+    <h1>Society for Economic and Regional Policy Interactions</h1>
+    <div class="estab">Established 2026 &middot; Pakistan</div>
+    <p class="lede">A learned society advancing research at the intersection of modern economics and regional economics — and the policy questions that live between the two.</p>
+    <div class="hero-cta">
+      <a class="btn btn-primary" href="journal.html">Explore the Journal</a>
+      <a class="btn btn-ghost" href="#about">About the Society</a>
+    </div>
+  </div>
+</section>
+
+<!-- FACTS BAND (legal status removed) -->
+<div class="facts">
+  <div class="wrap">
+    <div class="fact"><div class="k">Founded</div><div class="v">2026</div></div>
+    <div class="fact"><div class="k">Flagship journal</div><div class="v">Economic &amp; Regional Policy Interactions</div></div>
+    <div class="fact"><div class="k">Field</div><div class="v">Economics &amp; regional policy</div></div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="block" id="about">
+  <div class="wrap">
+    <div class="lead">
+      <div>
+        <div class="kicker">About the Society</div>
+        <h2>A responsible home for serious scholarship.</h2>
+        <hr class="rule">
+      </div>
+      <div class="prose">
+        <p>The Society for Economic and Regional Policy Interactions exists to advance research where modern economics and regional economics meet, and to apply that research to real policy questions.</p>
+        <p>As an academic society, we are the responsible body behind our journal: we own and govern the publication, uphold its ethical standards, and protect its editorial independence and long-term continuity — independent of any single individual.</p>
+        <p>We are building a community of scholars across institutions and countries who share an interest in how regions, economies, and policy shape one another.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OBJECTIVES -->
+<section class="block alt" id="objectives">
+  <div class="wrap">
+    <div class="kicker">Our Objectives</div>
+    <h2>What the Society sets out to do.</h2>
+    <hr class="rule">
+    <div class="obj">
+      <div class="o"><h3>Publish</h3><p>Maintain a rigorous, transparent, peer-reviewed journal bridging economic and regional policy research.</p></div>
+      <div class="o"><h3>Convene</h3><p>Bring scholars together through seminars, working papers, and — in time — conferences and special issues.</p></div>
+      <div class="o"><h3>Uphold standards</h3><p>Champion research integrity, ethical publishing, and open scholarship across everything we do.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- GOVERNANCE (Founder + Advisory Board) -->
+<section class="block" id="governance">
+  <div class="wrap">
+    <div class="kicker">Governance &amp; Leadership</div>
+    <h2>Founded with purpose, guided by an advisory board.</h2>
+    <hr class="rule">
+
+    <div class="founder">
+      <svg class="badge" viewBox="0 0 40 40" aria-hidden="true">
+        <circle cx="20" cy="20" r="18.5" fill="none" stroke="#22433A" stroke-width="1.3"/>
+        <circle cx="20" cy="20" r="14.5" fill="none" stroke="#9A7B3C" stroke-width="0.8"/>
+        <circle cx="20" cy="20" r="3.4" fill="#9A7B3C"/>
+        <circle cx="13" cy="16" r="2" fill="#22433A"/><circle cx="27" cy="16" r="2" fill="#22433A"/>
+        <circle cx="20" cy="28" r="2" fill="#22433A"/>
+        <g stroke="#22433A" stroke-width="0.9" opacity="0.7" fill="none"><path d="M13,16 L20,20 L27,16 M20,20 L20,28"/></g>
+      </svg>
+      <div>
+        <div class="role">Founder</div>
+        <div class="name">Ahmad Nawaz</div>
+        <div class="aff"><span class="ph">[Department, Institution, Country &middot; ORCID]</span></div>
+      </div>
+    </div>
+
+    <div class="board">
+      <h3 class="sub">Advisory Board</h3>
+      <p class="note">Distinguished scholars advising on the Society's academic direction and standards.</p>
+      <ul class="members">
+        <li><span class="mn"><span class="ph">[Advisory member]</span></span><span class="ma">Macroeconomic &amp; monetary policy &middot; <span class="ph">[University, Country]</span></span></li>
+        <li><span class="mn"><span class="ph">[Advisory member]</span></span><span class="ma">Regional &amp; spatial economics &middot; <span class="ph">[University, Country]</span></span></li>
+        <li><span class="mn"><span class="ph">[Advisory member]</span></span><span class="ma">Development &amp; public policy &middot; <span class="ph">[Institute, Country]</span></span></li>
+        <li><span class="mn"><span class="ph">[Advisory member]</span></span><span class="ma">Applied econometrics &middot; <span class="ph">[University, Country]</span></span></li>
+        <li><span class="mn"><span class="ph">[Advisory member]</span></span><span class="ma">Trade &amp; regional integration &middot; <span class="ph">[University, Country]</span></span></li>
+      </ul>
+      <p class="caption">Illustrative — advisory appointments in progress. Replace the bracketed entries with confirmed members, affiliations, and ORCID identifiers.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ACADEMIC RESOURCES -->
+<section class="block alt" id="resources">
+  <div class="wrap">
+    <div class="kicker">Academic Resources</div>
+    <h2>Tools and references for our research community.</h2>
+    <hr class="rule">
+    <div class="res">
+      <div class="rcard">
+        <div class="rl">Classification</div>
+        <h3>JEL Classification Codes</h3>
+        <p>The Journal of Economic Literature codes used to classify economics research — required for our submissions and for indexing in EconLit and RePEc.</p>
+        <a class="lnk" href="https://www.aeaweb.org/econlit/jelCodes.php" target="_blank" rel="noopener">View JEL codes &rarr;</a>
+      </div>
+      <div class="rcard">
+        <div class="rl">Discovery</div>
+        <h3>RePEc &amp; IDEAS</h3>
+        <p>The economics discipline's open bibliographic network, where economists discover working papers, articles, and author profiles.</p>
+        <a class="lnk" href="https://ideas.repec.org/" target="_blank" rel="noopener">Browse RePEc &rarr;</a>
+      </div>
+      <div class="rcard">
+        <div class="rl">Integrity</div>
+        <h3>Research &amp; Publication Ethics</h3>
+        <p>The Committee on Publication Ethics (COPE) guidelines that govern authorship, peer review, corrections, and misconduct.</p>
+        <a class="lnk" href="https://publicationethics.org/" target="_blank" rel="noopener">COPE guidelines &rarr;</a>
+      </div>
+      <div class="rcard">
+        <div class="rl">Open access</div>
+        <h3>Licensing &amp; Author Rights</h3>
+        <p>How Creative Commons licensing works. Our journal publishes open access under CC BY 4.0, with authors retaining copyright.</p>
+        <a class="lnk" href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">About CC BY 4.0 &rarr;</a>
+      </div>
+      <div class="rcard">
+        <div class="rl">Identity</div>
+        <h3>ORCID for Researchers</h3>
+        <p>A free, persistent identifier that distinguishes you from every other researcher and links your work across databases.</p>
+        <a class="lnk" href="https://orcid.org/" target="_blank" rel="noopener">Register for ORCID &rarr;</a>
+      </div>
+      <div class="rcard">
+        <div class="rl">Authors</div>
+        <h3>Submission Guidance</h3>
+        <p>Author guidelines, manuscript structure, abstract and JEL requirements, and the referencing style for the Society's journal.</p>
+        <a class="lnk" href="#">Read guidelines &rarr; <span class="ph">[link to journal]</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- JOURNAL -->
+<section class="journal" id="journal">
+  <div class="wrap">
+    <div>
+      <div class="kicker">Our Flagship Journal</div>
+      <h2>Economic and Regional Policy Interactions</h2>
+      <hr class="rule">
+      <p>A peer-reviewed, open-access journal publishing theoretical and empirical research, and reviews, that bridge modern economics and regional economics to answer policy-relevant questions. Published and governed by the Society.</p>
+      <a class="btn btn-primary" href="journal.html">Visit the Journal</a>
+    </div>
+    <div class="jcard">
+      <div class="pub">Published by the Society</div>
+      <div class="jt">Economic &amp; Regional Policy Interactions</div>
+      <p class="jd">Bridging the pillars of modern economics and regional economics for better policy.</p>
+      <div class="meta">
+        <div><span class="k">Editor-in-Chief</span><span class="v">Ahmad Nawaz</span></div>
+        <div><span class="k">Peer review</span><span class="v">Double-anonymized</span></div>
+        <div><span class="k">Access</span><span class="v">Open (CC BY)</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MEMBERSHIP -->
+<section class="block" id="membership">
+  <div class="wrap">
+    <div class="kicker">Membership</div>
+    <h2>Become part of the community.</h2>
+    <hr class="rule">
+    <p class="prose" style="max-width:60ch;">Membership will connect researchers working across economics and regional policy. Structure and benefits are being finalised. <span class="ph">[draft — to confirm]</span></p>
+    <div class="tiers">
+      <div class="tier"><div class="tl">Individual</div><h3>Researcher</h3><p>For faculty, researchers, and practitioners — updates, participation, and reduced fees for Society events.</p></div>
+      <div class="tier"><div class="tl">Student</div><h3>Early-career</h3><p>For graduate students and early-career scholars, at a concessional rate.</p></div>
+      <div class="tier"><div class="tl">Institutional</div><h3>Institution</h3><p>For departments and institutes wishing to support the Society's mission.</p></div>
+    </div>
+    <div style="margin-top:30px;"><a class="btn btn-primary" href="mailto:info@[domain]">Register your interest</a></div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="grid">
+      <div>
+        <h4>The Society</h4>
+        <p class="own"><strong>Society for Economic and Regional Policy Interactions</strong><br>
+        Established 2026. The responsible body governing the journal Economic and Regional Policy Interactions.</p>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <a href="#about">About</a>
+        <a href="#objectives">Objectives</a>
+        <a href="#governance">Governance</a>
+        <a href="#resources">Academic Resources</a>
+        <a href="journal.html">The Journal</a>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <a href="mailto:info@[domain]">info@[your-domain]</a>
+        <a href="#">[Registered address]</a>
+        <a href="#">Pakistan</a>
+      </div>
+    </div>
+    <div class="footnote">
+      <span>&copy; 2026 Society for Economic and Regional Policy Interactions. All rights reserved.</span>
+      <span>Advancing economic &amp; regional policy research</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.querySelectorAll('#nav a').forEach(function(a){a.addEventListener('click',function(){document.getElementById('nav').classList.remove('open');});});
+</script>
+</body>
+</html>
