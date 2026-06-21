@@ -516,7 +516,7 @@
     </div>
     <form class="mform" id="joinForm">
       <!-- Web3Forms: replace the value below with your own access key from web3forms.com -->
-      <input type="hidden" name="access_key" value="e3fbae46-0e37-4673-b0ff-326ebeb88350">
+      <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE">
       <input type="hidden" name="subject" value="New SERPI Membership Application">
       <input type="hidden" name="from_name" value="SERPI Website">
       <input type="checkbox" name="botcheck" class="hide" style="display:none" tabindex="-1" autocomplete="off">
@@ -765,11 +765,10 @@
     var btn=document.getElementById('joinSubmit');
     btn.disabled=true; btn.textContent='Submitting\u2026';
     formMsg.className='form-msg';
-    var data=Object.fromEntries(new FormData(joinForm).entries());
+    var formData=new FormData(joinForm);
     fetch('https://api.web3forms.com/submit',{
       method:'POST',
-      headers:{'Content-Type':'application/json','Accept':'application/json'},
-      body:JSON.stringify(data)
+      body:formData
     }).then(function(r){return r.json();}).then(function(res){
       if(res.success){
         joinForm.reset();
@@ -778,7 +777,7 @@
         formMsg.textContent='Thank you for applying to join the Society for Economic and Regional Policy Interactions. Your application has been received, and a member of our team will be in touch by email regarding the next steps.';
         formMsg.className='form-msg success show';
       } else {
-        formMsg.textContent='Sorry, something went wrong. Please try again, or email the Society directly.';
+        formMsg.textContent=(res && res.message) ? ('Could not submit \u2014 '+res.message) : 'Sorry, something went wrong. Please try again, or email the Society directly.';
         formMsg.className='form-msg error show';
       }
     }).catch(function(){
