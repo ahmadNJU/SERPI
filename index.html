@@ -39,12 +39,14 @@
   nav.main{display:flex;gap:26px;align-items:center;}
   nav.main a{font-size:.86rem;font-weight:500;text-decoration:none;color:var(--text);}
   nav.main a:hover{color:var(--brass);}
+  nav.main a.btn-primary{color:#fff;}
+  nav.main a.btn-primary:hover{color:#fff;background:var(--pine-deep);border-color:var(--pine-deep);}
   .menu-toggle{display:none;background:none;border:0;font-size:1.5rem;color:var(--pine);cursor:pointer;}
 
   /* hero */
   .hero{background:linear-gradient(#fff,#fbfbf9);border-bottom:1px solid var(--line);}
   .hero .wrap{padding:78px 32px 70px;text-align:center;max-width:860px;}
-  .seal{width:138px;height:138px;margin:0 auto 30px;display:block;}
+  .seal{width:152px;height:152px;margin:0 auto 30px;display:block;}
   .hero h1{font-size:clamp(2.1rem,4.4vw,3.1rem);font-weight:500;margin:0 auto 8px;max-width:18ch;}
   .estab{font-size:.8rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:22px;}
   .hero p.lede{font-family:"Spectral",serif;font-size:1.22rem;font-weight:400;color:#3a3f38;max-width:60ch;margin:0 auto 30px;line-height:1.55;}
@@ -75,7 +77,7 @@
   /* governance */
   .founder{display:flex;align-items:flex-start;gap:22px;border:1px solid var(--line);background:#fff;padding:28px 30px;border-radius:2px;margin-bottom:40px;}
   .founder .badge{width:54px;height:54px;flex:none;}
-  .founder .role{font-size:.72rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--brass);margin-bottom:6px;}
+  .founder .role{font-size:.72rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:#111;margin-bottom:6px;}
   .founder .name{font-family:"Spectral",serif;font-size:1.55rem;font-weight:500;color:var(--pine);line-height:1.1;}
   .founder .aff{color:var(--muted);font-size:.95rem;margin-top:6px;}
   .board h3.sub{font-size:1.35rem;margin-bottom:4px;}
@@ -83,7 +85,8 @@
   .members{list-style:none;margin:0;padding:0;}
   .members li{display:flex;justify-content:space-between;gap:24px;align-items:baseline;padding:16px 0;border-top:1px solid var(--line);}
   .members li:last-child{border-bottom:1px solid var(--line);}
-  .members .mn{font-family:"Spectral",serif;font-size:1.12rem;color:var(--pine);}
+  .members .mn{font-family:"Spectral",serif;font-size:1.12rem;color:#141414;}
+  .members .mn .ph{color:#141414;font-style:normal;font-size:1em;}
   .members .ma{font-size:.92rem;color:var(--muted);text-align:right;max-width:54%;}
   .caption{font-size:.84rem;color:var(--muted);margin-top:16px;font-style:italic;}
 
@@ -95,6 +98,18 @@
   .rcard p{font-size:.93rem;color:#43473e;margin:0 0 16px;flex:1;}
   .rcard a.lnk{font-size:.86rem;font-weight:600;color:var(--pine);text-decoration:none;border-bottom:1px solid var(--brass);padding-bottom:2px;align-self:flex-start;}
   .rcard a.lnk:hover{color:var(--brass);}
+
+  /* news & announcements */
+  .news-list{margin-top:8px;border-top:1px solid var(--line);}
+  .news-item{display:grid;grid-template-columns:160px 1fr;gap:30px;padding:28px 0;border-bottom:1px solid var(--line);}
+  .news-item .meta{display:flex;flex-direction:column;gap:10px;}
+  .news-item .date{font-size:.82rem;font-weight:600;color:var(--muted);letter-spacing:.02em;}
+  .news-item .cat{align-self:flex-start;font-size:.6rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--brass);border:1px solid var(--brass);border-radius:1px;padding:4px 10px;}
+  .news-item h3{font-size:1.3rem;margin-bottom:8px;}
+  .news-item p{font-size:.96rem;color:#43473e;margin:0 0 12px;max-width:62ch;}
+  .news-item a.more{font-size:.84rem;font-weight:600;color:var(--pine);text-decoration:none;border-bottom:1px solid var(--brass);padding-bottom:2px;}
+  .news-item a.more:hover{color:var(--brass);}
+  @media (max-width:600px){.news-item{grid-template-columns:1fr;gap:12px;}}
 
   /* journal band */
   .journal{background:var(--pine);color:#e9ede8;}
@@ -147,6 +162,34 @@
   @media (max-width:560px){.res{grid-template-columns:1fr;}.members li{flex-direction:column;gap:4px;}.members .ma{text-align:left;max-width:100%;}}
   @media (prefers-reduced-motion:reduce){*{transition:none!important;}}
   :focus-visible{outline:2px solid var(--brass);outline-offset:3px;}
+
+  /* membership modal + form */
+  .modal-overlay{position:fixed;inset:0;background:rgba(21,48,42,.55);display:none;align-items:flex-start;justify-content:center;padding:40px 20px;z-index:100;overflow-y:auto;}
+  .modal-overlay.open{display:flex;}
+  .modal{background:#fff;max-width:640px;width:100%;border-radius:3px;border-top:4px solid var(--brass);box-shadow:0 24px 60px rgba(0,0,0,.28);}
+  .modal-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;padding:28px 30px 0;}
+  .modal-head h3{font-size:1.55rem;color:var(--pine);}
+  .modal-head p{font-size:.92rem;color:var(--muted);margin:6px 0 0;}
+  .modal-close{background:none;border:0;font-size:1.7rem;line-height:1;color:var(--muted);cursor:pointer;padding:0 4px;}
+  .modal-close:hover{color:var(--pine);}
+  .mform{padding:20px 30px 30px;}
+  .frow{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  .field{margin-bottom:16px;}
+  .field.full{grid-column:1/-1;}
+  .field label{display:block;font-size:.8rem;font-weight:600;color:var(--pine);margin-bottom:6px;}
+  .field label .req{color:var(--brass);}
+  .field input,.field select,.field textarea{width:100%;font-family:"Source Sans 3",sans-serif;font-size:.95rem;color:var(--text);padding:11px 13px;border:1px solid var(--line);border-radius:2px;background:#fff;transition:.15s;}
+  .field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--pine);box-shadow:0 0 0 3px rgba(34,67,58,.12);}
+  .field textarea{resize:vertical;min-height:82px;}
+  .mform .actions{margin-top:6px;display:flex;align-items:center;gap:14px;}
+  .mform .actions .btn{cursor:pointer;}
+  .form-note{font-size:.8rem;color:var(--muted);margin-top:14px;}
+  .form-msg{display:none;padding:14px 16px;border-radius:2px;font-size:.92rem;margin-bottom:16px;}
+  .form-msg.show{display:block;}
+  .form-msg.success{background:#eef3ec;border:1px solid #9fb6a3;color:#2c4a39;}
+  .form-msg.error{background:#f6ece6;border:1px solid #c9a48c;color:#8a4b2c;}
+  .hide{display:none!important;}
+  @media (max-width:560px){.frow{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
@@ -155,16 +198,21 @@
 <header class="topbar">
   <div class="wrap">
     <div class="lockup">
-      <svg width="38" height="38" viewBox="0 0 40 40" aria-hidden="true">
+      <svg width="40" height="40" viewBox="0 0 40 40" aria-hidden="true">
         <circle cx="20" cy="20" r="18.5" fill="none" stroke="#22433A" stroke-width="1.3"/>
         <circle cx="20" cy="20" r="15" fill="none" stroke="#9A7B3C" stroke-width="0.8"/>
-        <g fill="none" stroke="#22433A" stroke-width="1" opacity="0.85">
-          <path d="M13,24 C17,19 20,15 27,15"/>
-          <path d="M13,24 C19,26 24,23 27,18"/>
+        <g fill="none" stroke="#22433A" stroke-width="1.1" opacity="0.72">
+          <path d="M14.9,22.8 L18.1,16.3"/><path d="M18.1,16.3 L24.2,14.9"/><path d="M24.2,14.9 L26.1,20.9"/>
+          <path d="M26.1,20.9 L21.9,25.1"/><path d="M21.9,25.1 L14.9,22.8"/>
+          <path d="M20,20 L18.1,16.3"/><path d="M20,20 L24.2,14.9"/><path d="M20,20 L21.9,25.1"/>
+          <path d="M14.9,22.8 L24.2,14.9"/>
         </g>
-        <circle cx="13" cy="24" r="2.1" fill="#9A7B3C"/>
-        <circle cx="27" cy="15" r="2.6" fill="#22433A"/>
-        <circle cx="27" cy="18" r="1.6" fill="#22433A"/>
+        <circle cx="18.1" cy="16.3" r="1.5" fill="#22433A"/>
+        <circle cx="24.2" cy="14.9" r="2" fill="#9A7B3C"/>
+        <circle cx="26.1" cy="20.9" r="1.5" fill="#22433A"/>
+        <circle cx="21.9" cy="25.1" r="1.5" fill="#22433A"/>
+        <circle cx="14.9" cy="22.8" r="1.5" fill="#22433A"/>
+        <circle cx="20" cy="20" r="1.7" fill="#9A7B3C"/>
       </svg>
       <span class="nm">Society for Economic &amp;<br>Regional Policy Interactions</span>
     </div>
@@ -175,7 +223,8 @@
       <a href="#governance">Governance</a>
       <a href="#resources">Resources</a>
       <a href="#journal">Journal</a>
-      <a class="btn btn-primary" href="#membership">Join the Society</a>
+      <a href="#news">News</a>
+      <a class="btn btn-primary" href="#membership" onclick="openJoin(event)">Join the Society</a>
     </nav>
   </div>
 </header>
@@ -184,32 +233,36 @@
 <section class="hero">
   <div class="wrap">
     <!-- formal society seal -->
-    <svg class="seal" viewBox="0 0 200 200" role="img" aria-label="Seal of the Society for Economic and Regional Policy Interactions, established 2026">
-      <defs><path id="topArc" d="M30,100 A70,70 0 0 0 170,100"/></defs>
+    <svg class="seal" viewBox="0 0 200 200" role="img" aria-label="Seal of the Society for Economic and Regional Policy Interactions">
+      <defs>
+        <path id="sealTop" d="M24,100 A76,76 0 0 0 176,100"/>
+        <path id="sealBot" d="M34,100 A66,66 0 0 1 166,100"/>
+      </defs>
       <circle cx="100" cy="100" r="94" fill="none" stroke="#22433A" stroke-width="1.4"/>
       <circle cx="100" cy="100" r="88" fill="none" stroke="#9A7B3C" stroke-width="0.8"/>
-      <circle cx="100" cy="100" r="60" fill="none" stroke="#22433A" stroke-width="1"/>
-      <text font-family="Source Sans 3, sans-serif" font-size="9" font-weight="600" letter-spacing="3" fill="#22433A">
-        <textPath href="#topArc" startOffset="50%" text-anchor="middle">ESTABLISHED 2026</textPath>
+      <circle cx="100" cy="100" r="58" fill="none" stroke="#22433A" stroke-width="1"/>
+      <text font-family="Source Sans 3, sans-serif" font-size="6" font-weight="600" letter-spacing="0.2" fill="#22433A">
+        <textPath href="#sealTop" startOffset="50%" text-anchor="middle">SOCIETY FOR ECONOMIC AND REGIONAL POLICY INTERACTIONS</textPath>
       </text>
-      <!-- regional-interaction emblem -->
-      <g fill="none" stroke="#22433A" stroke-width="1.3" opacity="0.7">
-        <path d="M78,86 C92,72 112,74 122,84"/>
-        <path d="M122,84 C130,98 124,114 110,120"/>
-        <path d="M110,120 C96,126 82,120 78,108"/>
-        <path d="M78,108 C72,98 72,92 78,86"/>
-        <path d="M78,86 C96,100 104,104 122,84"/>
-        <path d="M78,108 C98,100 104,96 110,120"/>
+      <text font-family="Source Sans 3, sans-serif" font-size="9.5" font-weight="700" letter-spacing="2.5" fill="#9A7B3C">
+        <textPath href="#sealBot" startOffset="50%" text-anchor="middle">&#8226;&#160;&#160;&#160;SERPI&#160;&#160;&#160;&#8226;</textPath>
+      </text>
+      <!-- central network emblem (matches header mark) -->
+      <g fill="none" stroke="#22433A" stroke-width="1.4" opacity="0.7">
+        <path d="M78,112 L92,84"/><path d="M92,84 L118,78"/><path d="M118,78 L126,104"/>
+        <path d="M126,104 L108,122"/><path d="M108,122 L78,112"/>
+        <path d="M100,100 L92,84"/><path d="M100,100 L118,78"/><path d="M100,100 L108,122"/>
+        <path d="M78,112 L118,78"/>
       </g>
-      <circle cx="78" cy="86" r="3.4" fill="#22433A"/>
-      <circle cx="122" cy="84" r="4.4" fill="#9A7B3C"/>
-      <circle cx="110" cy="120" r="3.2" fill="#22433A"/>
-      <circle cx="78" cy="108" r="2.8" fill="#22433A"/>
-      <rect x="96" y="170" width="8" height="8" transform="rotate(45 100 174)" fill="#9A7B3C"/>
+      <circle cx="92" cy="84" r="3.2" fill="#22433A"/>
+      <circle cx="118" cy="78" r="4.4" fill="#9A7B3C"/>
+      <circle cx="126" cy="104" r="3.2" fill="#22433A"/>
+      <circle cx="108" cy="122" r="3.2" fill="#22433A"/>
+      <circle cx="78" cy="112" r="3.2" fill="#22433A"/>
+      <circle cx="100" cy="100" r="3.6" fill="#9A7B3C"/>
     </svg>
 
     <h1>Society for Economic and Regional Policy Interactions</h1>
-    <div class="estab">Established 2026</div>
     <p class="lede">A learned society advancing research at the intersection of modern economics and regional economics — and the policy questions that live between the two.</p>
     <div class="hero-cta">
       <a class="btn btn-primary" href="journal.html">Explore the Journal</a>
@@ -367,6 +420,42 @@
   </div>
 </section>
 
+<!-- NEWS & ANNOUNCEMENTS -->
+<section class="block alt" id="news">
+  <div class="wrap">
+    <div class="kicker">News &amp; Announcements</div>
+    <h2>Latest from the Society.</h2>
+    <hr class="rule">
+    <div class="news-list">
+      <article class="news-item">
+        <div class="meta"><span class="date">[Month 2026]</span><span class="cat">Call for Papers</span></div>
+        <div>
+          <h3>Inaugural issue &mdash; call for submissions</h3>
+          <p>The Society invites original research, empirical studies, and review articles bridging modern economics and regional economics for the inaugural issue of our journal.</p>
+          <a class="more" href="journal.html">Read submission details &rarr;</a>
+        </div>
+      </article>
+      <article class="news-item">
+        <div class="meta"><span class="date">[Month 2026]</span><span class="cat">Editorial Board</span></div>
+        <div>
+          <h3>Applications open: editorial &amp; advisory board</h3>
+          <p>We welcome expressions of interest from scholars wishing to contribute as editorial board members, advisory board members, or reviewers for the Society's journal.</p>
+          <a class="more" href="#" onclick="openJoin(event)">Apply to join &rarr;</a>
+        </div>
+      </article>
+      <article class="news-item">
+        <div class="meta"><span class="date">[Month 2026]</span><span class="cat">Society</span></div>
+        <div>
+          <h3>The Society is established</h3>
+          <p>The Society for Economic and Regional Policy Interactions is founded to advance research at the intersection of economics and regional policy, and to publish a transparent, peer-reviewed, open-access journal.</p>
+          <a class="more" href="#about">About the Society &rarr;</a>
+        </div>
+      </article>
+    </div>
+    <p class="caption">Announcement dates and details are placeholders &mdash; replace with your real updates.</p>
+  </div>
+</section>
+
 <!-- MEMBERSHIP -->
 <section class="block" id="membership">
   <div class="wrap">
@@ -379,7 +468,7 @@
       <div class="tier"><div class="tl">Student</div><h3>Early-career</h3><p>For graduate students and early-career scholars, at a concessional rate.</p></div>
       <div class="tier"><div class="tl">Institutional</div><h3>Institution</h3><p>For departments and institutes wishing to support the Society's mission.</p></div>
     </div>
-    <div style="margin-top:30px;"><a class="btn btn-primary" href="mailto:info@[domain]">Register your interest</a></div>
+    <div style="margin-top:30px;"><a class="btn btn-primary" href="#" onclick="openJoin(event)">Apply for membership</a></div>
   </div>
 </section>
 
@@ -414,8 +503,292 @@
   </div>
 </footer>
 
+<!-- MEMBERSHIP MODAL -->
+<div class="modal-overlay" id="joinModal" role="dialog" aria-modal="true" aria-labelledby="joinTitle">
+  <div class="modal">
+    <div class="modal-head">
+      <div>
+        <div class="kicker">Membership</div>
+        <h3 id="joinTitle">Join the Society</h3>
+        <p>Complete the form below to apply. We'll be in touch by email.</p>
+      </div>
+      <button class="modal-close" aria-label="Close" onclick="closeJoin()">&times;</button>
+    </div>
+    <form class="mform" id="joinForm">
+      <!-- Web3Forms: replace the value below with your own access key from web3forms.com -->
+      <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE">
+      <input type="hidden" name="subject" value="New SERPI Membership Application">
+      <input type="hidden" name="from_name" value="SERPI Website">
+      <input type="checkbox" name="botcheck" class="hide" style="display:none" tabindex="-1" autocomplete="off">
+
+      <div class="form-msg" id="formMsg"></div>
+
+      <div class="frow">
+        <div class="field"><label>First name <span class="req">*</span></label><input type="text" name="First name" required></div>
+        <div class="field"><label>Last name <span class="req">*</span></label><input type="text" name="Last name" required></div>
+      </div>
+      <div class="field full"><label>Email <span class="req">*</span></label><input type="email" name="Email" required></div>
+      <div class="frow">
+        <div class="field"><label>Gender</label>
+          <select name="Gender">
+            <option value="">Select&hellip;</option>
+            <option>Male</option>
+            <option>Female</option>
+            <option>Prefer not to say</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="field"><label>Country</label><input type="text" name="Country"></div>
+      </div>
+      <div class="field full"><label>Affiliation</label>
+        <select name="Affiliation" id="affilSelect" onchange="toggleAffilOther()">
+          <option value="">Select your institution&hellip;</option>
+          <optgroup label="Islamabad / Federal">
+            <option>Quaid-i-Azam University, Islamabad</option>
+            <option>National University of Sciences &amp; Technology (NUST), Islamabad</option>
+            <option>COMSATS University Islamabad</option>
+            <option>International Islamic University, Islamabad</option>
+            <option>Allama Iqbal Open University, Islamabad</option>
+            <option>National University of Modern Languages (NUML), Islamabad</option>
+            <option>Air University, Islamabad</option>
+            <option>Bahria University, Islamabad</option>
+            <option>Federal Urdu University of Arts, Science &amp; Technology, Islamabad</option>
+            <option>Pakistan Institute of Development Economics (PIDE), Islamabad</option>
+            <option>Pakistan Institute of Engineering &amp; Applied Sciences (PIEAS), Islamabad</option>
+            <option>Capital University of Science &amp; Technology (CUST), Islamabad</option>
+            <option>Riphah International University, Islamabad</option>
+            <option>Institute of Space Technology, Islamabad</option>
+            <option>National University of Medical Sciences (NUMS), Rawalpindi</option>
+            <option>National University of Technology (NUTECH), Islamabad</option>
+          </optgroup>
+          <optgroup label="Punjab">
+            <option>University of the Punjab, Lahore</option>
+            <option>University of Engineering &amp; Technology (UET), Lahore</option>
+            <option>Lahore University of Management Sciences (LUMS)</option>
+            <option>Government College University (GCU), Lahore</option>
+            <option>University of Health Sciences, Lahore</option>
+            <option>University of Veterinary &amp; Animal Sciences (UVAS), Lahore</option>
+            <option>Information Technology University (ITU), Lahore</option>
+            <option>University of Education, Lahore</option>
+            <option>Lahore College for Women University</option>
+            <option>Kinnaird College for Women University, Lahore</option>
+            <option>University of Management &amp; Technology (UMT), Lahore</option>
+            <option>University of Central Punjab (UCP), Lahore</option>
+            <option>The University of Lahore</option>
+            <option>Forman Christian College (FCCU), Lahore</option>
+            <option>Beaconhouse National University, Lahore</option>
+            <option>Superior University, Lahore</option>
+            <option>University of Agriculture, Faisalabad</option>
+            <option>Government College University, Faisalabad</option>
+            <option>National Textile University, Faisalabad</option>
+            <option>University of Sargodha</option>
+            <option>Bahauddin Zakariya University, Multan</option>
+            <option>The Islamia University of Bahawalpur</option>
+            <option>University of Sahiwal</option>
+            <option>University of Gujrat</option>
+            <option>University of Okara</option>
+            <option>University of Engineering &amp; Technology, Taxila</option>
+            <option>PMAS Arid Agriculture University, Rawalpindi</option>
+            <option>Fatima Jinnah Women University, Rawalpindi</option>
+            <option>Khwaja Fareed University of Engineering &amp; IT, Rahim Yar Khan</option>
+            <option>MNS University of Agriculture, Multan</option>
+            <option>The Women University, Multan</option>
+            <option>Ghazi University, Dera Ghazi Khan</option>
+            <option>Government College Women University, Sialkot</option>
+            <option>Government College Women University, Faisalabad</option>
+            <option>University of Sialkot</option>
+            <option>University of Jhang</option>
+            <option>University of Narowal</option>
+            <option>Thal University, Bhakkar</option>
+            <option>Emerson University, Multan</option>
+            <option>University of Mianwali</option>
+            <option>University of Chakwal</option>
+          </optgroup>
+          <optgroup label="Sindh">
+            <option>University of Karachi</option>
+            <option>NED University of Engineering &amp; Technology, Karachi</option>
+            <option>Mehran University of Engineering &amp; Technology, Jamshoro</option>
+            <option>University of Sindh, Jamshoro</option>
+            <option>Aga Khan University, Karachi</option>
+            <option>Institute of Business Administration (IBA), Karachi</option>
+            <option>Dow University of Health Sciences, Karachi</option>
+            <option>Sindh Agriculture University, Tandojam</option>
+            <option>Shah Abdul Latif University, Khairpur</option>
+            <option>Quaid-e-Awam University of Engineering, Science &amp; Technology, Nawabshah</option>
+            <option>Sukkur IBA University</option>
+            <option>Liaquat University of Medical &amp; Health Sciences, Jamshoro</option>
+            <option>Hamdard University, Karachi</option>
+            <option>Iqra University, Karachi</option>
+            <option>Bahria University, Karachi</option>
+            <option>DHA Suffa University, Karachi</option>
+            <option>Habib University, Karachi</option>
+            <option>Ziauddin University, Karachi</option>
+            <option>Jinnah Sindh Medical University, Karachi</option>
+            <option>Shaheed Benazir Bhutto University, Shaheed Benazirabad</option>
+            <option>Benazir Bhutto Shaheed University Lyari, Karachi</option>
+            <option>Federal Urdu University, Karachi</option>
+            <option>Begum Nusrat Bhutto Women University, Sukkur</option>
+          </optgroup>
+          <optgroup label="Khyber Pakhtunkhwa">
+            <option>University of Peshawar</option>
+            <option>University of Engineering &amp; Technology, Peshawar</option>
+            <option>Khyber Medical University, Peshawar</option>
+            <option>Islamia College University, Peshawar</option>
+            <option>Abdul Wali Khan University, Mardan</option>
+            <option>University of Malakand</option>
+            <option>University of Swat</option>
+            <option>Hazara University, Mansehra</option>
+            <option>Gomal University, Dera Ismail Khan</option>
+            <option>Kohat University of Science &amp; Technology</option>
+            <option>Bacha Khan University, Charsadda</option>
+            <option>The University of Agriculture, Peshawar</option>
+            <option>University of Haripur</option>
+            <option>Shaheed Benazir Bhutto University, Sheringal</option>
+            <option>University of Science &amp; Technology, Bannu</option>
+            <option>Abbottabad University of Science &amp; Technology</option>
+            <option>Pak-Austria Fachhochschule, Haripur</option>
+            <option>Women University Swabi</option>
+            <option>University of Buner</option>
+            <option>University of Lakki Marwat</option>
+            <option>University of Swabi</option>
+          </optgroup>
+          <optgroup label="Balochistan">
+            <option>University of Balochistan, Quetta</option>
+            <option>Balochistan University of Engineering &amp; Technology, Khuzdar</option>
+            <option>BUITEMS, Quetta</option>
+            <option>Lasbela University of Agriculture, Water &amp; Marine Sciences</option>
+            <option>Sardar Bahadur Khan Women's University, Quetta</option>
+            <option>University of Turbat</option>
+            <option>University of Loralai</option>
+            <option>University of Gwadar</option>
+          </optgroup>
+          <optgroup label="Azad Jammu &amp; Kashmir / Gilgit-Baltistan">
+            <option>University of Azad Jammu &amp; Kashmir, Muzaffarabad</option>
+            <option>Mirpur University of Science &amp; Technology (MUST), Mirpur</option>
+            <option>University of Poonch, Rawalakot</option>
+            <option>Women University of Azad Jammu &amp; Kashmir, Bagh</option>
+            <option>Karakoram International University, Gilgit</option>
+            <option>University of Baltistan, Skardu</option>
+          </optgroup>
+          <option value="Other">Other (not listed)</option>
+        </select>
+      </div>
+      <div class="field full hide" id="affilOtherWrap"><label>Please specify your affiliation</label><input type="text" name="Affiliation (other)" id="affilOther"></div>
+      <div class="frow">
+        <div class="field"><label>Intended role</label>
+          <select name="Intended role">
+            <option value="">Select&hellip;</option>
+            <option>Member</option>
+            <option>Reviewer</option>
+            <option>Editorial board member</option>
+            <option>Advisory board member</option>
+          </select>
+        </div>
+        <div class="field"><label>Academic qualification</label>
+          <select name="Academic qualification" id="qualSelect" onchange="toggleQualOther()">
+            <option value="">Select&hellip;</option>
+            <option>Bachelors</option>
+            <option>Masters</option>
+            <option>Doctoral</option>
+            <option>Faculty member</option>
+            <option value="Other">Other (specify)</option>
+          </select>
+        </div>
+      </div>
+      <div class="field full hide" id="qualOtherWrap"><label>Please specify your qualification</label><input type="text" name="Qualification (other)" id="qualOther"></div>
+      <div class="field full"><label>Primary subject area (JEL)</label>
+        <select name="Primary subject area">
+          <option value="">Select&hellip;</option>
+          <option>A &mdash; General Economics &amp; Teaching</option>
+          <option>B &mdash; History of Economic Thought &amp; Methodology</option>
+          <option>C &mdash; Mathematical &amp; Quantitative Methods</option>
+          <option>D &mdash; Microeconomics</option>
+          <option>E &mdash; Macroeconomics &amp; Monetary Economics</option>
+          <option>F &mdash; International Economics</option>
+          <option>G &mdash; Financial Economics</option>
+          <option>H &mdash; Public Economics</option>
+          <option>I &mdash; Health, Education &amp; Welfare</option>
+          <option>J &mdash; Labor &amp; Demographic Economics</option>
+          <option>K &mdash; Law &amp; Economics</option>
+          <option>L &mdash; Industrial Organization</option>
+          <option>M &mdash; Business Administration, Marketing &amp; Accounting</option>
+          <option>N &mdash; Economic History</option>
+          <option>O &mdash; Economic Development, Innovation &amp; Growth</option>
+          <option>P &mdash; Economic Systems</option>
+          <option>Q &mdash; Agricultural, Natural Resource &amp; Environmental Economics</option>
+          <option>R &mdash; Urban, Rural, Regional &amp; Transportation Economics</option>
+          <option>Y &mdash; Miscellaneous Categories</option>
+          <option>Z &mdash; Other Special Topics</option>
+        </select>
+      </div>
+      <div class="field full"><label>Research interests (optional)</label><textarea name="Research interests" placeholder="e.g. regional development, monetary policy, spatial econometrics"></textarea></div>
+
+      <div class="actions">
+        <button type="submit" class="btn btn-primary" id="joinSubmit">Submit application</button>
+        <button type="button" class="btn btn-ghost" onclick="closeJoin()">Cancel</button>
+      </div>
+      <p class="form-note">Your details are sent securely to the Society and used only to process your membership.</p>
+    </form>
+  </div>
+</div>
+
 <script>
+  // mobile nav close
   document.querySelectorAll('#nav a').forEach(function(a){a.addEventListener('click',function(){document.getElementById('nav').classList.remove('open');});});
+
+  // membership modal
+  var joinModal=document.getElementById('joinModal');
+  function openJoin(e){ if(e){e.preventDefault();} joinModal.classList.add('open'); document.body.style.overflow='hidden'; }
+  function closeJoin(){ joinModal.classList.remove('open'); document.body.style.overflow=''; }
+  joinModal.addEventListener('click',function(e){ if(e.target===joinModal){ closeJoin(); } });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape'){ closeJoin(); } });
+  function toggleQualOther(){
+    var v=document.getElementById('qualSelect').value;
+    var wrap=document.getElementById('qualOtherWrap');
+    var inp=document.getElementById('qualOther');
+    if(v==='Other'){ wrap.classList.remove('hide'); inp.required=true; }
+    else{ wrap.classList.add('hide'); inp.required=false; inp.value=''; }
+  }
+  function toggleAffilOther(){
+    var v=document.getElementById('affilSelect').value;
+    var wrap=document.getElementById('affilOtherWrap');
+    var inp=document.getElementById('affilOther');
+    if(v==='Other'){ wrap.classList.remove('hide'); inp.required=true; }
+    else{ wrap.classList.add('hide'); inp.required=false; inp.value=''; }
+  }
+
+  // form submit -> Web3Forms
+  var joinForm=document.getElementById('joinForm');
+  var formMsg=document.getElementById('formMsg');
+  joinForm.addEventListener('submit',function(e){
+    e.preventDefault();
+    var btn=document.getElementById('joinSubmit');
+    btn.disabled=true; btn.textContent='Submitting\u2026';
+    formMsg.className='form-msg';
+    var data=Object.fromEntries(new FormData(joinForm).entries());
+    fetch('https://api.web3forms.com/submit',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Accept':'application/json'},
+      body:JSON.stringify(data)
+    }).then(function(r){return r.json();}).then(function(res){
+      if(res.success){
+        joinForm.reset();
+        document.getElementById('qualOtherWrap').classList.add('hide');
+        document.getElementById('affilOtherWrap').classList.add('hide');
+        formMsg.textContent='Thank you \u2014 your membership application has been received. We will contact you by email.';
+        formMsg.className='form-msg success show';
+      } else {
+        formMsg.textContent='Sorry, something went wrong. Please try again, or email the Society directly.';
+        formMsg.className='form-msg error show';
+      }
+    }).catch(function(){
+      formMsg.textContent='Network error. Please check your connection and try again.';
+      formMsg.className='form-msg error show';
+    }).finally(function(){
+      btn.disabled=false; btn.textContent='Submit application';
+      formMsg.scrollIntoView({behavior:'smooth',block:'nearest'});
+    });
+  });
 </script>
 </body>
 </html>
