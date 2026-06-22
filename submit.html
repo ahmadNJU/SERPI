@@ -443,8 +443,9 @@
 
       formCard.style.display = 'none';
       successPanel.style.display = 'block';
-      if (data.submissionId) {
-        submissionRef.textContent = 'Submission reference: ERPI-' + String(data.submissionId).padStart(5, '0');
+      const ref = data.reference || (data.submissionId ? 'ERPI-' + String(data.submissionId).padStart(5, '0') : '');
+      if (ref) {
+        submissionRef.textContent = 'Submission reference: ' + ref;
       }
     } catch (err) {
       showError('A network error occurred. Please check your connection and try again.');

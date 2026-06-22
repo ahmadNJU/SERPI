@@ -11,6 +11,8 @@
     "drizzle-orm": "beta"
   },
   "devDependencies": {
+    "@netlify/functions": "^2.8.0",
+    "@types/node": "^20.14.0",
     "drizzle-kit": "beta"
   }
 }
