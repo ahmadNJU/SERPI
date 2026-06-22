@@ -6,7 +6,7 @@
  *
  *   RESEND_API_KEY   API key from https://resend.com (required to actually send)
  *   MAIL_FROM        Verified sender, e.g. "ERPI Editorial <no-reply@your-domain>"
- *   EDITORIAL_EMAIL  Address that receives new-submission notifications
+ *   EDITORIAL_EMAIL  Address that receives notifications (never exposed to clients)
  *
  * Sending is best-effort: if RESEND_API_KEY is absent or the provider call
  * fails, we log and continue so a submission is never lost because of email.
@@ -14,13 +14,8 @@
 
 const RESEND_ENDPOINT = "https://api.resend.com/emails";
 
-export const EDITORIAL_EMAIL = process.env.EDITORIAL_EMAIL || "editors@serpi-journal.org";
+export const EDITORIAL_EMAIL = process.env.EDITORIAL_EMAIL || "editorial@serpi-journals.netlify.app";
 const MAIL_FROM = process.env.MAIL_FROM || `ERPI Editorial Office <${EDITORIAL_EMAIL}>`;
-
-/** Build the public-facing submission reference from the database id. */
-export function referenceId(id: number): string {
-  return "ERPI-" + String(id).padStart(5, "0");
-}
 
 interface SendArgs {
   to: string | string[];
@@ -29,10 +24,11 @@ interface SendArgs {
   replyTo?: string;
 }
 
-async function send({ to, subject, text, replyTo }: SendArgs): Promise<boolean> {
+/** Low-level send. Returns true on success, false if skipped or failed. */
+export async function sendEmail({ to, subject, text, replyTo }: SendArgs): Promise<boolean> {
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) {
-    console.warn(`[email] RESEND_API_KEY not set — skipping email "${subject}" to ${Array.isArray(to) ? to.join(", ") : to}`);
+    console.warn(`[email] RESEND_API_KEY not set — skipping email "${subject}"`);
     return false;
   }
 
@@ -65,7 +61,7 @@ async function send({ to, subject, text, replyTo }: SendArgs): Promise<boolean> 
 }
 
 interface SubmissionInfo {
-  id: number;
+  reference: string;
   title: string;
   authors: string;
   paperType: string;
@@ -75,16 +71,15 @@ interface SubmissionInfo {
 }
 
 /**
- * Notify the editorial office of a new submission and send the corresponding
- * author a confirmation that includes their reference id. Runs both sends
- * concurrently and never throws.
+ * Notify the editorial office of a new submission. Reply-to is set to the
+ * corresponding author so the editor can contact them manually. No email is
+ * sent to the author — confirmation happens only on the submission screen.
+ * Never throws.
  */
 export async function notifyNewSubmission(info: SubmissionInfo): Promise<void> {
-  const ref = referenceId(info.id);
-
   const editorText =
     `A new manuscript has been submitted to Economic and Regional Policy Interactions.\n\n` +
-    `Reference:        ${ref}\n` +
+    `Reference:        ${info.reference}\n` +
     `Title:            ${info.title}\n` +
     `Manuscript type:  ${info.paperType}\n` +
     `Authors:          ${info.authors}\n` +
@@ -92,32 +87,37 @@ export async function notifyNewSubmission(info: SubmissionInfo): Promise<void> {
     `Institution:      ${info.institution || "—"}\n\n` +
     `Open the editorial console to review the manuscript and update its status.`;
 
-  const authorText =
-    `Dear ${info.submitterName},\n\n` +
-    `Thank you for submitting your manuscript to Economic and Regional Policy Interactions. ` +
-    `We confirm that it has been received by the editorial office.\n\n` +
-    `Your submission reference is ${ref}. Please quote this reference in any correspondence.\n\n` +
-    `Title: ${info.title}\n\n` +
-    `Each submission is first screened editorially and then, if suitable, sent for ` +
-    `double-anonymized peer review by at least two independent experts. You can expect an ` +
-    `initial editorial decision within 5–10 business days, and you will be notified at every ` +
-    `stage of the process.\n\n` +
-    `With thanks,\n` +
-    `The Editorial Office\n` +
-    `Economic and Regional Policy Interactions`;
+  await sendEmail({
+    to: EDITORIAL_EMAIL,
+    subject: `New submission ${info.reference}: ${info.title}`,
+    text: editorText,
+    replyTo: info.submitterEmail,
+  }).catch(() => false);
+}
 
-  await Promise.allSettled([
-    send({
-      to: EDITORIAL_EMAIL,
-      subject: `New submission ${ref}: ${info.title}`,
-      text: editorText,
-      replyTo: info.submitterEmail,
-    }),
-    send({
-      to: info.submitterEmail,
-      subject: `Submission received — reference ${ref}`,
-      text: authorText,
-      replyTo: EDITORIAL_EMAIL,
-    }),
-  ]);
+interface ContactMessage {
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+}
+
+/**
+ * Forward a contact-form message to the editorial office, with reply-to set to
+ * the sender so the editor can reply directly. The destination address is
+ * never returned to the client.
+ */
+export async function sendContactMessage(msg: ContactMessage): Promise<boolean> {
+  const text =
+    `New message via the editorial contact form.\n\n` +
+    `From:    ${msg.name} <${msg.email}>\n` +
+    `Subject: ${msg.subject}\n\n` +
+    `${msg.message}\n`;
+
+  return sendEmail({
+    to: EDITORIAL_EMAIL,
+    subject: `Contact form: ${msg.subject}`,
+    text,
+    replyTo: msg.email,
+  });
 }

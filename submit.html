@@ -86,6 +86,16 @@
   .submit-btn{font-size:1rem;padding:14px 32px;}
   .submit-note{font-size:.82rem;color:var(--muted);}
 
+  /* honeypot (kept out of the visual + a11y tree) */
+  .hp{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;}
+
+  /* consent */
+  .consent{margin-top:30px;border-top:1px solid var(--line);padding-top:24px;}
+  .consent-label{display:flex;gap:10px;align-items:flex-start;font-weight:500;color:var(--text);cursor:pointer;}
+  .consent-label input{margin-top:4px;flex:none;width:16px;height:16px;accent-color:var(--pine);}
+  .consent-label span{font-size:.9rem;line-height:1.5;}
+  .privacy-note{font-size:.82rem;color:var(--muted);margin:10px 0 0;padding-left:26px;line-height:1.55;}
+
   /* alerts */
   .alert{display:none;padding:16px 20px;border-radius:1px;margin-bottom:20px;font-size:.92rem;}
   .alert.show{display:flex;align-items:flex-start;gap:12px;}
@@ -110,8 +120,10 @@
   .success-panel{display:none;text-align:center;padding:56px 40px;}
   .success-panel .big-check{font-size:3rem;margin-bottom:16px;}
   .success-panel h2{font-size:1.7rem;margin-bottom:10px;}
-  .success-panel p{color:var(--muted);max-width:42ch;margin:0 auto 24px;}
-  .success-panel .ref{font-size:.82rem;color:var(--muted);margin-top:16px;}
+  .success-panel p{color:var(--muted);max-width:46ch;margin:0 auto 18px;}
+  .success-panel .ref-box{display:inline-block;font-family:"Spectral",serif;font-size:1.25rem;font-weight:600;color:var(--pine);letter-spacing:.04em;background:var(--panel-2);border:1px solid var(--line);border-radius:2px;padding:12px 22px;margin:6px auto 18px;}
+  .success-panel .track-cta{font-size:.9rem;}
+  .success-panel .success-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:8px;}
 
   /* loading state */
   .btn-primary.loading{opacity:.65;pointer-events:none;}
@@ -265,9 +277,23 @@
               <textarea id="cover_letter" name="cover_letter" placeholder="Briefly explain why this manuscript is suited to Economic and Regional Policy Interactions, any declarations of interest, and any other information for the editors." maxlength="3000"></textarea>
             </div>
 
+            <!-- Honeypot: hidden from users; bots that fill it are silently ignored. -->
+            <div class="hp" aria-hidden="true">
+              <label for="company">Company</label>
+              <input type="text" id="company" name="company" tabindex="-1" autocomplete="off">
+            </div>
+
+            <div class="field-group consent">
+              <label class="consent-label">
+                <input type="checkbox" id="consent" name="consent" required>
+                <span>I confirm the corresponding author consents to this submission, and I have read the privacy note below. <span class="req">*</span></span>
+              </label>
+              <p class="privacy-note">We store your manuscript and the details you provide solely to manage editorial peer review. The corresponding author's email is used only by the editorial office and is never shown publicly. You can check progress any time at <a href="track.html">/track</a>.</p>
+            </div>
+
             <div class="submit-row">
               <button type="submit" class="btn btn-primary submit-btn" id="submit-btn">Submit Manuscript</button>
-              <span class="submit-note">You will receive a confirmation with your submission reference.</span>
+              <span class="submit-note">You'll see a reference number on the next screen — please save it.</span>
             </div>
           </form>
         </div>
@@ -277,8 +303,12 @@
           <div class="big-check">&#9989;</div>
           <h2>Submission Received</h2>
           <p>Thank you for submitting to <em>Economic and Regional Policy Interactions</em>. The editorial office will be in touch within 5–10 business days.</p>
-          <a href="journal.html" class="btn btn-ghost">Return to Journal</a>
-          <div class="ref" id="submission-ref"></div>
+          <div class="ref-box" id="submission-ref"></div>
+          <p class="track-cta"><strong>Please save your reference number.</strong> You can check the progress of your submission at any time — no login required — using your reference and the corresponding author's email at <a href="track.html">/track</a>.</p>
+          <div class="success-actions">
+            <a href="track.html" class="btn btn-primary">Track my submission</a>
+            <a href="journal.html" class="btn btn-ghost">Return to Journal</a>
+          </div>
         </div>
       </div>
 
@@ -314,8 +344,7 @@
 
         <div class="info-card">
           <h3>Questions?</h3>
-          <p>Contact the editorial office at<br>
-          <a class="contact-link" href="mailto:editors@serpi-journal.org">editors@serpi-journal.org</a></p>
+          <p>For any queries about your submission, please <a class="contact-link" href="contact.html">contact the editorial team</a>. We respond by email.</p>
         </div>
       </aside>
     </div>
@@ -427,6 +456,7 @@
     if (!submitterEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(submitterEmail)) return showError('Please enter a valid email address.');
     if (!file) return showError('Please upload your manuscript file (PDF or DOCX).');
     if (file.size > 25 * 1024 * 1024) return showError('The file exceeds the 25 MB limit. Please compress your manuscript and try again.');
+    if (!form.consent.checked) return showError('Please confirm consent and that you have read the privacy note.');
 
     submitBtn.classList.add('loading');
     submitBtn.innerHTML = '<span class="spinner"></span>Submitting…';
@@ -443,9 +473,10 @@
 
       formCard.style.display = 'none';
       successPanel.style.display = 'block';
-      const ref = data.reference || (data.submissionId ? 'ERPI-' + String(data.submissionId).padStart(5, '0') : '');
-      if (ref) {
-        submissionRef.textContent = 'Submission reference: ' + ref;
+      if (data.reference) {
+        submissionRef.textContent = data.reference;
+      } else {
+        submissionRef.style.display = 'none';
       }
     } catch (err) {
       showError('A network error occurred. Please check your connection and try again.');

@@ -2,7 +2,8 @@ import type { Config } from "@netlify/functions";
 import { getStore } from "@netlify/blobs";
 import { db } from "../../db/index.js";
 import { papers } from "../../db/schema.js";
-import { notifyNewSubmission, referenceId } from "../lib/email.js";
+import { notifyNewSubmission } from "../lib/email.js";
+import { nextReference, recordStatus } from "../lib/submissions.js";
 
 const ALLOWED_TYPES: Record<string, string> = {
   "application/pdf": "pdf",
@@ -29,6 +30,13 @@ export default async (req: Request): Promise<Response> => {
     return Response.json({ error: "Failed to parse form data" }, { status: 400 });
   }
 
+  // Honeypot: a hidden field real users never fill. If populated, this is a bot.
+  // Silently return a success-shaped response and store nothing.
+  const honeypot = (formData.get("company") as string | null)?.trim();
+  if (honeypot) {
+    return Response.json({ success: true, message: "Manuscript submitted successfully" }, { status: 201 });
+  }
+
   const title = (formData.get("title") as string | null)?.trim();
   const authors = (formData.get("authors") as string | null)?.trim();
   const abstract = (formData.get("abstract") as string | null)?.trim();
@@ -38,10 +46,15 @@ export default async (req: Request): Promise<Response> => {
   const submitterEmail = (formData.get("submitter_email") as string | null)?.trim();
   const institution = (formData.get("institution") as string | null)?.trim() ?? "";
   const coverLetter = (formData.get("cover_letter") as string | null)?.trim() ?? "";
+  const consent = (formData.get("consent") as string | null)?.trim();
   const file = formData.get("manuscript") as File | null;
 
   if (!title || !authors || !abstract || !submitterName || !submitterEmail) {
     return Response.json({ error: "Missing required fields: title, authors, abstract, submitter_name, submitter_email" }, { status: 400 });
+  }
+
+  if (!consent) {
+    return Response.json({ error: "Please confirm you have read and agree to the privacy note." }, { status: 400 });
   }
 
   if (!file || file.size === 0) {
@@ -49,7 +62,7 @@ export default async (req: Request): Promise<Response> => {
   }
 
   const detectedType = ALLOWED_TYPES[file.type];
-  if (!detectedType) {
+  if (!detectedType || (detectedType !== "pdf" && detectedType !== "docx" && detectedType !== "doc")) {
     return Response.json({ error: "Only PDF or DOCX files are accepted" }, { status: 400 });
   }
 
@@ -72,9 +85,13 @@ export default async (req: Request): Promise<Response> => {
     const arrayBuffer = await file.arrayBuffer();
     await store.set(fileKey, arrayBuffer);
 
+    // Claim a stable, year-scoped reference before inserting the row.
+    const reference = await nextReference(new Date().getFullYear());
+
     const [paper] = await db
       .insert(papers)
       .values({
+        reference,
         title,
         authors,
         abstract,
@@ -92,10 +109,12 @@ export default async (req: Request): Promise<Response> => {
       })
       .returning();
 
-    // Notify the editorial office and confirm receipt to the corresponding
-    // author. Best-effort: never block or fail the submission on email.
+    // Author-visible initial timeline entry.
+    await recordStatus(paper.id, "submitted", null, true);
+
+    // Notify the editorial office only. Authors are contacted manually.
     await notifyNewSubmission({
-      id: paper.id,
+      reference: paper.reference!,
       title: paper.title,
       authors: paper.authors,
       paperType: paper.paperType,
@@ -104,15 +123,14 @@ export default async (req: Request): Promise<Response> => {
       institution: paper.institution,
     });
 
-    // Deliberately do NOT echo back any title/name/email here — only the
-    // submitter's own reference. Privileged fields are exposed solely via the
-    // token-protected editorial endpoints.
+    // Stable public response: only the submitter's own reference. Privileged
+    // fields are exposed solely via the token-protected editorial endpoints.
     return Response.json(
       {
         success: true,
         message: "Manuscript submitted successfully",
         submissionId: paper.id,
-        reference: referenceId(paper.id),
+        reference: paper.reference,
       },
       { status: 201 }
     );
