@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Submit Manuscript — Economic and Regional Policy Interactions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pine:#22433A; --pine-deep:#15302A; --brass:#9A7B3C; --brass-soft:#B79A5E;
+    --text:#1C1F1B; --muted:#5E635B; --paper:#ffffff; --panel:#F4F5F1; --panel-2:#ECEEE6;
+    --line:#DCDDD3; --maxw:1140px; --error:#B02020; --success:#1E5C2E;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--text);font-family:"Source Sans 3",system-ui,sans-serif;font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased;}
+  a{color:var(--pine);}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 32px;}
+  h1,h2,h3,h4{font-family:"Spectral",Georgia,serif;font-weight:500;line-height:1.16;color:var(--pine);margin:0;}
+  .kicker{font-family:"Source Sans 3",sans-serif;font-size:.74rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--brass);margin-bottom:14px;}
+  .rule{width:46px;height:2px;background:var(--brass);border:0;margin:18px 0 26px;}
+
+  .btn{display:inline-block;font-family:"Source Sans 3";font-size:.86rem;font-weight:600;letter-spacing:.02em;text-decoration:none;padding:12px 24px;border:1px solid var(--pine);border-radius:1px;transition:.18s;cursor:pointer;}
+  .btn-primary{background:var(--pine);color:#fff;}
+  .btn-primary:hover{background:var(--pine-deep);border-color:var(--pine-deep);}
+  .btn-ghost{background:transparent;color:var(--pine);}
+  .btn-ghost:hover{background:var(--pine);color:#fff;}
+
+  /* top bar */
+  .topbar{border-bottom:1px solid var(--line);background:#fff;position:sticky;top:0;z-index:50;}
+  .topbar .wrap{display:flex;align-items:center;justify-content:space-between;height:70px;gap:24px;}
+  .brandline{display:flex;flex-direction:column;line-height:1.12;}
+  .brandline .pub{font-size:.62rem;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);}
+  .brandline .jt{font-family:"Spectral",serif;font-weight:500;font-size:1.08rem;color:var(--pine);}
+  nav.main{display:flex;gap:24px;align-items:center;}
+  nav.main a{font-size:.85rem;font-weight:500;text-decoration:none;color:var(--text);}
+  nav.main a:hover{color:var(--brass);}
+  .menu-toggle{display:none;background:none;border:0;font-size:1.5rem;color:var(--pine);cursor:pointer;}
+
+  /* page header */
+  .page-header{background:linear-gradient(#fff,#fbfbf9);border-bottom:1px solid var(--line);padding:60px 0 48px;}
+  .page-header h1{font-size:clamp(1.9rem,3.8vw,2.8rem);margin-bottom:10px;}
+  .page-header .sub{font-family:"Spectral",serif;font-style:italic;font-size:1.15rem;color:var(--brass);}
+
+  /* main layout */
+  .main-content{padding:56px 0 80px;}
+  .form-layout{display:grid;grid-template-columns:1fr 340px;gap:52px;align-items:start;}
+
+  /* form card */
+  .form-card{background:#fff;border:1px solid var(--line);border-radius:2px;padding:40px 38px;}
+  .form-card h2{font-size:1.32rem;margin-bottom:6px;}
+  .form-card .section-note{font-size:.9rem;color:var(--muted);margin-bottom:28px;}
+
+  .field-group{margin-bottom:22px;}
+  .field-group + .section-sep{margin-top:36px;margin-bottom:28px;border:0;border-top:1px solid var(--line);}
+  .section-label{font-size:.68rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--brass);margin:0 0 18px;}
+  label{display:block;font-size:.88rem;font-weight:600;color:var(--text);margin-bottom:5px;}
+  label .req{color:var(--brass);margin-left:2px;}
+  label .hint{font-weight:400;color:var(--muted);font-size:.82rem;margin-left:6px;}
+  input[type="text"],input[type="email"],select,textarea{
+    width:100%;padding:10px 13px;font-family:"Source Sans 3",sans-serif;font-size:.95rem;
+    color:var(--text);background:#fff;border:1px solid var(--line);border-radius:1px;
+    transition:.15s;outline:none;
+  }
+  input[type="text"]:focus,input[type="email"]:focus,select:focus,textarea:focus{border-color:var(--pine);box-shadow:0 0 0 3px rgba(34,67,58,.1);}
+  textarea{resize:vertical;min-height:100px;line-height:1.6;}
+  textarea.tall{min-height:140px;}
+
+  /* file drop zone */
+  .file-zone{border:2px dashed var(--line);border-radius:2px;padding:30px 24px;text-align:center;cursor:pointer;transition:.15s;background:#fafaf8;position:relative;}
+  .file-zone:hover,.file-zone.drag-over{border-color:var(--pine);background:rgba(34,67,58,.04);}
+  .file-zone input[type="file"]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
+  .file-zone .icon{font-size:2rem;margin-bottom:8px;opacity:.55;}
+  .file-zone .fz-label{font-weight:600;color:var(--pine);font-size:.9rem;}
+  .file-zone .fz-sub{font-size:.82rem;color:var(--muted);margin-top:4px;}
+  .file-chosen{display:none;align-items:center;gap:10px;margin-top:12px;padding:10px 14px;background:var(--panel-2);border-radius:1px;border:1px solid var(--line);}
+  .file-chosen .fc-name{font-size:.88rem;font-weight:600;color:var(--pine);word-break:break-all;}
+  .file-chosen .fc-size{font-size:.8rem;color:var(--muted);}
+  .file-chosen .fc-remove{margin-left:auto;background:none;border:0;cursor:pointer;color:var(--muted);font-size:.95rem;padding:2px 4px;border-radius:2px;}
+  .file-chosen .fc-remove:hover{color:var(--error);}
+
+  /* submit button */
+  .submit-row{margin-top:32px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
+  .submit-btn{font-size:1rem;padding:14px 32px;}
+  .submit-note{font-size:.82rem;color:var(--muted);}
+
+  /* alerts */
+  .alert{display:none;padding:16px 20px;border-radius:1px;margin-bottom:20px;font-size:.92rem;}
+  .alert.show{display:flex;align-items:flex-start;gap:12px;}
+  .alert-error{background:#FDF0F0;border:1px solid #E8B4B4;color:var(--error);}
+  .alert-success{background:#F0F8F2;border:1px solid #9FCFAB;color:var(--success);}
+  .alert .al-icon{font-size:1.1rem;flex:none;margin-top:1px;}
+
+  /* sidebar */
+  .sidebar{}
+  .info-card{border:1px solid var(--line);background:#fff;border-radius:2px;padding:28px;margin-bottom:22px;}
+  .info-card h3{font-size:1.06rem;margin-bottom:10px;}
+  .info-card p,.info-card li{font-size:.88rem;color:#43473e;margin:0 0 8px;line-height:1.6;}
+  .info-card ul{padding-left:18px;margin:8px 0 0;}
+  .info-card li{margin-bottom:5px;}
+  .info-card .contact-link{font-weight:600;color:var(--pine);}
+  .checklist{list-style:none;padding:0;margin:10px 0 0;}
+  .checklist li{padding:7px 0;border-bottom:1px solid var(--line);font-size:.88rem;color:#43473e;padding-left:22px;position:relative;}
+  .checklist li:last-child{border-bottom:0;}
+  .checklist li::before{content:"✓";position:absolute;left:0;color:var(--pine);font-weight:700;}
+
+  /* success state */
+  .success-panel{display:none;text-align:center;padding:56px 40px;}
+  .success-panel .big-check{font-size:3rem;margin-bottom:16px;}
+  .success-panel h2{font-size:1.7rem;margin-bottom:10px;}
+  .success-panel p{color:var(--muted);max-width:42ch;margin:0 auto 24px;}
+  .success-panel .ref{font-size:.82rem;color:var(--muted);margin-top:16px;}
+
+  /* loading state */
+  .btn-primary.loading{opacity:.65;pointer-events:none;}
+  .spinner{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.5);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite;vertical-align:middle;margin-right:8px;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+
+  /* footer */
+  footer{background:var(--pine-deep);color:#c4cdc4;padding:40px 0 24px;}
+  footer .own{font-size:.88rem;line-height:1.7;color:#aab4aa;}
+  .footnote{border-top:1px solid rgba(255,255,255,.13);margin-top:28px;padding-top:18px;font-size:.78rem;color:#8d978d;}
+
+  @media (max-width:900px){
+    .form-layout{grid-template-columns:1fr;}
+    .form-card{padding:28px 22px;}
+  }
+  @media (max-width:560px){.wrap{padding:0 18px;}.submit-btn{width:100%;text-align:center;}}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;}}
+  :focus-visible{outline:2px solid var(--brass);outline-offset:3px;}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<header class="topbar">
+  <div class="wrap">
+    <div class="brandline">
+      <a class="pub" href="index.html" style="text-decoration:none;">Society for Economic &amp; Regional Policy Interactions</a>
+      <a class="jt" href="journal.html" style="text-decoration:none;">Economic &amp; Regional Policy Interactions</a>
+    </div>
+    <button class="menu-toggle" aria-label="Toggle menu" onclick="document.getElementById('nav').classList.toggle('open')">&#9776;</button>
+    <nav class="main" id="nav">
+      <a href="journal.html#scope">Aims &amp; Scope</a>
+      <a href="journal.html#editorial">Editorial Board</a>
+      <a href="journal.html#ethics">Ethics &amp; Review</a>
+      <a href="journal.html#authors">For Authors</a>
+    </nav>
+  </div>
+</header>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="wrap">
+    <div class="kicker">Manuscript Submission</div>
+    <h1>Submit Your Research</h1>
+    <div class="sub">Economic and Regional Policy Interactions</div>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="main-content">
+  <div class="wrap">
+    <div class="form-layout">
+
+      <!-- FORM PANEL -->
+      <div>
+        <div class="alert alert-error" id="alert-error" role="alert">
+          <span class="al-icon">&#9888;</span>
+          <span id="alert-error-text"></span>
+        </div>
+        <div class="alert alert-success" id="alert-success" role="alert">
+          <span class="al-icon">&#10003;</span>
+          <span id="alert-success-text"></span>
+        </div>
+
+        <div class="form-card" id="submission-form-card">
+          <div class="kicker">New Submission</div>
+          <h2>Manuscript Details</h2>
+          <p class="section-note">All fields marked <span style="color:var(--brass);">*</span> are required. Accepted formats: PDF, DOCX. Maximum file size: 25 MB.</p>
+
+          <form id="submission-form" novalidate>
+
+            <!-- MANUSCRIPT INFORMATION -->
+            <div class="section-label">Manuscript Information</div>
+
+            <div class="field-group">
+              <label for="title">Title <span class="req">*</span></label>
+              <input type="text" id="title" name="title" placeholder="Full manuscript title" required maxlength="500">
+            </div>
+
+            <div class="field-group">
+              <label for="authors">Authors <span class="req">*</span> <span class="hint">Full names, semicolon-separated (e.g. Jane Smith; John Doe)</span></label>
+              <input type="text" id="authors" name="authors" placeholder="Jane Smith; John Doe; Maria García" required maxlength="1000">
+            </div>
+
+            <div class="field-group">
+              <label for="paper_type">Manuscript Type <span class="req">*</span></label>
+              <select id="paper_type" name="paper_type" required>
+                <option value="article">Research Article</option>
+                <option value="review">Review Article</option>
+                <option value="short_communication">Short Communication</option>
+                <option value="policy_brief">Policy Brief</option>
+                <option value="comment">Comment / Reply</option>
+              </select>
+            </div>
+
+            <div class="field-group">
+              <label for="abstract">Abstract <span class="req">*</span> <span class="hint">250–350 words recommended</span></label>
+              <textarea id="abstract" name="abstract" class="tall" placeholder="Provide a structured or unstructured abstract summarising the background, methods, results and conclusions." required maxlength="5000"></textarea>
+            </div>
+
+            <div class="field-group">
+              <label for="keywords">Keywords <span class="hint">Up to 6, comma-separated</span></label>
+              <input type="text" id="keywords" name="keywords" placeholder="regional economics, fiscal policy, spatial analysis" maxlength="300">
+            </div>
+
+            <hr class="section-sep">
+
+            <!-- CORRESPONDING AUTHOR -->
+            <div class="section-label">Corresponding Author</div>
+
+            <div class="field-group">
+              <label for="submitter_name">Full Name <span class="req">*</span></label>
+              <input type="text" id="submitter_name" name="submitter_name" placeholder="Dr Jane Smith" required maxlength="200">
+            </div>
+
+            <div class="field-group">
+              <label for="submitter_email">Email Address <span class="req">*</span></label>
+              <input type="email" id="submitter_email" name="submitter_email" placeholder="jane.smith@university.edu" required maxlength="300">
+            </div>
+
+            <div class="field-group">
+              <label for="institution">Institution / Affiliation</label>
+              <input type="text" id="institution" name="institution" placeholder="University of Economics, Department of Regional Studies" maxlength="300">
+            </div>
+
+            <hr class="section-sep">
+
+            <!-- MANUSCRIPT FILE -->
+            <div class="section-label">Manuscript File</div>
+
+            <div class="field-group">
+              <label>Upload Manuscript <span class="req">*</span></label>
+              <div class="file-zone" id="file-zone">
+                <input type="file" id="manuscript" name="manuscript" accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" required>
+                <div class="icon">&#128196;</div>
+                <div class="fz-label">Drag &amp; drop or click to select</div>
+                <div class="fz-sub">PDF or DOCX &middot; Max 25 MB</div>
+              </div>
+              <div class="file-chosen" id="file-chosen">
+                <span style="font-size:1.2rem;">&#128196;</span>
+                <div>
+                  <div class="fc-name" id="fc-name"></div>
+                  <div class="fc-size" id="fc-size"></div>
+                </div>
+                <button type="button" class="fc-remove" id="fc-remove" aria-label="Remove file">&#10005;</button>
+              </div>
+            </div>
+
+            <div class="field-group">
+              <label for="cover_letter">Cover Letter <span class="hint">Optional</span></label>
+              <textarea id="cover_letter" name="cover_letter" placeholder="Briefly explain why this manuscript is suited to Economic and Regional Policy Interactions, any declarations of interest, and any other information for the editors." maxlength="3000"></textarea>
+            </div>
+
+            <div class="submit-row">
+              <button type="submit" class="btn btn-primary submit-btn" id="submit-btn">Submit Manuscript</button>
+              <span class="submit-note">You will receive a confirmation with your submission reference.</span>
+            </div>
+          </form>
+        </div>
+
+        <!-- SUCCESS PANEL (shown after submission) -->
+        <div class="form-card success-panel" id="success-panel">
+          <div class="big-check">&#9989;</div>
+          <h2>Submission Received</h2>
+          <p>Thank you for submitting to <em>Economic and Regional Policy Interactions</em>. The editorial office will be in touch within 5–10 business days.</p>
+          <a href="journal.html" class="btn btn-ghost">Return to Journal</a>
+          <div class="ref" id="submission-ref"></div>
+        </div>
+      </div>
+
+      <!-- SIDEBAR -->
+      <aside class="sidebar">
+        <div class="info-card">
+          <div class="kicker" style="margin-bottom:10px;">Before You Submit</div>
+          <h3>Preparation checklist</h3>
+          <ul class="checklist">
+            <li>Manuscript is anonymised for double-blind review</li>
+            <li>Abstract is 250–350 words</li>
+            <li>All figures and tables are included</li>
+            <li>References follow APA 7th or Chicago author-date</li>
+            <li>Declarations of interest are included in the cover letter</li>
+            <li>File is PDF or DOCX, under 25 MB</li>
+          </ul>
+        </div>
+
+        <div class="info-card">
+          <h3>Review Process</h3>
+          <ul style="padding-left:18px;margin:8px 0 0;">
+            <li>Double-anonymized peer review</li>
+            <li>Initial editorial decision: 5–10 business days</li>
+            <li>Full review: typically 6–10 weeks</li>
+            <li>Authors are notified at every stage</li>
+          </ul>
+        </div>
+
+        <div class="info-card">
+          <h3>Open Access</h3>
+          <p>All accepted articles are published open access at no charge to authors at launch. No article processing charges (APCs) apply for this inaugural period.</p>
+        </div>
+
+        <div class="info-card">
+          <h3>Questions?</h3>
+          <p>Contact the editorial office at<br>
+          <a class="contact-link" href="mailto:editors@serpi-journal.org">editors@serpi-journal.org</a></p>
+        </div>
+      </aside>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="own">
+      <strong>Economic &amp; Regional Policy Interactions</strong><br>
+      A journal of the Society for Economic and Regional Policy Interactions.
+    </div>
+    <div class="footnote">
+      &copy; 2026 Society for Economic and Regional Policy Interactions. All rights reserved.
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  const form = document.getElementById('submission-form');
+  const formCard = document.getElementById('submission-form-card');
+  const successPanel = document.getElementById('success-panel');
+  const submitBtn = document.getElementById('submit-btn');
+  const alertError = document.getElementById('alert-error');
+  const alertErrorText = document.getElementById('alert-error-text');
+  const alertSuccess = document.getElementById('alert-success');
+  const alertSuccessText = document.getElementById('alert-success-text');
+  const fileInput = document.getElementById('manuscript');
+  const fileZone = document.getElementById('file-zone');
+  const fileChosen = document.getElementById('file-chosen');
+  const fcName = document.getElementById('fc-name');
+  const fcSize = document.getElementById('fc-size');
+  const fcRemove = document.getElementById('fc-remove');
+  const submissionRef = document.getElementById('submission-ref');
+
+  function formatBytes(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+  }
+
+  function showFile(file) {
+    fcName.textContent = file.name;
+    fcSize.textContent = formatBytes(file.size);
+    fileChosen.style.display = 'flex';
+    fileZone.style.display = 'none';
+  }
+
+  function clearFile() {
+    fileInput.value = '';
+    fileChosen.style.display = 'none';
+    fileZone.style.display = 'block';
+  }
+
+  fileInput.addEventListener('change', function () {
+    if (this.files && this.files[0]) showFile(this.files[0]);
+  });
+
+  fcRemove.addEventListener('click', clearFile);
+
+  fileZone.addEventListener('dragover', function (e) {
+    e.preventDefault();
+    this.classList.add('drag-over');
+  });
+  fileZone.addEventListener('dragleave', function () {
+    this.classList.remove('drag-over');
+  });
+  fileZone.addEventListener('drop', function (e) {
+    e.preventDefault();
+    this.classList.remove('drag-over');
+    const files = e.dataTransfer.files;
+    if (files && files[0]) {
+      const dt = new DataTransfer();
+      dt.items.add(files[0]);
+      fileInput.files = dt.files;
+      showFile(files[0]);
+    }
+  });
+
+  function showError(msg) {
+    alertErrorText.textContent = msg;
+    alertError.classList.add('show');
+    alertSuccess.classList.remove('show');
+    alertError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  function hideAlerts() {
+    alertError.classList.remove('show');
+    alertSuccess.classList.remove('show');
+  }
+
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault();
+    hideAlerts();
+
+    const title = form.title.value.trim();
+    const authors = form.authors.value.trim();
+    const abstract = form.abstract.value.trim();
+    const submitterName = form.submitter_name.value.trim();
+    const submitterEmail = form.submitter_email.value.trim();
+    const file = fileInput.files && fileInput.files[0];
+
+    if (!title) return showError('Please enter the manuscript title.');
+    if (!authors) return showError('Please enter the author names.');
+    if (!abstract) return showError('Please provide an abstract.');
+    if (!submitterName) return showError('Please enter the corresponding author\'s name.');
+    if (!submitterEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(submitterEmail)) return showError('Please enter a valid email address.');
+    if (!file) return showError('Please upload your manuscript file (PDF or DOCX).');
+    if (file.size > 25 * 1024 * 1024) return showError('The file exceeds the 25 MB limit. Please compress your manuscript and try again.');
+
+    submitBtn.classList.add('loading');
+    submitBtn.innerHTML = '<span class="spinner"></span>Submitting…';
+
+    try {
+      const fd = new FormData(form);
+      const res = await fetch('/api/submit-paper', { method: 'POST', body: fd });
+      const data = await res.json();
+
+      if (!res.ok) {
+        showError(data.error || 'Submission failed. Please try again.');
+        return;
+      }
+
+      formCard.style.display = 'none';
+      successPanel.style.display = 'block';
+      if (data.submissionId) {
+        submissionRef.textContent = 'Submission reference: ERPI-' + String(data.submissionId).padStart(5, '0');
+      }
+    } catch (err) {
+      showError('A network error occurred. Please check your connection and try again.');
+    } finally {
+      submitBtn.classList.remove('loading');
+      submitBtn.innerHTML = 'Submit Manuscript';
+    }
+  });
+})();
+</script>
+</body>
+</html>
