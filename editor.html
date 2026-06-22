@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Editorial Console — Economic and Regional Policy Interactions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pine:#22433A; --pine-deep:#15302A; --brass:#9A7B3C; --brass-soft:#B79A5E;
+    --text:#1C1F1B; --muted:#5E635B; --paper:#ffffff; --panel:#F4F5F1; --panel-2:#ECEEE6;
+    --line:#DCDDD3; --maxw:1280px; --error:#B02020; --success:#1E5C2E;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--panel);color:var(--text);font-family:"Source Sans 3",system-ui,sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;}
+  a{color:var(--pine);}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px;}
+  h1,h2,h3{font-family:"Spectral",Georgia,serif;font-weight:500;line-height:1.16;color:var(--pine);margin:0;}
+  .kicker{font-family:"Source Sans 3",sans-serif;font-size:.72rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--brass);margin-bottom:10px;}
+
+  .btn{display:inline-block;font-family:"Source Sans 3";font-size:.85rem;font-weight:600;letter-spacing:.02em;text-decoration:none;padding:11px 22px;border:1px solid var(--pine);border-radius:1px;transition:.18s;cursor:pointer;background:transparent;color:var(--pine);}
+  .btn-primary{background:var(--pine);color:#fff;}
+  .btn-primary:hover{background:var(--pine-deep);border-color:var(--pine-deep);}
+  .btn:disabled{opacity:.55;cursor:not-allowed;}
+
+  /* top bar */
+  .topbar{border-bottom:1px solid var(--line);background:#fff;position:sticky;top:0;z-index:40;}
+  .topbar .wrap{display:flex;align-items:center;justify-content:space-between;height:68px;gap:24px;}
+  .brandline{display:flex;flex-direction:column;line-height:1.12;}
+  .brandline .pub{font-size:.6rem;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);}
+  .brandline .jt{font-family:"Spectral",serif;font-weight:500;font-size:1.05rem;color:var(--pine);}
+  .topbar .right{display:flex;align-items:center;gap:18px;}
+  .topbar .who{font-size:.82rem;color:var(--muted);}
+
+  /* login gate */
+  .gate{position:fixed;inset:0;background:linear-gradient(160deg,#1b3c33,#15302a);display:flex;align-items:center;justify-content:center;padding:24px;z-index:100;}
+  .gate-card{background:#fff;border-radius:3px;border-top:4px solid var(--brass);max-width:420px;width:100%;padding:38px 34px;box-shadow:0 24px 60px rgba(0,0,0,.35);}
+  .gate-card .kicker{margin-bottom:8px;}
+  .gate-card h1{font-size:1.5rem;margin-bottom:6px;}
+  .gate-card p{font-size:.9rem;color:var(--muted);margin:0 0 22px;}
+  .gate-card label{display:block;font-size:.8rem;font-weight:600;color:var(--pine);margin-bottom:6px;}
+  .gate-card input{width:100%;padding:12px 13px;font-family:"Source Sans 3";font-size:.95rem;border:1px solid var(--line);border-radius:2px;outline:none;}
+  .gate-card input:focus{border-color:var(--pine);box-shadow:0 0 0 3px rgba(34,67,58,.12);}
+  .gate-card .btn{width:100%;text-align:center;margin-top:18px;}
+  .gate-err{display:none;margin-top:14px;font-size:.86rem;color:var(--error);}
+  .gate-err.show{display:block;}
+
+  /* page header */
+  .page-header{padding:34px 0 26px;}
+  .page-header h1{font-size:clamp(1.6rem,3vw,2.2rem);margin-bottom:4px;}
+  .page-header .sub{font-family:"Spectral",serif;font-style:italic;color:var(--brass);}
+  .toolbar{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:18px;}
+  .toolbar .count{font-size:.85rem;color:var(--muted);}
+  .toolbar .search{flex:1;min-width:200px;max-width:340px;padding:9px 12px;border:1px solid var(--line);border-radius:2px;font-family:"Source Sans 3";font-size:.9rem;outline:none;background:#fff;}
+  .toolbar .search:focus{border-color:var(--pine);box-shadow:0 0 0 3px rgba(34,67,58,.1);}
+
+  /* table */
+  .table-wrap{background:#fff;border:1px solid var(--line);border-radius:3px;overflow-x:auto;margin-bottom:60px;}
+  table{width:100%;border-collapse:collapse;min-width:1040px;}
+  thead th{font-size:.66rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:left;padding:14px 16px;border-bottom:2px solid var(--line);background:var(--panel);white-space:nowrap;position:sticky;top:0;}
+  tbody td{padding:15px 16px;border-bottom:1px solid var(--line);vertical-align:top;font-size:.9rem;}
+  tbody tr:last-child td{border-bottom:0;}
+  tbody tr:hover{background:#fafaf7;}
+  .c-date{white-space:nowrap;color:var(--muted);font-size:.84rem;}
+  .c-title{font-weight:600;color:var(--pine);max-width:280px;}
+  .c-title .abs-id{display:block;font-size:.72rem;font-weight:600;color:var(--brass);letter-spacing:.05em;margin-top:3px;}
+  .c-authors{max-width:200px;color:#3a3f37;}
+  .c-corr .nm{font-weight:600;}
+  .c-corr a{font-size:.84rem;color:var(--pine);word-break:break-all;}
+  .c-inst{max-width:180px;color:#3a3f37;font-size:.86rem;}
+  .type-tag{display:inline-block;font-size:.7rem;font-weight:600;letter-spacing:.04em;text-transform:capitalize;padding:3px 9px;border:1px solid var(--line);border-radius:1px;color:var(--pine);background:var(--panel);white-space:nowrap;}
+  select.status{font-family:"Source Sans 3";font-size:.84rem;padding:7px 9px;border:1px solid var(--line);border-radius:2px;background:#fff;color:var(--text);cursor:pointer;min-width:160px;}
+  select.status:focus{outline:none;border-color:var(--pine);box-shadow:0 0 0 3px rgba(34,67,58,.1);}
+  select.status[data-state="saving"]{opacity:.6;}
+  select.status[data-state="saved"]{border-color:var(--success);}
+  .status-note{display:block;font-size:.72rem;margin-top:4px;min-height:14px;}
+  .status-note.ok{color:var(--success);}
+  .status-note.err{color:var(--error);}
+  .dl-btn{font-size:.8rem;padding:8px 14px;white-space:nowrap;}
+
+  .state-msg{padding:60px 24px;text-align:center;color:var(--muted);font-size:.95rem;}
+  .spinner{display:inline-block;width:15px;height:15px;border:2px solid rgba(34,67,58,.25);border-top-color:var(--pine);border-radius:50%;animation:spin .6s linear infinite;vertical-align:middle;margin-right:8px;}
+  .dl-btn .spinner{border-color:rgba(255,255,255,.4);border-top-color:#fff;width:12px;height:12px;margin-right:6px;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .hidden{display:none!important;}
+  :focus-visible{outline:2px solid var(--brass);outline-offset:2px;}
+</style>
+</head>
+<body>
+
+<!-- LOGIN GATE -->
+<div class="gate" id="gate">
+  <form class="gate-card" id="gate-form">
+    <div class="kicker">Editorial Console</div>
+    <h1>Restricted access</h1>
+    <p>Enter the editorial access token to view manuscript submissions. The token is kept only for this browser session.</p>
+    <label for="token">Access token</label>
+    <input type="password" id="token" autocomplete="off" autofocus placeholder="••••••••••••">
+    <button type="submit" class="btn btn-primary" id="gate-btn">Sign in</button>
+    <div class="gate-err" id="gate-err"></div>
+  </form>
+</div>
+
+<!-- APP -->
+<div id="app" class="hidden">
+  <header class="topbar">
+    <div class="wrap">
+      <div class="brandline">
+        <span class="pub">Economic &amp; Regional Policy Interactions</span>
+        <span class="jt">Editorial Console</span>
+      </div>
+      <div class="right">
+        <span class="who">Editorial session</span>
+        <button class="btn" id="signout">Sign out</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <div class="page-header">
+      <div class="kicker">Submissions</div>
+      <h1>Manuscript Submissions</h1>
+      <div class="sub">All received manuscripts and their review status.</div>
+      <div class="toolbar">
+        <span class="count" id="count">—</span>
+        <input class="search" id="search" type="search" placeholder="Filter by title, author, email…">
+        <button class="btn" id="refresh">Refresh</button>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Title</th>
+            <th>Authors</th>
+            <th>Type</th>
+            <th>Corresponding Author</th>
+            <th>Institution</th>
+            <th>Status</th>
+            <th>Manuscript</th>
+          </tr>
+        </thead>
+        <tbody id="rows">
+          <tr><td colspan="8"><div class="state-msg"><span class="spinner"></span>Loading submissions…</div></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  "use strict";
+  var TOKEN_KEY = "erpi_editor_token";
+
+  var STATUS_OPTIONS = [
+    ["submitted", "Submitted"],
+    ["with_editor", "With editor"],
+    ["under_review", "Under review"],
+    ["revisions_requested", "Revisions requested"],
+    ["accepted", "Accepted"],
+    ["rejected", "Rejected"],
+    ["withdrawn", "Withdrawn"]
+  ];
+  var STATUS_LABELS = {};
+  STATUS_OPTIONS.forEach(function (o) { STATUS_LABELS[o[0]] = o[1]; });
+
+  var gate = document.getElementById("gate");
+  var gateForm = document.getElementById("gate-form");
+  var gateBtn = document.getElementById("gate-btn");
+  var gateErr = document.getElementById("gate-err");
+  var tokenInput = document.getElementById("token");
+  var app = document.getElementById("app");
+  var rows = document.getElementById("rows");
+  var countEl = document.getElementById("count");
+  var searchEl = document.getElementById("search");
+
+  var allPapers = [];
+
+  function token() { return sessionStorage.getItem(TOKEN_KEY) || ""; }
+  function authHeaders() { return { "Authorization": "Bearer " + token() }; }
+
+  function esc(s) {
+    return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+
+  function fmtDate(iso) {
+    if (!iso) return "—";
+    var d = new Date(iso);
+    if (isNaN(d)) return "—";
+    return d.toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" });
+  }
+
+  function refId(id) { return "ERPI-" + String(id).padStart(5, "0"); }
+
+  function prettyType(t) {
+    if (!t) return "—";
+    return String(t).replace(/_/g, " ");
+  }
+
+  function showGate(msg) {
+    gate.classList.remove("hidden");
+    app.classList.add("hidden");
+    if (msg) { gateErr.textContent = msg; gateErr.classList.add("show"); }
+  }
+
+  function showApp() {
+    gate.classList.add("hidden");
+    app.classList.remove("hidden");
+  }
+
+  // ---- auth + load -------------------------------------------------------
+  async function loadPapers() {
+    rows.innerHTML = '<tr><td colspan="8"><div class="state-msg"><span class="spinner"></span>Loading submissions…</div></td></tr>';
+    var res;
+    try {
+      res = await fetch("/api/papers", { headers: authHeaders() });
+    } catch (e) {
+      rows.innerHTML = '<tr><td colspan="8"><div class="state-msg">Network error. Please try again.</div></td></tr>';
+      return false;
+    }
+    if (res.status === 401) {
+      sessionStorage.removeItem(TOKEN_KEY);
+      showGate("That token was not accepted. Please try again.");
+      return false;
+    }
+    if (!res.ok) {
+      rows.innerHTML = '<tr><td colspan="8"><div class="state-msg">Failed to load submissions (' + res.status + ').</div></td></tr>';
+      return false;
+    }
+    var data = await res.json();
+    allPapers = (data.papers || []);
+    render();
+    return true;
+  }
+
+  function render() {
+    var q = (searchEl.value || "").trim().toLowerCase();
+    var list = allPapers;
+    if (q) {
+      list = allPapers.filter(function (p) {
+        return [p.title, p.authors, p.submitterName, p.submitterEmail, p.institution, refId(p.id)]
+          .map(function (v) { return String(v || "").toLowerCase(); })
+          .join(" ").indexOf(q) !== -1;
+      });
+    }
+
+    countEl.textContent = list.length + (list.length === 1 ? " submission" : " submissions") +
+      (q ? " (filtered from " + allPapers.length + ")" : "");
+
+    if (!list.length) {
+      rows.innerHTML = '<tr><td colspan="8"><div class="state-msg">' +
+        (allPapers.length ? "No submissions match your filter." : "No submissions yet.") + '</div></td></tr>';
+      return;
+    }
+
+    rows.innerHTML = list.map(function (p) {
+      var opts = STATUS_OPTIONS.map(function (o) {
+        return '<option value="' + o[0] + '"' + (o[0] === p.status ? " selected" : "") + '>' + esc(o[1]) + "</option>";
+      }).join("");
+
+      return '<tr>' +
+        '<td class="c-date">' + esc(fmtDate(p.submittedAt)) + '</td>' +
+        '<td class="c-title">' + esc(p.title) + '<span class="abs-id">' + esc(refId(p.id)) + '</span></td>' +
+        '<td class="c-authors">' + esc(p.authors) + '</td>' +
+        '<td><span class="type-tag">' + esc(prettyType(p.paperType)) + '</span></td>' +
+        '<td class="c-corr"><span class="nm">' + esc(p.submitterName) + '</span><br>' +
+          '<a href="mailto:' + esc(p.submitterEmail) + '">' + esc(p.submitterEmail) + '</a></td>' +
+        '<td class="c-inst">' + esc(p.institution || "—") + '</td>' +
+        '<td><select class="status" data-id="' + p.id + '">' + opts + '</select>' +
+          '<span class="status-note" data-note="' + p.id + '"></span></td>' +
+        '<td><button class="btn btn-primary dl-btn" data-dl="' + p.id + '" data-name="' + esc(p.fileName || "") + '">Download</button></td>' +
+      '</tr>';
+    }).join("");
+  }
+
+  // ---- status update -----------------------------------------------------
+  async function updateStatus(sel) {
+    var id = sel.getAttribute("data-id");
+    var status = sel.value;
+    var note = document.querySelector('[data-note="' + id + '"]');
+    sel.setAttribute("data-state", "saving");
+    if (note) { note.textContent = "Saving…"; note.className = "status-note"; }
+
+    try {
+      var res = await fetch("/api/papers", {
+        method: "PATCH",
+        headers: Object.assign({ "Content-Type": "application/json" }, authHeaders()),
+        body: JSON.stringify({ id: Number(id), status: status })
+      });
+      if (res.status === 401) { sessionStorage.removeItem(TOKEN_KEY); showGate("Session expired. Please sign in again."); return; }
+      if (!res.ok) {
+        var err = await res.json().catch(function () { return {}; });
+        throw new Error(err.error || ("HTTP " + res.status));
+      }
+      // keep local cache in sync
+      var p = allPapers.filter(function (x) { return String(x.id) === String(id); })[0];
+      if (p) p.status = status;
+      sel.setAttribute("data-state", "saved");
+      if (note) { note.textContent = "Saved " + (STATUS_LABELS[status] || status); note.className = "status-note ok"; }
+      setTimeout(function () { sel.removeAttribute("data-state"); if (note) note.textContent = ""; }, 2500);
+    } catch (e) {
+      sel.removeAttribute("data-state");
+      if (note) { note.textContent = "Could not save: " + e.message; note.className = "status-note err"; }
+    }
+  }
+
+  // ---- download (streams blob with auth header) --------------------------
+  async function download(btn) {
+    var id = btn.getAttribute("data-dl");
+    var name = btn.getAttribute("data-name") || ("manuscript-" + id);
+    var original = btn.innerHTML;
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner"></span>…';
+    try {
+      var res = await fetch("/api/download?id=" + encodeURIComponent(id), { headers: authHeaders() });
+      if (res.status === 401) { sessionStorage.removeItem(TOKEN_KEY); showGate("Session expired. Please sign in again."); return; }
+      if (!res.ok) {
+        var err = await res.json().catch(function () { return {}; });
+        alert("Download failed: " + (err.error || ("HTTP " + res.status)));
+        return;
+      }
+      var blob = await res.blob();
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement("a");
+      a.href = url; a.download = name;
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(function () { URL.revokeObjectURL(url); }, 4000);
+    } catch (e) {
+      alert("Download failed: " + e.message);
+    } finally {
+      btn.disabled = false;
+      btn.innerHTML = original;
+    }
+  }
+
+  // ---- events ------------------------------------------------------------
+  rows.addEventListener("change", function (e) {
+    if (e.target && e.target.classList.contains("status")) updateStatus(e.target);
+  });
+  rows.addEventListener("click", function (e) {
+    var btn = e.target.closest ? e.target.closest("[data-dl]") : null;
+    if (btn) download(btn);
+  });
+  searchEl.addEventListener("input", render);
+  document.getElementById("refresh").addEventListener("click", loadPapers);
+
+  document.getElementById("signout").addEventListener("click", function () {
+    sessionStorage.removeItem(TOKEN_KEY);
+    allPapers = [];
+    showGate();
+    tokenInput.value = "";
+  });
+
+  gateForm.addEventListener("submit", async function (e) {
+    e.preventDefault();
+    gateErr.classList.remove("show");
+    var val = tokenInput.value.trim();
+    if (!val) { gateErr.textContent = "Please enter the access token."; gateErr.classList.add("show"); return; }
+    gateBtn.disabled = true;
+    gateBtn.innerHTML = '<span class="spinner"></span>Verifying…';
+    sessionStorage.setItem(TOKEN_KEY, val);
+    var ok = await loadPapers();
+    gateBtn.disabled = false;
+    gateBtn.innerHTML = "Sign in";
+    if (ok) showApp();
+  });
+
+  // ---- boot --------------------------------------------------------------
+  (async function () {
+    if (token()) {
+      var ok = await loadPapers();
+      if (ok) showApp(); else showGate();
+    } else {
+      showGate();
+    }
+  })();
+})();
+</script>
+</body>
+</html>

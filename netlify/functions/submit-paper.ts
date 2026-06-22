@@ -2,6 +2,7 @@ import type { Config } from "@netlify/functions";
 import { getStore } from "@netlify/blobs";
 import { db } from "../../db/index.js";
 import { papers } from "../../db/schema.js";
+import { notifyNewSubmission, referenceId } from "../lib/email.js";
 
 const ALLOWED_TYPES: Record<string, string> = {
   "application/pdf": "pdf",
@@ -91,13 +92,27 @@ export default async (req: Request): Promise<Response> => {
       })
       .returning();
 
+    // Notify the editorial office and confirm receipt to the corresponding
+    // author. Best-effort: never block or fail the submission on email.
+    await notifyNewSubmission({
+      id: paper.id,
+      title: paper.title,
+      authors: paper.authors,
+      paperType: paper.paperType,
+      submitterName: paper.submitterName,
+      submitterEmail: paper.submitterEmail,
+      institution: paper.institution,
+    });
+
+    // Deliberately do NOT echo back any title/name/email here — only the
+    // submitter's own reference. Privileged fields are exposed solely via the
+    // token-protected editorial endpoints.
     return Response.json(
       {
         success: true,
         message: "Manuscript submitted successfully",
         submissionId: paper.id,
-        title: paper.title,
-        submittedAt: paper.submittedAt,
+        reference: referenceId(paper.id),
       },
       { status: 201 }
     );

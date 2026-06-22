@@ -1,1 +1,6 @@
+# Clean URLs for app pages (must precede the catch-all below)
+/editor              /editor.html              200
+/guide-for-authors   /guide-for-authors.html   200
+
+# Canonical domain
 /*    https://serpi-journals.netlify.app/:splat    302

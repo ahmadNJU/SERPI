@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guide for Authors — Economic and Regional Policy Interactions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pine:#22433A; --pine-deep:#15302A; --brass:#9A7B3C; --brass-soft:#B79A5E;
+    --text:#1C1F1B; --muted:#5E635B; --paper:#ffffff; --panel:#F4F5F1; --panel-2:#ECEEE6;
+    --line:#DCDDD3; --maxw:1140px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--text);font-family:"Source Sans 3",system-ui,sans-serif;font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased;}
+  a{color:var(--pine);}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 32px;}
+  h1,h2,h3,h4{font-family:"Spectral",Georgia,serif;font-weight:500;line-height:1.16;color:var(--pine);margin:0;}
+  .kicker{font-family:"Source Sans 3",sans-serif;font-size:.74rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--brass);margin-bottom:14px;}
+  .rule{width:46px;height:2px;background:var(--brass);border:0;margin:18px 0 26px;}
+  .ph{color:var(--brass);font-style:italic;font-size:.92em;}
+
+  .btn{display:inline-block;font-family:"Source Sans 3";font-size:.86rem;font-weight:600;letter-spacing:.02em;text-decoration:none;padding:12px 24px;border:1px solid var(--pine);border-radius:1px;transition:.18s;cursor:pointer;}
+  .btn-primary{background:var(--pine);color:#fff;}
+  .btn-primary:hover{background:var(--pine-deep);border-color:var(--pine-deep);}
+  .btn-ghost{background:transparent;color:var(--pine);}
+  .btn-ghost:hover{background:var(--pine);color:#fff;}
+
+  /* top bar */
+  .topbar{border-bottom:1px solid var(--line);background:#fff;position:sticky;top:0;z-index:50;}
+  .topbar .wrap{display:flex;align-items:center;justify-content:space-between;height:70px;gap:24px;}
+  .brandline{display:flex;flex-direction:column;line-height:1.12;}
+  .brandline .pub{font-size:.62rem;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);}
+  .brandline .jt{font-family:"Spectral",serif;font-weight:500;font-size:1.08rem;color:var(--pine);}
+  nav.main{display:flex;gap:24px;align-items:center;}
+  nav.main a{font-size:.85rem;font-weight:500;text-decoration:none;color:var(--text);}
+  nav.main a:hover{color:var(--brass);}
+  .menu-toggle{display:none;background:none;border:0;font-size:1.5rem;color:var(--pine);cursor:pointer;}
+
+  /* page header */
+  .page-header{background:linear-gradient(#fff,#fbfbf9);border-bottom:1px solid var(--line);padding:60px 0 48px;}
+  .page-header h1{font-size:clamp(1.9rem,3.8vw,2.8rem);margin-bottom:10px;}
+  .page-header .sub{font-family:"Spectral",serif;font-style:italic;font-size:1.15rem;color:var(--brass);}
+
+  /* layout */
+  .layout{display:grid;grid-template-columns:240px 1fr;gap:54px;align-items:start;padding:56px 0 80px;}
+  .toc{position:sticky;top:92px;}
+  .toc .tl{font-size:.66rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin-bottom:14px;}
+  .toc a{display:block;font-size:.9rem;color:#3a3f37;text-decoration:none;padding:7px 0;border-top:1px solid var(--line);}
+  .toc a:first-of-type{border-top:0;}
+  .toc a:hover{color:var(--brass);}
+
+  .content section{margin-bottom:48px;scroll-margin-top:92px;}
+  .content h2{font-size:1.5rem;margin-bottom:8px;}
+  .content h3{font-size:1.12rem;margin:24px 0 8px;}
+  .content p{margin:0 0 14px;color:#34382f;}
+  .content ul,.content ol{margin:8px 0 16px;padding-left:22px;}
+  .content li{margin-bottom:8px;color:#34382f;}
+  .content .lead-note{border-left:3px solid var(--brass);background:var(--panel);padding:16px 20px;font-size:.95rem;color:#34382f;margin:0 0 16px;}
+  .content table{width:100%;border-collapse:collapse;margin:10px 0 18px;font-size:.92rem;}
+  .content th,.content td{text-align:left;padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top;}
+  .content th{font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);}
+  .content code{background:var(--panel-2);padding:1px 6px;border-radius:2px;font-size:.88em;}
+  .checklist{list-style:none;padding:0;margin:8px 0 0;}
+  .checklist li{padding:9px 0;border-bottom:1px solid var(--line);padding-left:24px;position:relative;}
+  .checklist li:last-child{border-bottom:0;}
+  .checklist li::before{content:"\2713";position:absolute;left:0;color:var(--pine);font-weight:700;}
+  .cta-row{margin-top:28px;display:flex;gap:12px;flex-wrap:wrap;}
+
+  /* footer */
+  footer{background:var(--pine-deep);color:#c4cdc4;padding:54px 0 28px;}
+  footer .grid{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:44px;}
+  footer h4{font-size:.66rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--brass-soft);margin:0 0 16px;font-family:"Source Sans 3",sans-serif;}
+  footer a{color:#c4cdc4;text-decoration:none;display:block;margin-bottom:9px;font-size:.92rem;}
+  footer a:hover{color:#fff;}
+  footer .own{font-size:.92rem;line-height:1.7;color:#aab4aa;}
+  footer .own strong{color:#fff;font-family:"Spectral",serif;font-weight:500;font-size:1.05rem;}
+  .footnote{border-top:1px solid rgba(255,255,255,.13);margin-top:40px;padding-top:20px;font-size:.8rem;color:#8d978d;}
+
+  @media (max-width:880px){
+    .layout{grid-template-columns:1fr;gap:24px;}
+    .toc{position:static;display:none;}
+    footer .grid{grid-template-columns:1fr;}
+    nav.main{display:none;position:absolute;top:70px;left:0;right:0;background:#fff;flex-direction:column;align-items:flex-start;padding:20px 32px;border-bottom:1px solid var(--line);gap:18px;}
+    nav.main.open{display:flex;}
+    .menu-toggle{display:block;}
+  }
+  @media (max-width:560px){.wrap{padding:0 18px;}}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;}}
+  :focus-visible{outline:2px solid var(--brass);outline-offset:3px;}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<header class="topbar">
+  <div class="wrap">
+    <div class="brandline">
+      <a class="pub" href="index.html" style="text-decoration:none;">Society for Economic &amp; Regional Policy Interactions</a>
+      <a class="jt" href="journal.html" style="text-decoration:none;">Economic &amp; Regional Policy Interactions</a>
+    </div>
+    <button class="menu-toggle" aria-label="Toggle menu" onclick="document.getElementById('nav').classList.toggle('open')">&#9776;</button>
+    <nav class="main" id="nav">
+      <a href="journal.html#scope">Aims &amp; Scope</a>
+      <a href="journal.html#editorial">Editorial Board</a>
+      <a href="journal.html#ethics">Ethics &amp; Review</a>
+      <a href="guide-for-authors.html">Guide for Authors</a>
+      <a class="btn btn-primary" href="submit.html">Submit</a>
+    </nav>
+  </div>
+</header>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="wrap">
+    <div class="kicker">For Authors</div>
+    <h1>Guide for Authors</h1>
+    <div class="sub">Economic and Regional Policy Interactions</div>
+  </div>
+</div>
+
+<!-- BODY -->
+<div class="wrap">
+  <div class="layout">
+
+    <!-- TOC -->
+    <aside class="toc">
+      <div class="tl">On this page</div>
+      <a href="#about">About the journal</a>
+      <a href="#scope">Aims &amp; scope</a>
+      <a href="#types">Types of paper</a>
+      <a href="#before">Before you begin</a>
+      <a href="#ethics">Ethics in publishing</a>
+      <a href="#preparation">Preparation</a>
+      <a href="#structure">Manuscript structure</a>
+      <a href="#references">References</a>
+      <a href="#submission">Submission</a>
+      <a href="#afteracceptance">After acceptance</a>
+      <a href="#checklist">Submission checklist</a>
+    </aside>
+
+    <!-- CONTENT -->
+    <div class="content">
+
+      <section id="about">
+        <h2>About the journal</h2>
+        <hr class="rule">
+        <p><em>Economic and Regional Policy Interactions</em> is a peer-reviewed, open-access journal that publishes theoretical and empirical research, and review articles, building bridges between the pillars of modern economics and regional economics. The journal is owned and governed by the Society for Economic and Regional Policy Interactions.</p>
+        <p>The journal serves scholars, practitioners and policymakers who use the principles of <em>both</em> disciplines to answer policy-relevant questions. Authors should refer to the Aims and Scope of the journal before deciding whether to submit a manuscript.</p>
+      </section>
+
+      <section id="scope">
+        <h2>Aims and scope</h2>
+        <hr class="rule">
+        <p>The journal welcomes contributions that connect macroeconomic theory, spatial and regional analysis, and applied policy. In every paper, a meaningful balance between the description of the technique of analysis and the relevance of the policy implications is essential.</p>
+        <p>The analytical instruments proposed should, wherever possible, be empirically validated on the basis of replicable data, and should take into account the interdependence of economic phenomena over time, across countries, and across sectors and regions. We particularly encourage work on:</p>
+        <ul>
+          <li>Regional dimensions of macroeconomic and development policy;</li>
+          <li>Spatial economics, agglomeration, and regional disparities;</li>
+          <li>Trade, migration, and inter-regional spillovers;</li>
+          <li>Fiscal, monetary, and structural policy across regions;</li>
+          <li>Empirical evaluation of place-based and regional interventions.</li>
+        </ul>
+        <p class="lead-note"><strong>Scope is illustrative</strong> and will be finalised with the editorial board. If you are unsure whether your work falls within scope, contact the editorial office before submitting.</p>
+      </section>
+
+      <section id="types">
+        <h2>Types of paper</h2>
+        <hr class="rule">
+        <table>
+          <thead><tr><th>Type</th><th>Description</th><th>Indicative length</th></tr></thead>
+          <tbody>
+            <tr><td>Research Article</td><td>Original theoretical or empirical research with clear policy relevance.</td><td>6,000–10,000 words</td></tr>
+            <tr><td>Review Article</td><td>Critical synthesis of a literature that advances understanding and frames open questions.</td><td>8,000–12,000 words</td></tr>
+            <tr><td>Short Communication</td><td>A concise, self-contained result or methodological note.</td><td>up to 4,000 words</td></tr>
+            <tr><td>Policy Brief</td><td>An evidence-based assessment of a policy question for a wider readership.</td><td>2,500–4,000 words</td></tr>
+            <tr><td>Comment / Reply</td><td>A substantive response to a paper previously published in the journal.</td><td>up to 3,000 words</td></tr>
+          </tbody>
+        </table>
+        <p>Word counts exclude the abstract, references, tables and figures, and are indicative rather than absolute. Where a manuscript departs substantially from these ranges, please explain why in your cover letter.</p>
+      </section>
+
+      <section id="before">
+        <h2>Before you begin</h2>
+        <hr class="rule">
+        <h3>Originality and concurrent submission</h3>
+        <p>Submission of a manuscript implies that the work described has not been published previously (except as an abstract, a published lecture, or a working paper), that it is not under consideration for publication elsewhere, and that its publication is approved by all authors and, tacitly or explicitly, by the responsible authorities where the work was carried out.</p>
+        <h3>Authorship</h3>
+        <p>All persons designated as authors should qualify for authorship, and all those who qualify should be listed. Each author should have participated sufficiently in the work to take public responsibility for the content. The corresponding author is responsible for ensuring that all named authors approve the submitted version.</p>
+        <h3>Declaration of competing interests</h3>
+        <p>All authors must disclose any financial and personal relationships with other people or organisations that could inappropriately influence (bias) their work. If there are none, please state so explicitly in the cover letter.</p>
+        <h3>Use of generative AI</h3>
+        <p>Authors must disclose any use of generative AI and AI-assisted technologies in the writing process. AI tools must not be listed as an author or co-author. Authors are fully responsible for the content of their manuscript, including any portion produced with the assistance of such tools.</p>
+      </section>
+
+      <section id="ethics">
+        <h2>Ethics in publishing</h2>
+        <hr class="rule">
+        <p>The journal follows the principles of the Committee on Publication Ethics (COPE). A public Publication Ethics and Malpractice Statement covers authorship, competing interests, corrections, retractions, and complaints.</p>
+        <p>All manuscripts are screened with recognised similarity-detection software before review. Submissions are evaluated through <strong>double-anonymized peer review</strong>: each manuscript is first screened editorially and then, if suitable, sent to at least two independent expert reviewers, with author and reviewer identities mutually concealed.</p>
+      </section>
+
+      <section id="preparation">
+        <h2>Preparation</h2>
+        <hr class="rule">
+        <h3>File format</h3>
+        <p>Manuscripts may be submitted as PDF or Microsoft Word (DOCX) files, up to 25&nbsp;MB. Use a single column layout, 1.5 or double line spacing, a legible 11–12&nbsp;pt serif font, and continuous line numbering to assist reviewers.</p>
+        <h3>Anonymisation</h3>
+        <p>Because review is double-anonymized, the manuscript file must not contain author names, affiliations, acknowledgements, or self-identifying references. Provide all identifying information through the submission form and cover letter only.</p>
+        <h3>Language</h3>
+        <p>Manuscripts must be written in clear, scholarly English. Authors who are not confident in their written English are encouraged to have the manuscript edited before submission.</p>
+      </section>
+
+      <section id="structure">
+        <h2>Manuscript structure</h2>
+        <hr class="rule">
+        <ol>
+          <li><strong>Title.</strong> Concise and informative; avoid abbreviations and formulae where possible.</li>
+          <li><strong>Abstract.</strong> A self-contained summary of 250–350 words stating the question, the method, the principal results, and the policy implications.</li>
+          <li><strong>Keywords and JEL codes.</strong> Provide up to six keywords and the relevant JEL classification codes.</li>
+          <li><strong>Introduction.</strong> State the objectives and provide adequate background, avoiding a detailed literature survey.</li>
+          <li><strong>Methods / model.</strong> Describe the technique of analysis in sufficient detail to allow the work to be reproduced.</li>
+          <li><strong>Data.</strong> Identify the data sources and, wherever possible, make replicable data and code available.</li>
+          <li><strong>Results.</strong> Present results clearly and concisely.</li>
+          <li><strong>Discussion and policy implications.</strong> Draw out the relevance of the findings for policy, maintaining the balance between technique and implication.</li>
+          <li><strong>Conclusions.</strong> The main conclusions may be presented in a short standalone section.</li>
+          <li><strong>References.</strong> See below.</li>
+        </ol>
+        <p>Tables and figures should be numbered consecutively, cited in the text, and supplied with concise, self-explanatory captions.</p>
+      </section>
+
+      <section id="references">
+        <h2>References</h2>
+        <hr class="rule">
+        <p>References should follow the <strong>APA 7th edition</strong> or <strong>Chicago author–date</strong> style, applied consistently throughout. Ensure that every reference cited in the text is present in the reference list and vice versa. Where available, include DOIs.</p>
+        <p>Examples (author–date):</p>
+        <ul>
+          <li>Krugman, P. (1991). Increasing returns and economic geography. <em>Journal of Political Economy</em>, 99(3), 483–499.</li>
+          <li>Barro, R. J., &amp; Sala-i-Martin, X. (2004). <em>Economic growth</em> (2nd ed.). MIT Press.</li>
+        </ul>
+      </section>
+
+      <section id="submission">
+        <h2>Submission</h2>
+        <hr class="rule">
+        <p>All manuscripts are submitted online through the journal's submission system. There is no need to post a hard copy. On submission you will provide the manuscript file together with the title, author list, manuscript type, abstract, keywords, and the corresponding author's name, email and institution.</p>
+        <p>The corresponding author's email is used solely by the editorial office to acknowledge receipt and to manage the review process; it is never displayed publicly. On submission you will receive an automatic confirmation containing a unique reference of the form <code>ERPI-00001</code> — please quote it in all correspondence.</p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="submit.html">Submit a manuscript</a>
+          <a class="btn btn-ghost" href="journal.html#ethics">Read the ethics policy</a>
+        </div>
+      </section>
+
+      <section id="afteracceptance">
+        <h2>After acceptance</h2>
+        <hr class="rule">
+        <p>Upon acceptance of an article, the author(s) will be asked to complete a publishing agreement with the Society. Articles are published open access under a <strong>CC BY 4.0</strong> licence, allowing reuse with attribution; authors retain copyright in their work. No article processing charges (APCs) apply during the journal's inaugural period.</p>
+        <p>Accepted articles are copy-edited and typeset, assigned a permanent DOI, and accompanied by complete metadata, an English abstract, and JEL codes to maximise discoverability. The corresponding author will receive proofs for a final check before publication.</p>
+      </section>
+
+      <section id="checklist">
+        <h2>Submission checklist</h2>
+        <hr class="rule">
+        <p>Before submitting, confirm that:</p>
+        <ul class="checklist">
+          <li>One author has been designated as corresponding author, with a valid email address and institution.</li>
+          <li>The manuscript is anonymised for double-anonymized review.</li>
+          <li>The abstract is 250–350 words, with up to six keywords and JEL codes.</li>
+          <li>All figures and tables are included and captioned.</li>
+          <li>References follow APA 7th or Chicago author–date consistently.</li>
+          <li>Declarations of competing interests and any use of generative AI are stated in the cover letter.</li>
+          <li>The file is a PDF or DOCX under 25&nbsp;MB.</li>
+        </ul>
+      </section>
+
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="grid">
+      <div>
+        <h4>Published by</h4>
+        <p class="own"><strong><a href="index.html" style="color:#fff;text-decoration:none;">Society for Economic and Regional Policy Interactions</a></strong><br>
+        The Society owns and governs this journal, sets its policies, and safeguards its editorial independence and continuity.</p>
+      </div>
+      <div>
+        <h4>For Authors</h4>
+        <a href="guide-for-authors.html">Guide for Authors</a>
+        <a href="journal.html#ethics">Ethics &amp; Peer Review</a>
+        <a href="journal.html#scope">Aims &amp; Scope</a>
+        <a href="submit.html">Submit a manuscript</a>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <a href="mailto:editors@serpi-journal.org">editors@serpi-journal.org</a>
+        <a href="journal.html">Journal home</a>
+        <a href="index.html">Society website</a>
+      </div>
+    </div>
+    <div class="footnote">
+      &copy; 2026 Society for Economic and Regional Policy Interactions. Articles published open access under CC BY 4.0.
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.querySelectorAll('#nav a').forEach(function(a){a.addEventListener('click',function(){document.getElementById('nav').classList.remove('open');});});
+</script>
+</body>
+</html>
