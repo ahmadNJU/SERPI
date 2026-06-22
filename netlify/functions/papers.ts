@@ -3,17 +3,7 @@ import { desc, eq } from "drizzle-orm";
 import { db } from "../../db/index.js";
 import { papers } from "../../db/schema.js";
 import { isEditorAuthorized, unauthorized } from "../lib/auth.js";
-
-// Statuses an editor may assign. Kept in sync with the selector in /editor.
-export const ALLOWED_STATUSES = [
-  "submitted",
-  "with_editor",
-  "under_review",
-  "revisions_requested",
-  "accepted",
-  "rejected",
-  "withdrawn",
-] as const;
+import { ALLOWED_STATUSES, isStatus, recordStatus } from "../lib/submissions.js";
 
 export default async (req: Request): Promise<Response> => {
   // Everything this endpoint returns (titles, authors, names, emails,
@@ -41,6 +31,7 @@ export default async (req: Request): Promise<Response> => {
     const allPapers = await db
       .select({
         id: papers.id,
+        reference: papers.reference,
         title: papers.title,
         authors: papers.authors,
         paperType: papers.paperType,
@@ -58,9 +49,9 @@ export default async (req: Request): Promise<Response> => {
     return Response.json({ papers: allPapers, total: allPapers.length });
   }
 
-  // Update the editorial status of a submission.
+  // Update the editorial status of a submission, recording a timeline entry.
   if (req.method === "PATCH" || req.method === "PUT") {
-    let body: { id?: unknown; status?: unknown };
+    let body: { id?: unknown; status?: unknown; note?: unknown; authorVisible?: unknown };
     try {
       body = await req.json();
     } catch {
@@ -73,12 +64,15 @@ export default async (req: Request): Promise<Response> => {
     }
 
     const status = String(body.status ?? "");
-    if (!(ALLOWED_STATUSES as readonly string[]).includes(status)) {
+    if (!isStatus(status)) {
       return Response.json(
         { error: `Invalid status. Allowed: ${ALLOWED_STATUSES.join(", ")}` },
         { status: 400 }
       );
     }
+
+    const note = typeof body.note === "string" ? body.note.trim() : "";
+    const authorVisible = body.authorVisible === true || body.authorVisible === "true";
 
     const [updated] = await db
       .update(papers)
@@ -89,6 +83,9 @@ export default async (req: Request): Promise<Response> => {
     if (!updated) {
       return Response.json({ error: "Paper not found" }, { status: 404 });
     }
+
+    // Append the change to the author-facing timeline.
+    await recordStatus(updated.id, status, note || null, authorVisible);
 
     return Response.json({ success: true, id: updated.id, status: updated.status });
   }

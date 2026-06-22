@@ -13,21 +13,41 @@ Neon (Netlify DB) and Netlify Blobs.
 | `/journal.html` | `journal.html` | Journal home (aims, ethics, indexing) |
 | `/guide-for-authors` | `guide-for-authors.html` | Author guidelines |
 | `/submit.html` | `submit.html` | Public manuscript submission form |
+| `/track` | `track.html` | **Public** author submission tracking (reference + email) |
+| `/contact` | `contact.html` | **Public** editorial contact form (no address exposed) |
 | `/editor` | `editor.html` | **Protected** editorial console |
 
 ## API (Netlify Functions)
 
 | Endpoint | Method | Auth | Purpose |
 | --- | --- | --- | --- |
-| `/api/submit-paper` | `POST` | Public | Accept a manuscript (multipart), store file in Blobs + row in Neon, email editor & author |
-| `/api/papers` | `GET` | **Bearer** | List/read submissions (incl. corresponding-author email) |
-| `/api/papers` | `PATCH` | **Bearer** | Update a submission's editorial status |
+| `/api/submit-paper` | `POST` | Public | Accept a manuscript (multipart), store file in Blobs + row in Neon, generate a stable reference, write initial status history, email the editor |
+| `/api/track` | `POST` | Public | Return a submission's status + author-visible timeline, only when reference **and** email match the same record |
+| `/api/contact` | `POST` | Public | Email a contact-form message to the editorial office (reply-to the sender) |
+| `/api/papers` | `GET` | **Bearer** | List/read submissions (incl. corresponding-author email + reference) |
+| `/api/papers` | `PATCH` | **Bearer** | Update status, with an optional note + author-visibility, recorded in history |
 | `/api/download` | `GET` | **Bearer** | Stream the stored manuscript file from Blobs |
 
-All privileged endpoints require `Authorization: Bearer ${EDITOR_TOKEN}` and
-return `401` without it. No endpoint returns author names, emails,
-institutions, or titles without a valid token. The corresponding-author email
-is stored on submission and shown only inside `/editor`.
+Privileged endpoints require `Authorization: Bearer ${EDITOR_TOKEN}` and return
+`401` without it. The public `/api/track` and `/api/contact` expose nothing
+sensitive: `/track` returns no file links, no email, and only author-visible
+timeline rows, and never confirms a reference or email independently;
+`/contact` never reveals the destination address.
+
+## References
+
+Each submission gets a stable reference **`ERPI-YYYY-NNNNN`** (e.g.
+`ERPI-2026-00001`). The year is the submission year and `NNNNN` is a per-year
+sequence that resets to `00001` each January. Numbers are claimed atomically
+via the `reference_counters` table, stored on the row, and never recomputed.
+The same reference appears on the submission success screen, in `/editor`, the
+CSV export, the editor notification email, and `/track`.
+
+## Email behaviour
+
+On submission only the **editorial office** is emailed (reply-to the
+corresponding author). **No confirmation email is sent to authors** — they are
+contacted manually, and can self-serve status via `/track`.
 
 ## Environment variables
 
@@ -35,28 +55,37 @@ Set these in the Netlify site (**Site settings → Environment variables**):
 
 | Variable | Required | Description |
 | --- | --- | --- |
-| `EDITOR_TOKEN` | Yes | Secret bearer token guarding `/api/papers` and `/api/download`. Choose a long random string. |
+| `EDITOR_TOKEN` | Yes | Secret bearer token guarding `/api/papers` and `/api/download`. |
 | `NETLIFY_DATABASE_URL` | Yes | Neon/Netlify DB connection (provisioned by the Netlify DB extension). |
-| `RESEND_API_KEY` | For email | API key from [resend.com](https://resend.com). If unset, emails are skipped (submissions still succeed). |
+| `RESEND_API_KEY` | For email | API key from [resend.com](https://resend.com). If unset, emails are skipped. |
 | `MAIL_FROM` | For email | Verified sender, e.g. `ERPI Editorial Office <no-reply@your-domain>`. |
-| `EDITORIAL_EMAIL` | For email | Address that receives new-submission notifications. Defaults to `editors@serpi-journal.org`. |
+| `EDITORIAL_EMAIL` | For email | Destination for new-submission notifications **and** contact-form messages. Never exposed to clients. |
 
-See `.env.example` for a template.
+No new environment variables were added in this round. See `.env.example`.
 
 ## Editorial console
 
-Visit `/editor`, enter the `EDITOR_TOKEN` when prompted (kept in
-`sessionStorage` for the session only), and you can:
+Visit `/editor`, enter the `EDITOR_TOKEN` (kept in `sessionStorage` only), and:
 
-- review every submission — date, title, authors, type, corresponding author
-  + email, institution, status;
-- download each manuscript (streamed from Blobs with the bearer token);
-- change a submission's status, saved straight to the Neon database.
+- review every submission — reference, date, title, authors, type,
+  corresponding author + email, institution, status;
+- search (title / author / reference / email), filter by status, sort by date,
+  and see counts per status;
+- change status with an optional note and a "show this note to the author"
+  toggle (persisted to `submission_status_history`);
+- export the current filtered view as CSV (metadata only, no files);
+- download each manuscript (streamed from Blobs with the bearer token).
 
 ## Database
 
-Drizzle ORM over Neon. Schema lives in `db/schema.ts`; generate migrations with:
+Drizzle ORM over Neon. Schema in `db/schema.ts`:
 
-```bash
-npm run db:generate
-```
+- `papers` — submissions (now with a unique `reference` column);
+- `reference_counters` — per-year sequence for references;
+- `submission_status_history` — append-only status timeline (`author_visible`
+  rows power the public `/track` timeline).
+
+Generate migrations with `npm run db:generate`. Migrations in
+`netlify/database/migrations` are applied by the Netlify DB extension on deploy;
+the `add_reference_and_history` migration also backfills references and seeds an
+initial author-visible "submitted" history row for existing submissions.

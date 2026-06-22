@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Track Your Submission — Economic and Regional Policy Interactions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pine:#22433A; --pine-deep:#15302A; --brass:#9A7B3C; --brass-soft:#B79A5E;
+    --text:#1C1F1B; --muted:#5E635B; --paper:#ffffff; --panel:#F4F5F1; --panel-2:#ECEEE6;
+    --line:#DCDDD3; --maxw:1140px; --error:#B02020; --success:#1E5C2E;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--text);font-family:"Source Sans 3",system-ui,sans-serif;font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased;}
+  a{color:var(--pine);}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 32px;}
+  h1,h2,h3{font-family:"Spectral",Georgia,serif;font-weight:500;line-height:1.16;color:var(--pine);margin:0;}
+  .kicker{font-size:.74rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--brass);margin-bottom:14px;}
+  .btn{display:inline-block;font-family:"Source Sans 3";font-size:.86rem;font-weight:600;letter-spacing:.02em;text-decoration:none;padding:12px 24px;border:1px solid var(--pine);border-radius:1px;transition:.18s;cursor:pointer;}
+  .btn-primary{background:var(--pine);color:#fff;}
+  .btn-primary:hover{background:var(--pine-deep);border-color:var(--pine-deep);}
+  .btn-ghost{background:transparent;color:var(--pine);}
+  .btn-ghost:hover{background:var(--pine);color:#fff;}
+
+  .topbar{border-bottom:1px solid var(--line);background:#fff;position:sticky;top:0;z-index:50;}
+  .topbar .wrap{display:flex;align-items:center;justify-content:space-between;height:70px;gap:24px;}
+  .brandline{display:flex;flex-direction:column;line-height:1.12;}
+  .brandline .pub{font-size:.62rem;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);}
+  .brandline .jt{font-family:"Spectral",serif;font-weight:500;font-size:1.08rem;color:var(--pine);}
+  nav.main{display:flex;gap:24px;align-items:center;}
+  nav.main a{font-size:.85rem;font-weight:500;text-decoration:none;color:var(--text);}
+  nav.main a:hover{color:var(--brass);}
+  .menu-toggle{display:none;background:none;border:0;font-size:1.5rem;color:var(--pine);cursor:pointer;}
+
+  .page-header{background:linear-gradient(#fff,#fbfbf9);border-bottom:1px solid var(--line);padding:60px 0 48px;}
+  .page-header h1{font-size:clamp(1.9rem,3.8vw,2.8rem);margin-bottom:10px;}
+  .page-header .sub{font-family:"Spectral",serif;font-style:italic;font-size:1.15rem;color:var(--brass);}
+
+  .main-content{padding:56px 0 80px;}
+  .track-grid{display:grid;grid-template-columns:380px 1fr;gap:48px;align-items:start;}
+  .form-card{background:#fff;border:1px solid var(--line);border-radius:2px;padding:34px 32px;}
+  .form-card h2{font-size:1.2rem;margin-bottom:6px;}
+  .form-card .section-note{font-size:.88rem;color:var(--muted);margin-bottom:24px;}
+  .field-group{margin-bottom:20px;}
+  label{display:block;font-size:.86rem;font-weight:600;color:var(--text);margin-bottom:5px;}
+  label .req{color:var(--brass);}
+  input[type="text"],input[type="email"]{width:100%;padding:10px 13px;font-family:"Source Sans 3",sans-serif;font-size:.95rem;color:var(--text);background:#fff;border:1px solid var(--line);border-radius:1px;transition:.15s;outline:none;}
+  input:focus{border-color:var(--pine);box-shadow:0 0 0 3px rgba(34,67,58,.1);}
+  input::placeholder{color:#a7aaa1;}
+  .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;}
+  .submit-btn{width:100%;text-align:center;margin-top:4px;}
+
+  .result-pane{min-height:200px;}
+  .placeholder,.empty,.errbox{border:1px dashed var(--line);border-radius:2px;background:#fafaf8;padding:40px 30px;text-align:center;color:var(--muted);font-size:.95rem;}
+  .errbox{border-style:solid;border-color:#E8B4B4;background:#FDF0F0;color:var(--error);text-align:left;}
+  .loadingbox{padding:40px;text-align:center;color:var(--muted);}
+  .spinner{display:inline-block;width:16px;height:16px;border:2px solid rgba(34,67,58,.25);border-top-color:var(--pine);border-radius:50%;animation:spin .6s linear infinite;vertical-align:middle;margin-right:8px;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+
+  .result-card{border:1px solid var(--line);border-radius:2px;background:#fff;overflow:hidden;}
+  .result-head{padding:28px 30px;border-bottom:1px solid var(--line);background:linear-gradient(#fff,#fbfbf9);}
+  .result-head .ref{font-family:"Spectral",serif;font-weight:600;color:var(--brass);font-size:.9rem;letter-spacing:.04em;}
+  .result-head h3{font-size:1.32rem;margin:6px 0 12px;}
+  .result-meta{display:flex;gap:28px;flex-wrap:wrap;}
+  .result-meta .k{font-size:.64rem;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:3px;}
+  .result-meta .v{font-size:.95rem;color:var(--pine);}
+  .badge{display:inline-block;font-size:.75rem;font-weight:600;padding:4px 12px;border-radius:1px;border:1px solid var(--line);background:var(--panel);color:var(--pine);}
+  .badge.accepted{background:#EAF4EC;border-color:#9FCFAB;color:var(--success);}
+  .badge.rejected,.badge.withdrawn{background:#F6ECEC;border-color:#D8B0B0;color:#8a3a3a;}
+
+  .timeline{padding:26px 30px 30px;}
+  .timeline .tl-title{font-size:.66rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin-bottom:18px;}
+  .tl-item{position:relative;padding:0 0 22px 26px;border-left:2px solid var(--line);margin-left:5px;}
+  .tl-item:last-child{padding-bottom:0;border-left-color:transparent;}
+  .tl-item::before{content:"";position:absolute;left:-7px;top:2px;width:12px;height:12px;border-radius:50%;background:var(--brass);border:2px solid #fff;box-shadow:0 0 0 1px var(--line);}
+  .tl-item:first-child::before{background:var(--pine);}
+  .tl-status{font-weight:600;color:var(--pine);font-size:.98rem;}
+  .tl-date{font-size:.8rem;color:var(--muted);margin-top:1px;}
+  .tl-note{font-size:.9rem;color:#43473e;margin-top:7px;background:var(--panel);border-left:3px solid var(--brass-soft);padding:9px 13px;border-radius:1px;}
+
+  footer{background:var(--pine-deep);color:#c4cdc4;padding:40px 0 24px;}
+  footer .own{font-size:.88rem;line-height:1.7;color:#aab4aa;}
+  .footnote{border-top:1px solid rgba(255,255,255,.13);margin-top:28px;padding-top:18px;font-size:.78rem;color:#8d978d;}
+
+  @media (max-width:900px){.track-grid{grid-template-columns:1fr;}}
+  @media (max-width:560px){.wrap{padding:0 18px;}
+    nav.main{display:none;position:absolute;top:70px;left:0;right:0;background:#fff;flex-direction:column;align-items:flex-start;padding:20px 32px;border-bottom:1px solid var(--line);gap:18px;}
+    nav.main.open{display:flex;}.menu-toggle{display:block;}}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;}}
+  :focus-visible{outline:2px solid var(--brass);outline-offset:3px;}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap">
+    <div class="brandline">
+      <a class="pub" href="index.html" style="text-decoration:none;">Society for Economic &amp; Regional Policy Interactions</a>
+      <a class="jt" href="journal.html" style="text-decoration:none;">Economic &amp; Regional Policy Interactions</a>
+    </div>
+    <button class="menu-toggle" aria-label="Toggle menu" onclick="document.getElementById('nav').classList.toggle('open')">&#9776;</button>
+    <nav class="main" id="nav">
+      <a href="journal.html#scope">Aims &amp; Scope</a>
+      <a href="guide-for-authors.html">Guide for Authors</a>
+      <a href="contact.html">Contact</a>
+      <a class="btn btn-primary" href="submit.html">Submit</a>
+    </nav>
+  </div>
+</header>
+
+<div class="page-header">
+  <div class="wrap">
+    <div class="kicker">For Authors</div>
+    <h1>Track Your Submission</h1>
+    <div class="sub">Check the status of your manuscript — no login required</div>
+  </div>
+</div>
+
+<div class="main-content">
+  <div class="wrap">
+    <div class="track-grid">
+      <div class="form-card">
+        <div class="kicker">Look up</div>
+        <h2>Your submission</h2>
+        <p class="section-note">Enter the reference shown when you submitted, together with the corresponding author's email. Both must match the same submission.</p>
+        <form id="track-form" novalidate>
+          <div class="field-group">
+            <label for="reference">Reference <span class="req">*</span></label>
+            <input type="text" id="reference" name="reference" placeholder="ERPI-2026-00001" autocomplete="off" spellcheck="false">
+          </div>
+          <div class="field-group">
+            <label for="email">Corresponding author email <span class="req">*</span></label>
+            <input type="email" id="email" name="email" placeholder="name@university.edu" autocomplete="off">
+          </div>
+          <!-- Honeypot -->
+          <div class="hp" aria-hidden="true">
+            <label for="website">Website</label>
+            <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+          </div>
+          <button type="submit" class="btn btn-primary submit-btn" id="submit-btn">Check status</button>
+        </form>
+      </div>
+
+      <div class="result-pane" id="result-pane">
+        <div class="placeholder" id="placeholder">
+          Your submission's title, type, date, current status, and a dated timeline will appear here once we find a match.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="own">
+      <strong>Economic &amp; Regional Policy Interactions</strong><br>
+      A journal of the Society for Economic and Regional Policy Interactions.
+    </div>
+    <div class="footnote">&copy; 2026 Society for Economic and Regional Policy Interactions. All rights reserved.</div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var form = document.getElementById('track-form');
+  var submitBtn = document.getElementById('submit-btn');
+  var pane = document.getElementById('result-pane');
+
+  var STATUS_LABELS = {
+    submitted: "Submitted",
+    with_editor: "With editor",
+    under_review: "Under review",
+    revisions_requested: "Revisions requested",
+    accepted: "Accepted",
+    rejected: "Decision: not accepted",
+    withdrawn: "Withdrawn"
+  };
+  var TYPE_LABELS = {
+    article: "Research Article",
+    review: "Review Article",
+    short_communication: "Short Communication",
+    policy_brief: "Policy Brief",
+    comment: "Comment / Reply"
+  };
+
+  function esc(s) {
+    return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+  function label(s) { return STATUS_LABELS[s] || s; }
+  function typeLabel(t) { return TYPE_LABELS[t] || String(t || "").replace(/_/g, " "); }
+  function fmtDate(iso) {
+    if (!iso) return "—";
+    var d = new Date(iso);
+    if (isNaN(d)) return "—";
+    return d.toLocaleDateString(undefined, { year: "numeric", month: "long", day: "numeric" });
+  }
+  function fmtDateTime(iso) {
+    if (!iso) return "—";
+    var d = new Date(iso);
+    if (isNaN(d)) return "—";
+    return d.toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" }) +
+      " · " + d.toLocaleTimeString(undefined, { hour: "2-digit", minute: "2-digit" });
+  }
+
+  function showLoading() {
+    pane.innerHTML = '<div class="loadingbox"><span class="spinner"></span>Looking up your submission…</div>';
+  }
+  function showNoMatch(msg) {
+    pane.innerHTML = '<div class="empty">' + esc(msg || "No matching submission was found. Please check your reference and email.") + '</div>';
+  }
+  function showError(msg) {
+    pane.innerHTML = '<div class="errbox">' + esc(msg) + '</div>';
+  }
+
+  function render(data) {
+    var s = data.submission;
+    var badgeClass = "badge" + (["accepted", "rejected", "withdrawn"].indexOf(s.status) !== -1 ? " " + s.status : "");
+    var timeline = (data.timeline || []).slice().reverse(); // newest first
+
+    var rows = timeline.map(function (t) {
+      return '<div class="tl-item">' +
+        '<div class="tl-status">' + esc(label(t.status)) + '</div>' +
+        '<div class="tl-date">' + esc(fmtDateTime(t.changedAt)) + '</div>' +
+        (t.note ? '<div class="tl-note">' + esc(t.note) + '</div>' : '') +
+      '</div>';
+    }).join("");
+
+    pane.innerHTML =
+      '<div class="result-card">' +
+        '<div class="result-head">' +
+          '<div class="ref">' + esc(s.reference) + '</div>' +
+          '<h3>' + esc(s.title) + '</h3>' +
+          '<div class="result-meta">' +
+            '<div><span class="k">Type</span><span class="v">' + esc(typeLabel(s.paperType)) + '</span></div>' +
+            '<div><span class="k">Submitted</span><span class="v">' + esc(fmtDate(s.submittedAt)) + '</span></div>' +
+            '<div><span class="k">Current status</span><span class="v"><span class="' + badgeClass + '">' + esc(label(s.status)) + '</span></span></div>' +
+          '</div>' +
+        '</div>' +
+        '<div class="timeline">' +
+          '<div class="tl-title">Status timeline</div>' +
+          (rows || '<div class="tl-item"><div class="tl-status">' + esc(label(s.status)) + '</div></div>') +
+        '</div>' +
+      '</div>';
+  }
+
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault();
+    var reference = form.reference.value.trim();
+    var email = form.email.value.trim();
+
+    if (!reference || !email) { showError('Please enter both your reference and email.'); return; }
+
+    submitBtn.disabled = true;
+    var original = submitBtn.textContent;
+    submitBtn.innerHTML = '<span class="spinner"></span>Checking…';
+    showLoading();
+
+    try {
+      var res = await fetch('/api/track', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ reference: reference, email: email, website: form.website.value })
+      });
+      if (res.status === 429) { showError('Too many attempts. Please wait a minute and try again.'); return; }
+      var data = await res.json().catch(function () { return {}; });
+      if (data && data.found) { render(data); }
+      else { showNoMatch(data && data.message); }
+    } catch (err) {
+      showError('A network error occurred. Please check your connection and try again.');
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = original;
+    }
+  });
+
+  document.querySelectorAll('#nav a').forEach(function (a) {
+    a.addEventListener('click', function () { document.getElementById('nav').classList.remove('open'); });
+  });
+})();
+</script>
+</body>
+</html>
