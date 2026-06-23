@@ -1,0 +1,81 @@
+/* ============================================================
+   SERPI — shared design system (navy / rust)
+   Loaded LAST in each page <head> so it standardises the
+   palette + chrome across pages that carry their own component
+   CSS. Page-specific component styles inherit these tokens.
+   ============================================================ */
+
+:root{
+  /* navy family */
+  --navy-deep:#081428;   /* utility bar, footer */
+  --navy:#0C1B33;        /* header, hero, journal band */
+  --navy-strip:#11233F;  /* facts strip */
+  /* rust accent */
+  --rust:#A8502E;
+  --rust-deep:#8E3F22;
+  --rust-node:#C4764A;
+  --sand:#E7C9A6;        /* accent text on navy */
+  /* surfaces */
+  --paper:#F4EEE4;
+  --panel:#EFE7D9;
+  --panel-2:#E7DCC9;
+  --card:#ffffff;
+  /* text */
+  --ink:#1C2536;
+  --prose:#34382F;
+  --muted:#5E6678;
+  --muted-2:#7C8290;
+  --on-navy:#C8D2E4;
+  --navlink:#D7DEEC;
+  --foot:#9FB0CC;
+  /* lines */
+  --line:#E4DCCF;
+  --line-2:#DAD0BE;
+
+  /* ---- back-compat aliases: existing pages reference these ---- */
+  --pine:#0C1B33;
+  --pine-deep:#081428;
+  --brass:#A8502E;
+  --brass-soft:#C4764A;
+  --text:#1C2536;
+  --maxw:1160px;
+}
+
+::selection{background:var(--rust);color:#fff;}
+:focus-visible{outline:2px solid var(--rust);outline-offset:3px;}
+
+/* ---------- buttons (rust primary, navy ghost) ---------- */
+.btn-primary{background:var(--rust)!important;border-color:var(--rust)!important;color:#fff!important;}
+.btn-primary:hover{background:var(--rust-deep)!important;border-color:var(--rust-deep)!important;}
+.btn-ghost:hover{background:var(--navy)!important;color:#fff!important;}
+
+/* ---------- utility bar ---------- */
+.utilitybar{background:var(--navy-deep);color:var(--foot);font-size:.74rem;}
+.utilitybar .wrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;padding-top:8px;padding-bottom:8px;}
+.utilitybar .ub-tag{letter-spacing:.1em;text-transform:uppercase;font-weight:600;}
+.utilitybar .ub-links{display:flex;gap:22px;flex-wrap:wrap;}
+.utilitybar a{color:var(--foot);text-decoration:none;}
+.utilitybar a:hover{color:#fff;}
+
+/* ---------- header (navy) ---------- */
+.topbar{background:var(--navy)!important;border-bottom:1px solid rgba(255,255,255,.10)!important;}
+.topbar .brandline .pub{color:var(--foot)!important;}
+.topbar .brandline .jt,.topbar .lockup .nm{color:#fff!important;}
+.topbar nav.main a{color:var(--navlink);}
+.topbar nav.main a:hover{color:var(--sand);}
+.topbar .menu-toggle{color:#fff!important;}
+.topbar nav.main a.btn,.topbar nav.main a.btn-primary{color:#fff;}
+
+/* keep the mobile disclosure panel navy so light links stay legible */
+@media (max-width:920px){
+  .topbar nav.main.open{background:var(--navy)!important;}
+  .topbar nav.main.open a{color:var(--navlink);}
+}
+
+/* ---------- footer (deepest navy) ---------- */
+footer{background:var(--navy-deep)!important;color:var(--foot)!important;}
+footer h4{color:var(--sand)!important;}
+footer a{color:var(--foot)!important;}
+footer a:hover{color:#fff!important;}
+footer .own,footer .own strong,footer .footnote,footer .footnote span{color:var(--foot);}
+footer .own strong{color:#fff!important;}

@@ -12,6 +12,7 @@ Neon (Netlify DB) and Netlify Blobs.
 | `/` | `index.html` | Society home |
 | `/journal.html` | `journal.html` | Journal home (aims, ethics, indexing) |
 | `/guide-for-authors` | `guide-for-authors.html` | Author guidelines |
+| `/membership.html` | `membership.html` | Society membership application (Web3Forms) |
 | `/submit.html` | `submit.html` | Public manuscript submission form |
 | `/track` | `track.html` | **Public** author submission tracking (reference + email) |
 | `/contact` | `contact.html` | **Public** editorial contact form (no address exposed) |
@@ -75,6 +76,19 @@ Visit `/editor`, enter the `EDITOR_TOKEN` (kept in `sessionStorage` only), and:
   toggle (persisted to `submission_status_history`);
 - export the current filtered view as CSV (metadata only, no files);
 - download each manuscript (streamed from Blobs with the bearer token).
+
+## Design system
+
+The site uses a shared navy (`#0C1B33`) / rust (`#A8502E`) palette on a warm
+"paper" background (`#F4EEE4`), with Spectral (headings) + Source Sans 3 (body).
+Tokens and common chrome (utility bar, navy header, footer, buttons) live in
+`assets/site.css`, which every page links **last** in its `<head>` so the
+palette stays consistent. The Society homepage (`index.html`) and
+`membership.html` are built directly to this system; the journal/submission
+pages carry page-specific component CSS that inherits the shared tokens.
+
+The membership form posts to [Web3Forms](https://web3forms.com) — replace the
+`access_key` in `membership.html` with the Society's own key.
 
 ## Database
 
