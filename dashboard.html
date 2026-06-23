@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pakistan Economy Dashboard — Society for Economic and Regional Policy Interactions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Source Sans 3",system-ui,sans-serif;font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased;}
+  a{color:var(--rust);}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 32px;}
+  h1,h2,h3,h4{font-family:"Spectral",Georgia,serif;font-weight:500;line-height:1.16;color:var(--navy);margin:0;}
+  .kicker{font-size:.74rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--rust);margin-bottom:14px;}
+  .rule{width:46px;height:2px;background:var(--rust);border:0;margin:18px 0 0;}
+
+  .btn{display:inline-block;font-family:"Source Sans 3";font-size:.9rem;font-weight:600;letter-spacing:.01em;text-decoration:none;padding:14px 26px;border:1px solid var(--navy);border-radius:1px;transition:.18s;cursor:pointer;}
+  .btn-primary{background:var(--rust);color:#fff;border-color:var(--rust);}
+  .btn-primary:hover{background:var(--rust-deep);border-color:var(--rust-deep);}
+  .btn-ghost{background:transparent;color:var(--navy);}
+  .btn-ghost:hover{background:var(--navy);color:#fff;}
+
+  /* header (site chrome) */
+  .topbar{background:var(--navy);border-bottom:1px solid rgba(255,255,255,.10);position:sticky;top:0;z-index:50;}
+  .topbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:24px;min-height:78px;flex-wrap:wrap;}
+  .lockup{display:flex;align-items:center;gap:14px;text-decoration:none;padding:14px 0;}
+  .lockup .nm{font-family:"Spectral",serif;font-weight:500;font-size:1.04rem;line-height:1.14;color:#fff;}
+  nav.main{display:flex;gap:26px;align-items:center;flex-wrap:wrap;}
+  nav.main a{font-size:.9rem;font-weight:500;text-decoration:none;color:var(--navlink);}
+  nav.main a:hover{color:var(--sand);}
+  nav.main a.active{color:var(--sand);}
+  nav.main a.btn-primary{color:#fff;font-size:.84rem;font-weight:600;padding:11px 20px;}
+  .menu-toggle{display:none;background:none;border:0;font-size:1.5rem;color:#fff;cursor:pointer;}
+
+  /* page intro */
+  .page-intro{padding:48px 0 8px;}
+  .page-intro h1{font-size:clamp(1.9rem,3.8vw,2.7rem);margin:6px 0 8px;}
+  .page-intro .lede{font-family:"Spectral",serif;font-size:1.12rem;color:#3C4250;max-width:62ch;margin:0;}
+
+  /* ---- dashboard body (reskinned to site tokens) ---- */
+  .dash{max-width:980px;margin:0 auto;padding:18px 0 64px;}
+  .controls{display:flex;align-items:center;gap:12px;margin:24px 0 6px;flex-wrap:wrap;}
+  .controls label{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:600;}
+  select{font-family:"Source Sans 3",sans-serif;font-size:15px;color:var(--ink);background:#fff;
+    border:1px solid var(--navy);border-radius:1px;padding:9px 12px;min-width:280px;cursor:pointer;}
+  select:focus{outline:2px solid var(--rust);outline-offset:1px;}
+  .headline{font-family:"Spectral",serif;font-size:17.5px;line-height:1.42;color:var(--navy);
+    border-left:3px solid var(--rust);padding:2px 0 2px 14px;margin:20px 0 4px;}
+  .attrib{font-size:12px;color:var(--muted);margin:0 0 10px 17px;}
+  .card{border:1px solid var(--line);border-radius:2px;background:#fff;padding:16px 16px 10px;margin-top:12px;}
+  .panelhead{display:flex;justify-content:space-between;align-items:baseline;margin:2px 2px 2px;}
+  .panelhead .lab{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600;}
+  .panelhead .val{font-family:"Spectral",serif;font-size:19px;font-weight:600;color:var(--navy);}
+  .panelhead .val small{font-family:"Source Sans 3",sans-serif;font-size:11px;color:var(--muted);font-weight:600;letter-spacing:.04em;}
+  svg.chart{display:block;width:100%;height:auto;}
+  .chart .grid line{stroke:var(--line);stroke-width:1;}
+  .chart .axis{stroke:var(--line-2);stroke-width:1;}
+  .chart .zero{stroke:#b8a06a;stroke-width:1;stroke-dasharray:3 3;}
+  .chart .ref{stroke:#9c5544;stroke-width:1;stroke-dasharray:4 3;opacity:.8;}
+  .chart .tick{fill:var(--muted);font:500 11px "Source Sans 3",sans-serif;}
+  .chart .reflabel{fill:#9c5544;font:600 10px "Source Sans 3",sans-serif;}
+  .chart .area{fill:var(--navy);opacity:.05;}
+  .chart .ser{fill:none;stroke:var(--navy);stroke-width:2;stroke-linejoin:round;}
+  .chart .guide{stroke:var(--navy);stroke-width:1;opacity:0;stroke-dasharray:2 2;}
+  .chart .dot{fill:var(--navy);opacity:0;}
+  .meta{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;
+    border-top:1px solid var(--line);margin-top:8px;padding-top:8px;font-size:11.5px;color:var(--muted);}
+  .meta b{color:var(--ink);font-weight:600;}
+  .dash-note{margin-top:26px;font-size:12px;color:var(--muted);line-height:1.6;}
+
+  /* footer (site chrome) */
+  footer{background:var(--navy-deep);color:var(--foot);padding:62px 0 30px;}
+  footer .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:44px;}
+  footer h4{font-size:.66rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--sand);margin:0 0 16px;font-family:"Source Sans 3",sans-serif;}
+  footer a{color:var(--foot);text-decoration:none;display:block;margin-bottom:9px;font-size:.92rem;}
+  footer a:hover{color:#fff;}
+  footer .own{font-size:.92rem;line-height:1.7;color:var(--foot);}
+  footer .own strong{color:#fff;font-family:"Spectral",serif;font-weight:500;font-size:1.04rem;}
+  footer .addr{display:block;font-size:.92rem;line-height:1.7;color:var(--foot);}
+  .footnote{border-top:1px solid rgba(255,255,255,.12);margin-top:44px;padding-top:22px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;font-size:.8rem;color:#6E7C92;}
+
+  @media (max-width:920px){
+    nav.main{display:none;position:absolute;top:78px;left:0;right:0;background:var(--navy);flex-direction:column;align-items:flex-start;padding:20px 32px;border-bottom:1px solid rgba(255,255,255,.10);gap:18px;}
+    nav.main.open{display:flex;}
+    .menu-toggle{display:block;}
+  }
+  @media (max-width:560px){ .page-intro h1{font-size:25px;} select{min-width:0;width:100%;} .controls{flex-direction:column;align-items:stretch;} }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;}}
+</style>
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+
+<!-- UTILITY BAR -->
+<div class="utilitybar">
+  <div class="wrap">
+    <span class="ub-tag">An international learned society &middot; Founded 2026</span>
+    <span class="ub-links"><a href="index.html">Society</a><a href="contact.html">Contact</a></span>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header class="topbar">
+  <div class="wrap">
+    <a class="lockup" href="index.html">
+      <svg width="42" height="42" viewBox="0 0 40 40" aria-hidden="true" style="flex:none;">
+        <circle cx="20" cy="20" r="18.5" fill="none" stroke="#E7C9A6" stroke-width="1.2"/>
+        <g fill="none" stroke="#9FB0CC" stroke-width="1" opacity="0.8"><path d="M14.9,22.8 L18.1,16.3"/><path d="M18.1,16.3 L24.2,14.9"/><path d="M24.2,14.9 L26.1,20.9"/><path d="M26.1,20.9 L21.9,25.1"/><path d="M21.9,25.1 L14.9,22.8"/><path d="M20,20 L18.1,16.3"/><path d="M20,20 L24.2,14.9"/><path d="M20,20 L21.9,25.1"/></g>
+        <circle cx="24.2" cy="14.9" r="2" fill="#C4764A"/><circle cx="20" cy="20" r="1.8" fill="#C4764A"/>
+        <circle cx="18.1" cy="16.3" r="1.4" fill="#9FB0CC"/><circle cx="26.1" cy="20.9" r="1.4" fill="#9FB0CC"/><circle cx="21.9" cy="25.1" r="1.4" fill="#9FB0CC"/><circle cx="14.9" cy="22.8" r="1.4" fill="#9FB0CC"/>
+      </svg>
+      <span class="nm">Society for Economic &amp;<br>Regional Policy Interactions</span>
+    </a>
+    <button class="menu-toggle" aria-label="Toggle menu" onclick="document.getElementById('nav').classList.toggle('open')">&#9776;</button>
+    <nav class="main" id="nav">
+      <a href="index.html#about">About</a>
+      <a href="membership.html">Membership</a>
+      <a href="journal.html">Journals &amp; Publications</a>
+      <a href="index.html#resources">Resources for Economists</a>
+      <a href="dashboard.html" class="active" aria-current="page">Dashboard</a>
+      <a href="index.html#news">News</a>
+      <a class="btn btn-primary" href="membership.html">Join the Society</a>
+    </nav>
+  </div>
+</header>
+
+<!-- PAGE INTRO -->
+<div class="wrap page-intro">
+  <div class="kicker">SERPI &middot; Pakistan Macroeconomic Series</div>
+  <h1>Pakistan Economy Dashboard</h1>
+  <p class="lede">Interactive charts of Pakistan's key macroeconomic indicators, compiled by the SERPI Economic Team from official sources.</p>
+  <hr class="rule">
+</div>
+
+<!-- DASHBOARD -->
+<div class="wrap">
+  <div class="dash">
+    <div class="controls">
+      <label for="picker">Indicator</label>
+      <select id="picker" aria-label="Choose an economic indicator"></select>
+    </div>
+
+    <p class="headline" id="headline"></p>
+    <p class="attrib" id="attrib"></p>
+
+    <div id="panels"></div>
+
+    <p class="dash-note">
+      Compiled by the SERPI Economic Team. Figures are drawn from the IMF International Financial Statistics
+      and the State Bank of Pakistan. This dashboard is for information and research; it is not investment advice.
+    </p>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="grid">
+      <div style="max-width:34ch;">
+        <h4>The Society</h4>
+        <p class="own"><strong>Society for Economic and Regional Policy Interactions</strong><br>Established 2026. The responsible body governing the journal <em>Economic and Regional Policy Interactions</em>.</p>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <a href="index.html#about">About</a>
+        <a href="membership.html">Membership</a>
+        <a href="journal.html">Journals &amp; Publications</a>
+        <a href="dashboard.html">Economy Dashboard</a>
+        <a href="index.html#news">News</a>
+      </div>
+      <div>
+        <h4>Resources</h4>
+        <a href="index.html#resources">Databases &amp; data sources</a>
+        <a href="dashboard.html">Economy Dashboard</a>
+        <a href="https://ideas.repec.org/" target="_blank" rel="noopener">RePEc / IDEAS</a>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <a href="contact.html">Contact the editorial team</a>
+        <span class="addr">Department of Economics, University of Sahiwal, Sahiwal 57000, Pakistan</span>
+      </div>
+    </div>
+    <div class="footnote">
+      <span>&copy; 2026 Society for Economic and Regional Policy Interactions. All rights reserved.</span>
+      <span>Advancing economic &amp; regional policy research</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // mobile nav close on click
+  document.querySelectorAll('#nav a').forEach(function(a){a.addEventListener('click',function(){document.getElementById('nav').classList.remove('open');});});
+</script>
+
+<script>
+const DATA = {"meta": {"updated": "June 2026", "authors": "SERPI Economic Team (2026)"}, "series": {"inflation": {"label": "CPI Inflation", "group": "Prices & Inflation", "kind": "rate", "unit": "% YoY", "freq": "Quarterly", "source": "IMF International Financial Statistics (CPI, base 2010)", "note": "How fast consumer prices are rising versus a year earlier.", "data": {"periods": ["2018-Q1", "2018-Q2", "2018-Q3", "2018-Q4", "2019-Q1", "2019-Q2", "2019-Q3", "2019-Q4", "2020-Q1", "2020-Q2", "2020-Q3", "2020-Q4", "2021-Q1", "2021-Q2", "2021-Q3", "2021-Q4", "2022-Q1", "2022-Q2", "2022-Q3", "2022-Q4", "2023-Q1", "2023-Q2", "2023-Q3", "2023-Q4", "2024-Q1", "2024-Q2", "2024-Q3", "2024-Q4", "2025-Q1", "2025-Q2", "2025-Q3", "2025-Q4", "2026-Q1"], "level": [3.822, 4.359, 5.598, 6.481, 8.271, 8.939, 11.703, 13.221, 13.039, 8.908, 8.846, 8.411, 7.796, 10.537, 8.582, 11.006, 12.641, 16.148, 25.109, 24.941, 31.516, 34.488, 29.034, 28.597, 23.926, 13.873, 9.192, 5.323, 1.534, 2.304, 4.295, 5.999, 6.696]}, "headline": "Inflation surged to a multi-decade high near 34% in mid-2023, then collapsed to under 2% by early 2025; it has since edged back up to about 7%."}, "wpi": {"label": "Wholesale Inflation (WPI)", "group": "Prices & Inflation", "kind": "rate", "unit": "% YoY", "freq": "Quarterly", "source": "IMF International Financial Statistics (WPI)", "note": "Year-on-year change in wholesale/producer prices.", "data": {"periods": ["2017-Q1", "2017-Q2", "2017-Q3", "2017-Q4", "2018-Q1", "2018-Q2", "2018-Q3", "2018-Q4", "2019-Q1", "2019-Q2", "2019-Q3", "2019-Q4", "2020-Q1", "2020-Q2", "2020-Q3", "2020-Q4", "2021-Q1", "2021-Q2", "2021-Q3", "2021-Q4", "2022-Q1", "2022-Q2", "2022-Q3", "2022-Q4", "2023-Q1", "2023-Q2", "2023-Q3", "2023-Q4", "2024-Q1", "2024-Q2", "2024-Q3", "2024-Q4", "2025-Q1", "2025-Q2", "2025-Q3"], "level": [5.272, 4.796, 1.1, 2.841, 4.148, 5.746, 10.247, 12.9, 11.18, 13.492, 14.211, 12.216, -5.933, -47.783, -47.168, -46.26, -32.961, 18.971, 18.006, 24.786, 23.783, 32.255, 39.567, 29.105, 34.243, 29.348, 24.608, 26.126, 19.874, 11.467, 6.094, 2.697, -0.553, -0.434, -0.303]}, "headline": "Wholesale-price inflation swung from a steep pandemic-era decline to a near-40% spike in 2022, and has now cooled to roughly zero."}, "exrate": {"label": "Exchange Rate (PKR/USD)", "group": "External", "kind": "stock", "unit": "PKR per USD", "freq": "Quarterly", "source": "IMF International Financial Statistics", "note": "Rupees per US dollar; the lower curve shows yearly depreciation.", "data": {"periods": ["2017-Q1", "2017-Q2", "2017-Q3", "2017-Q4", "2018-Q1", "2018-Q2", "2018-Q3", "2018-Q4", "2019-Q1", "2019-Q2", "2019-Q3", "2019-Q4", "2020-Q1", "2020-Q2", "2020-Q3", "2020-Q4", "2021-Q1", "2021-Q2", "2021-Q3", "2021-Q4", "2022-Q1", "2022-Q2", "2022-Q3", "2022-Q4", "2023-Q1", "2023-Q2", "2023-Q3", "2023-Q4", "2024-Q1", "2024-Q2", "2024-Q3", "2024-Q4", "2025-Q1", "2025-Q2", "2025-Q3", "2025-Q4", "2026-Q1"], "level": [104.848, 104.862, 105.464, 106.647, 111.187, 116.878, 124.398, 134.833, 138.929, 147.769, 157.941, 155.506, 156.007, 163.52, 166.991, 160.836, 158.582, 154.435, 164.28, 174.328, 177.372, 195.245, 224.082, 222.769, 260.996, 285.966, 291.165, 283.297, 279.567, 278.359, 278.452, 277.945, 279.416, 281.844, 282.627, 280.685, 279.56], "yoy": [null, null, null, null, 6.05, 11.46, 17.95, 26.43, 24.95, 26.43, 26.96, 15.33, 12.29, 10.66, 5.73, 3.43, 1.65, -5.56, -1.62, 8.39, 11.85, 26.43, 36.4, 27.79, 47.15, 46.46, 29.94, 27.17, 7.12, -2.66, -4.37, -1.89, -0.05, 1.25, 1.5, 0.99, 0.05]}, "headline": "The rupee has more than halved against the dollar since 2017 — from about 105 to 280 — with its sharpest fall, nearly 47% in a single year, during the 2023 crisis; it has since stabilised."}, "reer": {"label": "Real Effective Exchange Rate", "group": "External", "kind": "index", "unit": "Index (2010=100)", "freq": "Quarterly", "source": "IMF International Financial Statistics (CPI-based REER)", "note": "Trade-weighted real value of the rupee; above 100 = stronger than 2010.", "data": {"periods": ["2017-Q1", "2017-Q2", "2017-Q3", "2017-Q4", "2018-Q1", "2018-Q2", "2018-Q3", "2018-Q4", "2019-Q1", "2019-Q2", "2019-Q3", "2019-Q4", "2020-Q1", "2020-Q2", "2020-Q3", "2020-Q4", "2021-Q1", "2021-Q2", "2021-Q3", "2021-Q4", "2022-Q1", "2022-Q2", "2022-Q3", "2022-Q4", "2023-Q1", "2023-Q2", "2023-Q3", "2023-Q4", "2024-Q1", "2024-Q2", "2024-Q3", "2024-Q4", "2025-Q1", "2025-Q2", "2025-Q3", "2025-Q4", "2026-Q1"], "level": [124.396, 123.736, 119.381, 118.647, 110.735, 108.976, 106.939, 101.315, 99.683, 96.761, 94.153, 97.766, 99.627, 96.857, 94.779, 98.362, 99.398, 103.991, 99.291, 97.907, 98.425, 96.161, 93.689, 99.475, 88.621, 87.541, 90.99, 97.964, 102.147, 102.808, 101.331, 103.343, 103.54, 99.956, 100.402, 103.478, 102.914]}, "headline": "In real, trade-weighted terms the rupee depreciated about 30% between 2017 and 2023, improving export competitiveness, before recovering to just above its 2010 benchmark."}, "cab": {"label": "Current Account Balance", "group": "External", "kind": "flow", "unit": "USD billion", "freq": "Quarterly", "source": "IMF International Financial Statistics (Balance of Payments)", "note": "Quarterly external balance; bars above zero are surpluses.", "data": {"periods": ["2017-Q1", "2017-Q2", "2017-Q3", "2017-Q4", "2018-Q1", "2018-Q2", "2018-Q3", "2018-Q4", "2019-Q1", "2019-Q2", "2019-Q3", "2019-Q4", "2020-Q1", "2020-Q2", "2020-Q3", "2020-Q4", "2021-Q1", "2021-Q2", "2021-Q3", "2021-Q4", "2022-Q1", "2022-Q2", "2022-Q3", "2022-Q4", "2023-Q1", "2023-Q2", "2023-Q3", "2023-Q4", "2024-Q1", "2024-Q2", "2024-Q3", "2024-Q4", "2025-Q1", "2025-Q2", "2025-Q3", "2025-Q4", "2026-Q1"], "level": [-3.09, -4.431, -4.338, -4.321, -4.395, -6.141, -4.112, -4.211, -1.961, -3.15, -1.719, -1.728, -0.7, -0.302, 0.797, -0.446, -0.626, -2.545, -3.56, -5.552, -3.902, -4.467, -2.441, -1.406, -0.207, 0.779, -1.417, -0.194, -0.041, -0.42, -0.505, 1.43, 0.749, 0.164, -0.737, -0.624, 1.369]}, "headline": "Pakistan's external balance has swung from quarterly deficits as deep as $6 billion in 2018 to recent surpluses near $1.4 billion, easing pressure on foreign reserves."}, "gdp": {"label": "Real GDP Growth", "group": "Real Sector", "kind": "stock", "unit": "PKR trillion (2015-16)", "freq": "Annual (fiscal year)", "source": "State Bank of Pakistan", "note": "Real output level; the lower curve is the headline GDP growth rate.", "data": {"periods": ["2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025", "2026"], "level": [15.807, 16.382, 16.812, 17.681, 19.04, 20.563, 21.728, 22.838, 23.853, 24.107, 24.653, 25.443, 26.256, 27.269, 28.238, 29.315, 30.508, 31.914, 33.86, 34.916, 34.587, 36.582, 38.843, 38.761, 39.777, 41.042, 42.562], "yoy": [null, 3.64, 2.62, 5.17, 7.69, 8.0, 5.66, 5.11, 4.44, 1.06, 2.26, 3.2, 3.2, 3.86, 3.56, 3.81, 4.07, 4.61, 6.1, 3.12, -0.94, 5.77, 6.18, -0.21, 2.62, 3.18, 3.7]}, "headline": "Real output has grown about 2.7 times since 2000, but expansion has been volatile — near 8% in 2005, contracting in both 2020 and 2023, and recovering to roughly 3.7% by 2026."}, "bsbp": {"label": "Govt Borrowing from SBP", "group": "Fiscal Financing", "kind": "stock", "unit": "PKR trillion", "freq": "Quarterly", "source": "State Bank of Pakistan", "note": "Federal borrowing from the central bank; falling under IMF programme limits.", "data": {"periods": ["2014-Q2", "2014-Q3", "2014-Q4", "2015-Q1", "2015-Q2", "2015-Q3", "2015-Q4", "2016-Q1", "2016-Q2", "2016-Q3", "2016-Q4", "2017-Q1", "2017-Q2", "2017-Q3", "2017-Q4", "2018-Q1", "2018-Q2", "2018-Q3", "2018-Q4", "2019-Q1", "2019-Q2", "2019-Q3", "2019-Q4", "2020-Q1", "2020-Q2", "2020-Q3", "2020-Q4", "2021-Q1", "2021-Q2", "2021-Q3", "2021-Q4", "2022-Q1", "2022-Q2", "2022-Q3", "2022-Q4", "2023-Q1", "2023-Q2", "2023-Q3", "2023-Q4", "2024-Q1", "2024-Q2", "2024-Q3", "2024-Q4", "2025-Q1", "2025-Q2", "2025-Q3", "2025-Q4", "2026-Q1"], "level": [2.561, 2.536, 2.25, 2.018, 2.099, 1.799, 1.857, 1.745, 1.73, 2.367, 2.663, 2.645, 2.441, 2.726, 2.602, 4.75, 3.668, 5.403, 5.104, 7.375, 7.234, 5.463, 6.412, 6.671, 6.741, 6.525, 6.387, 5.851, 5.703, 5.778, 6.128, 6.201, 5.717, 6.366, 5.991, 6.546, 5.913, 5.682, 4.367, 5.531, 5.419, 4.056, 5.254, 5.78, 5.263, 4.034, 3.631, 3.35], "yoy": [null, null, null, null, -18.05, -29.05, -17.48, -13.55, -17.55, 31.54, 43.43, 51.57, 41.05, 15.18, -2.27, 79.6, 50.27, 98.24, 96.11, 55.27, 97.25, 1.1, 25.63, -9.54, -6.81, 19.44, -0.39, -12.29, -15.4, -11.44, -4.05, 5.99, 0.25, 10.16, -2.23, 5.56, 3.43, -10.74, -27.12, -15.5, -8.36, -28.61, 20.32, 4.49, -2.88, -0.55, -30.9, -42.03]}, "headline": "Federal borrowing from the central bank peaked around PKR 7.4 trillion in 2019 and has since been cut sharply — down over 40% in the past year — as IMF programme rules curb central-bank financing of the deficit."}, "bbank": {"label": "Govt Borrowing from Commercial Banks", "group": "Fiscal Financing", "kind": "stock", "unit": "PKR trillion", "freq": "Quarterly", "source": "State Bank of Pakistan", "note": "Federal borrowing from scheduled banks (MTBs/PIBs); rising as financing shifts from the SBP.", "data": {"periods": ["2014-Q2", "2014-Q3", "2014-Q4", "2015-Q1", "2015-Q2", "2015-Q3", "2015-Q4", "2016-Q1", "2016-Q2", "2016-Q3", "2016-Q4", "2017-Q1", "2017-Q2", "2017-Q3", "2017-Q4", "2018-Q1", "2018-Q2", "2018-Q3", "2018-Q4", "2019-Q1", "2019-Q2", "2019-Q3", "2019-Q4", "2020-Q1", "2020-Q2", "2020-Q3", "2020-Q4", "2021-Q1", "2021-Q2", "2021-Q3", "2021-Q4", "2022-Q1", "2022-Q2", "2022-Q3", "2022-Q4", "2023-Q1", "2023-Q2", "2023-Q3", "2023-Q4", "2024-Q1", "2024-Q2", "2024-Q3", "2024-Q4", "2025-Q1", "2025-Q2", "2025-Q3", "2025-Q4", "2026-Q1"], "level": [3.492, 3.686, 4.129, 4.689, 4.905, 5.366, 5.548, 6.014, 6.27, 6.063, 5.873, 6.286, 6.631, 6.804, 6.989, 5.282, 6.523, 5.072, 6.012, 3.931, 5.397, 7.461, 6.698, 7.259, 8.222, 8.767, 9.255, 10.25, 11.182, 11.459, 11.473, 12.444, 14.63, 14.754, 14.909, 16.663, 18.347, 20.032, 22.271, 23.38, 26.867, 26.935, 25.583, 28.67, 32.302, 31.487, 33.63, 35.338], "yoy": [null, null, null, null, 40.47, 45.59, 34.38, 28.25, 27.83, 12.99, 5.85, 4.53, 5.76, 12.22, 19.0, -15.98, -1.63, -25.46, -13.98, -25.58, -17.27, 47.12, 11.41, 84.67, 52.37, 17.5, 38.18, 41.2, 35.99, 30.7, 23.97, 21.4, 30.84, 28.76, 29.95, 33.9, 25.4, 35.77, 49.37, 40.31, 46.44, 34.46, 14.88, 22.62, 20.23, 16.9, 31.45, 23.26]}, "headline": "Federal borrowing from commercial banks has risen roughly tenfold since 2014 to over PKR 35 trillion, as the government shifts its financing from the central bank to scheduled banks through treasury bills and bonds."}, "confidence": {"label": "Consumer Confidence", "group": "Sentiment", "kind": "sentiment", "unit": "Diffusion Index", "ref": 50, "freq": "Bi-monthly → monthly", "source": "State Bank of Pakistan", "note": "Household sentiment; above 50 = net optimism, below 50 = net pessimism.", "data": {"periods": ["JAN-2012", "MAR-2012", "MAY-2012", "JUL-2012", "SEP-2012", "NOV-2012", "JAN-2013", "MAR-2013", "MAY-2013", "JUL-2013", "SEP-2013", "NOV-2013", "JAN-2014", "MAR-2014", "MAY-2014", "JUL-2014", "SEP-2014", "NOV-2014", "JAN-2015", "MAR-2015", "MAY-2015", "JUL-2015", "SEP-2015", "NOV-2015", "JAN-2016", "MAR-2016", "MAY-2016", "JUL-2016", "SEP-2016", "NOV-2016", "JAN-2017", "MAR-2017", "MAY-2017", "JUL-2017", "SEP-2017", "NOV-2017", "JAN-2018", "MAR-2018", "MAY-2018", "JUL-2018", "SEP-2018", "NOV-2018", "JAN-2019", "MAR-2019", "MAY-2019", "JUL-2019", "SEP-2019", "NOV-2019", "JAN-2020", "MAR-2020", "MAY-2020", "JUL-2020", "SEP-2020", "NOV-2020", "JAN-2021", "MAR-2021", "MAY-2021", "JUL-2021", "SEP-2021", "NOV-2021", "JAN-2022", "MAR-2022", "MAY-2022", "JUL-2022", "SEP-2022", "NOV-2022", "JAN-2023", "FEB-2023", "MAR-2023", "APR-2023", "MAY-2023", "JUN-2023", "JUL-2023", "AUG-2023", "SEP-2023", "OCT-2023", "NOV-2023", "DEC-2023", "JAN-2024", "FEB-2024", "MAR-2024", "APR-2024", "MAY-2024", "JUN-2024", "JUL-2024", "AUG-2024", "SEP-2024", "OCT-2024", "NOV-2024", "DEC-2024", "JAN-2025", "FEB-2025", "MAR-2025", "APR-2025", "MAY-2025", "JUN-2025", "JUL-2025", "AUG-2025", "SEP-2025", "OCT-2025", "NOV-2025", "DEC-2025", "JAN-2026", "FEB-2026", "MAR-2026", "APR-2026", "MAY-2026", "JUN-2026"], "level": [29.105, 31.077, 28.768, 31.308, 29.186, 32.78, 32.755, 34.416, 37.094, 36.557, 37.698, 36.583, 38.203, 40.504, 41.276, 40.611, 37.996, 40.057, 44.228, 43.987, 48.154, 43.218, 47.793, 48.535, 49.977, 48.725, 46.608, 45.264, 49.206, 50.005, 50.56, 51.095, 48.628, 47.657, 50.3, 47.327, 45.712, 48.32, 47.613, 44.804, 55.971, 49.284, 51.818, 53.157, 43.029, 43.387, 44.267, 41.918, 40.592, 44.03, 39.466, 35.617, 43.061, 39.8, 43.053, 41.121, 40.67, 44.125, 41.565, 37.96, 38.229, 39.416, 41.465, 31.603, 34.497, 34.635, 33.198, 29.524, 29.924, 28.937, 34.797, 36.714, 35.816, 33.425, 26.239, 32.79, 36.109, 33.947, 33.07, 31.707, 33.641, 32.823, 37.709, 40.726, 31.849, 31.007, 30.975, 35.524, 34.898, 36.352, 37.984, 40.262, 40.418, 40.619, 44.612, 42.054, 40.061, 40.5, 37.7, 40.0, 40.95, 40.2, 41.6, 43.0, 37.4, 36.2, 35.5, 36.1]}, "headline": "Household confidence peaked above 55 in 2018, fell to a record low near 26 during the 2023 crisis, and remains subdued in the mid-30s — still below the 50 line that divides optimism from pessimism."}}};
+const C = (function(){ var cs=getComputedStyle(document.documentElement); return {pine:(cs.getPropertyValue('--pine').trim()||'#0C1B33'), pineDeep:(cs.getPropertyValue('--pine-deep').trim()||'#081428'), brass:(cs.getPropertyValue('--brass').trim()||'#A8502E'), brick:'#9c5544'}; })();
+const W=820, padL=56, padR=18;
+function minA(a){var m=Infinity;for(var i=0;i<a.length;i++)if(a[i]<m)m=a[i];return m;}
+function maxA(a){var m=-Infinity;for(var i=0;i<a.length;i++)if(a[i]>m)m=a[i];return m;}
+function lastVal(a){for(var i=a.length-1;i>=0;i--)if(a[i]!=null)return a[i];return null;}
+
+function niceTicks(min,max,n){
+  const span=(max-min)||1, raw=span/n, mag=Math.pow(10,Math.floor(Math.log10(raw)));
+  const norm=raw/mag, step=(norm<1.5?1:norm<3?2:norm<7?5:10)*mag;
+  const lo=Math.floor(min/step)*step, hi=Math.ceil(max/step)*step, out=[];
+  for(let v=lo; v<=hi+step*0.5; v+=step) out.push(+v.toFixed(6));
+  return out;
+}
+function fmt(v,unit){
+  if(v===null||v===undefined) return '–';
+  const a=Math.abs(v);
+  if(/trillion|USD/.test(unit||'')) return v.toFixed(2);
+  if(a>=100) return v.toFixed(0);
+  if(a>=10) return v.toFixed(1);
+  return v.toFixed(1);
+}
+function xLabels(periods){
+  const n=periods.length, want=Math.min(7,n), idx=[];
+  for(let k=0;k<want;k++) idx.push(Math.round(k*(n-1)/(want-1)));
+  var seen={},out=[]; for(var k2=0;k2<idx.length;k2++){ if(!seen[idx[k2]]){seen[idx[k2]]=1;out.push(idx[k2]);} } return out;
+}
+
+function panel(periods, values, o){
+  // o: {type:'line'|'bars', unit, zero, ref, height}
+  const H=o.height||(o.type==='line'?230:170), padT=16, padB=28;
+  const plotW=W-padL-padR, plotH=H-padT-padB;
+  const clean=values.filter(v=>v!==null&&v!==undefined);
+  let mn=minA(clean), mx=maxA(clean);
+  if(o.zero){mn=Math.min(mn,0);mx=Math.max(mx,0);}
+  if(o.ref!=null){mn=Math.min(mn,o.ref);mx=Math.max(mx,o.ref);}
+  if(mn===mx){mx=mn+1;}
+  const padv=(mx-mn)*0.10; mn-=padv; mx+=padv;
+  let ticks=niceTicks(mn,mx,4);
+  mn=Math.min(mn,ticks[0]); mx=Math.max(mx,ticks[ticks.length-1]);
+  const n=periods.length;
+  const X=i=> padL+(n<=1?plotW/2:i/(n-1)*plotW);
+  const Y=v=> padT+(1-(v-mn)/(mx-mn))*plotH;
+  let s=`<svg class="chart" viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet" role="img">`;
+  // gridlines + y ticks
+  s+='<g class="grid">';
+  ticks.forEach(t=>{ const y=Y(t); s+=`<line x1="${padL}" y1="${y.toFixed(1)}" x2="${W-padR}" y2="${y.toFixed(1)}"/>`; });
+  s+='</g>';
+  ticks.forEach(t=>{ const y=Y(t); s+=`<text class="tick" x="${padL-8}" y="${(y+3.5).toFixed(1)}" text-anchor="end">${(/trillion|USD/.test(o.unit||'')?t.toFixed(t%1?1:0):t.toFixed(0))}</text>`; });
+  // zero line
+  if((o.zero||clean.some(v=>v<0)) && mn<0 && mx>0){ const z=Y(0); s+=`<line class="zero" x1="${padL}" y1="${z.toFixed(1)}" x2="${W-padR}" y2="${z.toFixed(1)}"/>`; }
+  // reference line (e.g. 50)
+  if(o.ref!=null){ const r=Y(o.ref); s+=`<line class="ref" x1="${padL}" y1="${r.toFixed(1)}" x2="${W-padR}" y2="${r.toFixed(1)}"/>`;
+    s+=`<text class="reflabel" x="${W-padR}" y="${(r-4).toFixed(1)}" text-anchor="end">${o.ref} · optimism line</text>`; }
+  // baseline axis
+  s+=`<line class="axis" x1="${padL}" y1="${(padT+plotH).toFixed(1)}" x2="${W-padR}" y2="${(padT+plotH).toFixed(1)}"/>`;
+  // x labels
+  xLabels(periods).forEach(function(i){ var anc=(i===0?'start':(i===n-1?'end':'middle')); s+=`<text class="tick" x="${X(i).toFixed(1)}" y="${H-9}" text-anchor="${anc}">${periods[i]}</text>`; });
+  if(o.type==='bars'){
+    const bw=Math.max(2, plotW/n*0.66);
+    for(let i=0;i<n;i++){ const v=values[i]; if(v===null||v===undefined) continue;
+      const y0=Y(0> mn?0:mn), y=Y(v); const top=Math.min(y0,y), h=Math.max(1,Math.abs(y-y0));
+      const col=v<0?C.brick:C.brass;
+      s+=`<rect x="${(X(i)-bw/2).toFixed(1)}" y="${top.toFixed(1)}" width="${bw.toFixed(1)}" height="${h.toFixed(1)}" fill="${col}" rx="0.5"/>`; }
+  } else {
+    let dpath='', lpath='';
+    let started=false;
+    for(let i=0;i<n;i++){ const v=values[i]; if(v===null||v===undefined) continue;
+      const x=X(i).toFixed(1), y=Y(v).toFixed(1);
+      lpath += (started?'L':'M')+x+' '+y+' ';
+      started=true; }
+    // area
+    const base=(padT+plotH).toFixed(1);
+    const firstI=values.findIndex(v=>v!=null), lastI=(()=>{for(let i=n-1;i>=0;i--)if(values[i]!=null)return i;})();
+    if(firstI>-1){ s+=`<path class="area" d="M${X(firstI).toFixed(1)} ${base} ${lpath.replace(/^M/,'L')} L${X(lastI).toFixed(1)} ${base} Z"/>`; }
+    s+=`<path class="ser" d="${lpath.trim()}"/>`;
+  }
+  s+=`<line class="guide" id="guide" x1="0" y1="${padT}" x2="0" y2="${(padT+plotH).toFixed(1)}"/>`;
+  s+=`<circle class="dot" id="dot" r="3.5"/>`;
+  s+=`</svg>`;
+  return {svg:s, X, Y, n, padT, plotH};
+}
+
+const sel=document.getElementById('picker');
+const groups={}; const gorder=[];
+Object.keys(DATA.series).forEach(function(id){ var sObj=DATA.series[id]; if(!groups[sObj.group]){groups[sObj.group]=[];gorder.push(sObj.group);} groups[sObj.group].push([id,sObj.label]); });
+gorder.forEach(function(g){ var items=groups[g]; var og=document.createElement('optgroup'); og.label=g;
+  items.forEach(function(it){ var o=document.createElement('option'); o.value=it[0]; o.textContent=it[1]; og.appendChild(o); });
+  sel.appendChild(og); });
+
+function render(id){
+  const s=DATA.series[id], p=s.data.periods, lv=s.data.level, yoy=s.data.yoy;
+  document.getElementById('headline').textContent=s.headline;
+  document.getElementById('attrib').textContent='Source: '+s.source+'.  Authors: '+DATA.meta.authors;
+  const host=document.getElementById('panels'); host.innerHTML='';
+  const panels=[];
+  if(s.kind==='stock'){
+    panels.push({title:'Level', unit:s.unit, values:lv, type:'line'});
+    panels.push({title:'Year-on-year change', unit:'%', values:yoy, type:'bars', zero:true, height:165});
+  } else if(s.kind==='flow'){
+    panels.push({title:s.label, unit:s.unit, values:lv, type:'bars', zero:true});
+  } else if(s.kind==='sentiment'){
+    panels.push({title:s.label, unit:s.unit, values:lv, type:'line', ref:s.ref});
+  } else {
+    panels.push({title:s.label, unit:s.unit, values:lv, type:'line', zero:lv.some(v=>v<0)});
+  }
+  const made=[];
+  panels.forEach((pn,idx)=>{
+    const card=document.createElement('div'); card.className='card';
+    const last=lastVal(pn.values);
+    card.innerHTML=`<div class="panelhead"><span class="lab">${pn.title}</span>`+
+      `<span class="val" data-base="${fmt(last,pn.unit)}">${fmt(last,pn.unit)} <small>${pn.unit}</small></span></div>`;
+    const built=panel(p, pn.values, {type:pn.type, unit:pn.unit, zero:pn.zero, ref:pn.ref, height:pn.height});
+    card.insertAdjacentHTML('beforeend', built.svg);
+    if(idx===panels.length-1){
+      const meta=document.createElement('div'); meta.className='meta';
+      meta.innerHTML=`<span><b>Frequency:</b> ${s.freq}</span><span><b>Source:</b> ${s.source}</span><span><b>Updated:</b> ${DATA.meta.updated}</span>`;
+      card.appendChild(meta);
+    }
+    host.appendChild(card);
+    made.push({card, built, pn});
+  });
+  // shared hover
+  function setIndex(i){
+    made.forEach(m=>{
+      const svg=m.card.querySelector('svg'); const g=svg.querySelector('#guide'); const dot=svg.querySelector('#dot');
+      const v=m.pn.values[i];
+      if(v==null){ g.style.opacity=0; dot.style.opacity=0; }
+      else{ const x=m.built.X(i); g.setAttribute('x1',x); g.setAttribute('x2',x); g.style.opacity=.55;
+        if(m.pn.type==='line'){ dot.setAttribute('cx',x); dot.setAttribute('cy',m.built.Y(v)); dot.style.opacity=1; } else dot.style.opacity=0; }
+      const valEl=m.card.querySelector('.val');
+      valEl.innerHTML = (v==null?'–':fmt(v,m.pn.unit))+` <small>${m.pn.unit}</small>`;
+    });
+    document.querySelectorAll('.panelhead .lab').forEach((el,k)=>{}); // labels static
+    // prepend period to first card value via title attr
+    made.forEach(m=>{ m.card.querySelector('.val').title=p[i]; });
+  }
+  function reset(){ made.forEach(m=>{ const svg=m.card.querySelector('svg');
+    svg.querySelector('#guide').style.opacity=0; svg.querySelector('#dot').style.opacity=0;
+    const last=lastVal(m.pn.values);
+    m.card.querySelector('.val').innerHTML=`${fmt(last,m.pn.unit)} <small>${m.pn.unit}</small>`; }); }
+  made.forEach(m=>{
+    const svg=m.card.querySelector('svg');
+    svg.addEventListener('mousemove',ev=>{
+      const r=svg.getBoundingClientRect(); const vbx=(ev.clientX-r.left)/r.width*W;
+      const plotW=W-padL-padR; let i=Math.round((vbx-padL)/plotW*(m.built.n-1));
+      i=Math.max(0,Math.min(m.built.n-1,i)); setIndex(i);
+    });
+    svg.addEventListener('mouseleave',reset);
+  });
+}
+
+sel.addEventListener('change',e=>render(e.target.value));
+render(Object.keys(DATA.series)[0]);
+</script>
+</body>
+</html>
