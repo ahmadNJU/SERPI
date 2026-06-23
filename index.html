@@ -6,277 +6,221 @@
 <title>Society for Economic and Regional Policy Interactions</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --pine:#22433A; --pine-deep:#15302A; --brass:#9A7B3C; --brass-soft:#B79A5E;
-    --text:#1C1F1B; --muted:#5E635B; --paper:#ffffff; --panel:#F4F5F1; --panel-2:#ECEEE6;
-    --line:#DCDDD3; --maxw:1140px;
-  }
   *{box-sizing:border-box;}
   html{scroll-behavior:smooth;}
-  body{margin:0;background:var(--paper);color:var(--text);font-family:"Source Sans 3",system-ui,sans-serif;font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased;}
-  a{color:var(--pine);}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Source Sans 3",system-ui,sans-serif;font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased;}
+  a{color:var(--rust);}
   .wrap{max-width:var(--maxw);margin:0 auto;padding:0 32px;}
-  h1,h2,h3,h4{font-family:"Spectral",Georgia,serif;font-weight:500;line-height:1.16;color:var(--pine);margin:0;letter-spacing:0;}
-  .kicker{font-family:"Source Sans 3",sans-serif;font-size:.74rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--brass);margin-bottom:14px;}
-  .rule{width:46px;height:2px;background:var(--brass);border:0;margin:18px 0 26px;}
-  .rule.center{margin-left:auto;margin-right:auto;}
-  .ph{color:var(--brass);font-style:italic;font-size:.92em;}
+  h1,h2,h3,h4{font-family:"Spectral",Georgia,serif;font-weight:500;line-height:1.16;color:var(--navy);margin:0;}
+  .kicker{font-size:.74rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--rust);margin-bottom:14px;}
+  .rule{width:46px;height:2px;background:var(--rust);border:0;margin:20px 0 0;}
+  .ph{color:var(--rust);font-style:italic;font-size:.92em;}
 
-  /* buttons */
-  .btn{display:inline-block;font-family:"Source Sans 3";font-size:.86rem;font-weight:600;letter-spacing:.02em;text-decoration:none;padding:12px 24px;border:1px solid var(--pine);border-radius:1px;transition:.18s;cursor:pointer;}
-  .btn-primary{background:var(--pine);color:#fff;}
-  .btn-primary:hover{background:var(--pine-deep);border-color:var(--pine-deep);}
-  .btn-ghost{background:transparent;color:var(--pine);}
-  .btn-ghost:hover{background:var(--pine);color:#fff;}
+  .btn{display:inline-block;font-family:"Source Sans 3";font-size:.9rem;font-weight:600;letter-spacing:.01em;text-decoration:none;padding:14px 26px;border:1px solid var(--navy);border-radius:2px;transition:.18s;cursor:pointer;}
+  .btn-primary{background:var(--rust);color:#fff;border-color:var(--rust);}
+  .btn-primary:hover{background:var(--rust-deep);border-color:var(--rust-deep);}
+  .btn-ghost{background:transparent;color:var(--navy);}
+  .btn-ghost:hover{background:var(--navy);color:#fff;}
+  .btn-ghost-navy{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.4);padding:13px 26px;}
+  .btn-ghost-navy:hover{background:rgba(255,255,255,.10);border-color:#fff;}
 
-  /* top bar */
-  .topbar{border-bottom:1px solid var(--line);background:#fff;position:sticky;top:0;z-index:50;}
-  .topbar .wrap{display:flex;align-items:center;justify-content:space-between;height:70px;gap:24px;}
-  .lockup{display:flex;align-items:center;gap:14px;}
-  .lockup .nm{font-family:"Spectral",serif;font-weight:500;font-size:1.02rem;line-height:1.12;color:var(--pine);}
-  nav.main{display:flex;gap:26px;align-items:center;}
-  nav.main a{font-size:.86rem;font-weight:500;text-decoration:none;color:var(--text);}
-  nav.main a:hover{color:var(--brass);}
-  nav.main a.btn-primary{color:#fff;}
-  nav.main a.btn-primary:hover{color:#fff;background:var(--pine-deep);border-color:var(--pine-deep);}
-  .menu-toggle{display:none;background:none;border:0;font-size:1.5rem;color:var(--pine);cursor:pointer;}
+  /* header */
+  .topbar{background:var(--navy);border-bottom:1px solid rgba(255,255,255,.10);position:sticky;top:0;z-index:50;}
+  .topbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:24px;min-height:78px;flex-wrap:wrap;}
+  .lockup{display:flex;align-items:center;gap:14px;text-decoration:none;padding:14px 0;}
+  .lockup .nm{font-family:"Spectral",serif;font-weight:500;font-size:1.04rem;line-height:1.14;color:#fff;}
+  nav.main{display:flex;gap:26px;align-items:center;flex-wrap:wrap;}
+  nav.main a{font-size:.9rem;font-weight:500;text-decoration:none;color:var(--navlink);}
+  nav.main a:hover{color:var(--sand);}
+  nav.main a.btn-primary{color:#fff;font-size:.84rem;font-weight:600;padding:11px 20px;}
+  .menu-toggle{display:none;background:none;border:0;font-size:1.5rem;color:#fff;cursor:pointer;}
 
   /* hero */
-  .hero{background:linear-gradient(#fff,#fbfbf9);border-bottom:1px solid var(--line);}
-  .hero .wrap{padding:78px 32px 70px;text-align:center;max-width:860px;}
-  .seal{width:152px;height:152px;margin:0 auto 30px;display:block;}
-  .hero h1{font-size:clamp(2.1rem,4.4vw,3.1rem);font-weight:500;margin:0 auto 8px;max-width:18ch;}
-  .estab{font-size:.8rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:22px;}
-  .hero p.lede{font-family:"Spectral",serif;font-size:1.22rem;font-weight:400;color:#3a3f38;max-width:60ch;margin:0 auto 30px;line-height:1.55;}
-  .hero-cta{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;}
+  .hero{position:relative;background:var(--navy);overflow:hidden;}
+  .hero canvas{position:absolute;inset:0;width:100%;height:100%;display:block;}
+  .hero .veil{position:absolute;inset:0;background:linear-gradient(95deg,rgba(12,27,51,.97) 0%,rgba(12,27,51,.88) 38%,rgba(12,27,51,.55) 70%,rgba(12,27,51,.30) 100%);}
+  .hero .inner{position:relative;max-width:1160px;margin:0 auto;padding:104px 32px 100px;}
+  .hero .col{max-width:640px;}
+  .hero .kicker{color:var(--sand);margin-bottom:20px;letter-spacing:.18em;}
+  .hero h1{color:#fff;font-size:clamp(2.2rem,4.8vw,3.4rem);line-height:1.1;margin:0 0 22px;letter-spacing:-.005em;}
+  .hero p.lede{font-family:"Spectral",serif;font-size:clamp(1.06rem,1.7vw,1.28rem);color:var(--on-navy);line-height:1.55;margin:0 0 34px;max-width:56ch;}
+  .hero-cta{display:flex;gap:14px;flex-wrap:wrap;}
 
-  /* facts band */
-  .facts{background:var(--pine);color:#eef1ec;}
-  .facts .wrap{display:grid;grid-template-columns:repeat(3,1fr);}
-  .fact{padding:30px 26px;border-right:1px solid rgba(255,255,255,.13);}
+  /* facts strip */
+  .facts{background:var(--navy-strip);}
+  .facts .wrap{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));padding-left:0;padding-right:0;}
+  .fact{padding:26px 28px;border-right:1px solid rgba(255,255,255,.10);}
   .fact:last-child{border-right:0;}
-  .fact .k{font-size:.68rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--brass-soft);margin-bottom:9px;}
-  .fact .v{font-family:"Spectral",serif;font-size:1.16rem;line-height:1.3;color:#fff;}
+  .fact .k{font-size:.66rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--sand);margin-bottom:8px;}
+  .fact .v{font-family:"Spectral",serif;font-size:1.14rem;color:#fff;}
 
   /* sections */
-  section.block{padding:88px 0;border-bottom:1px solid var(--line);}
+  section.block{padding:92px 0;border-bottom:1px solid var(--line);}
   section.block.alt{background:var(--panel);}
   .block h2{font-size:clamp(1.7rem,3.2vw,2.35rem);font-weight:500;max-width:24ch;}
-  .lead{display:grid;grid-template-columns:0.85fr 1.15fr;gap:56px;}
-  .prose p{margin:0 0 16px;color:#34382f;}
-  .prose p:last-child{margin-bottom:0;}
-
-  /* objectives */
-  .obj{display:grid;grid-template-columns:repeat(3,1fr);gap:34px;margin-top:8px;}
-  .obj .o{border-top:2px solid var(--pine);padding-top:18px;}
-  .obj .o h3{font-size:1.28rem;margin-bottom:8px;}
-  .obj .o p{font-size:.96rem;color:#43473e;margin:0;}
+  .lead{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:56px;align-items:start;}
+  .prose{font-size:1.04rem;color:var(--prose);}
+  .prose p{margin:0 0 16px;}.prose p:last-child{margin-bottom:0;}
+  .mini{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:28px;margin-top:34px;}
+  .mini .m{border-top:2px solid var(--navy);padding-top:14px;}
+  .mini .m h3{font-size:1.16rem;margin-bottom:5px;}
+  .mini .m p{font-size:.92rem;color:#4A5263;margin:0;}
 
   /* governance */
-  .founder{display:flex;align-items:flex-start;gap:22px;border:1px solid var(--line);background:#fff;padding:28px 30px;border-radius:2px;margin-bottom:40px;}
+  .founder{display:flex;align-items:flex-start;gap:22px;border:1px solid var(--line);background:#fff;padding:28px 30px;border-radius:2px;margin:28px 0 36px;}
   .founder .badge{width:54px;height:54px;flex:none;}
-  .founder .role{font-size:.72rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:#111;margin-bottom:6px;}
-  .founder .name{font-family:"Spectral",serif;font-size:1.55rem;font-weight:500;color:var(--pine);line-height:1.1;}
+  .founder .role{font-size:.72rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--rust);margin-bottom:6px;}
+  .founder .name{font-family:"Spectral",serif;font-size:1.5rem;font-weight:500;color:var(--navy);line-height:1.1;}
   .founder .aff{color:var(--muted);font-size:.95rem;margin-top:6px;}
-  .board h3.sub{font-size:1.35rem;margin-bottom:4px;}
-  .board .note{font-size:.86rem;color:var(--muted);margin-bottom:18px;}
+  .board h3.sub{font-size:1.3rem;margin-bottom:4px;}
+  .board .note{font-size:.86rem;color:var(--muted);margin-bottom:14px;}
   .members{list-style:none;margin:0;padding:0;}
   .members li{display:flex;justify-content:space-between;gap:24px;align-items:baseline;padding:16px 0;border-top:1px solid var(--line);}
   .members li:last-child{border-bottom:1px solid var(--line);}
-  .members .mn{font-family:"Spectral",serif;font-size:1.12rem;color:#141414;}
-  .members .mn .ph{color:#141414;font-style:normal;font-size:1em;}
-  .members .ma{font-size:.92rem;color:var(--muted);text-align:right;max-width:54%;}
-  .caption{font-size:.84rem;color:var(--muted);margin-top:16px;font-style:italic;}
+  .members .mn{font-family:"Spectral",serif;font-size:1.08rem;color:var(--navy);}
+  .members .ma{font-size:.9rem;color:var(--muted);text-align:right;max-width:52%;}
+  .caption{font-size:.84rem;color:var(--muted-2);margin-top:16px;font-style:italic;}
 
-  /* academic resources */
-  .res{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:8px;}
-  .rcard{border:1px solid var(--line);background:#fff;padding:26px;border-radius:2px;display:flex;flex-direction:column;}
-  .rcard .rl{font-size:.68rem;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--brass);margin-bottom:12px;}
-  .rcard h3{font-size:1.18rem;margin-bottom:9px;}
-  .rcard p{font-size:.93rem;color:#43473e;margin:0 0 16px;flex:1;}
-  .rcard a.lnk{font-size:.86rem;font-weight:600;color:var(--pine);text-decoration:none;border-bottom:1px solid var(--brass);padding-bottom:2px;align-self:flex-start;}
-  .rcard a.lnk:hover{color:var(--brass);}
-
-  /* news & announcements */
-  .news-list{margin-top:8px;border-top:1px solid var(--line);}
-  .news-item{display:grid;grid-template-columns:160px 1fr;gap:30px;padding:28px 0;border-bottom:1px solid var(--line);}
-  .news-item .meta{display:flex;flex-direction:column;gap:10px;}
-  .news-item .date{font-size:.82rem;font-weight:600;color:var(--muted);letter-spacing:.02em;}
-  .news-item .cat{align-self:flex-start;font-size:.6rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--brass);border:1px solid var(--brass);border-radius:1px;padding:4px 10px;}
-  .news-item h3{font-size:1.3rem;margin-bottom:8px;}
-  .news-item p{font-size:.96rem;color:#43473e;margin:0 0 12px;max-width:62ch;}
-  .news-item a.more{font-size:.84rem;font-weight:600;color:var(--pine);text-decoration:none;border-bottom:1px solid var(--brass);padding-bottom:2px;}
-  .news-item a.more:hover{color:var(--brass);}
-  @media (max-width:600px){.news-item{grid-template-columns:1fr;gap:12px;}}
+  /* resources */
+  .res-intro{max-width:720px;margin-bottom:44px;}
+  .res-intro p{font-size:1.04rem;color:#3C4250;margin:0;}
+  .sub-h{font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--navy);margin-bottom:18px;padding-bottom:10px;border-bottom:1px solid var(--line-2);}
+  .res-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:18px;}
+  .dbcard{display:flex;flex-direction:column;background:#fff;border:1px solid var(--line);border-top:3px solid var(--rust);border-radius:2px;padding:22px 22px 20px;text-decoration:none;color:inherit;transition:.18s;}
+  .dbcard:hover{box-shadow:0 12px 30px rgba(12,27,51,.12);transform:translateY(-3px);}
+  .dbcard .tag{font-size:.62rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--rust);margin-bottom:10px;}
+  .dbcard .nm{font-family:"Spectral",serif;font-size:1.1rem;font-weight:600;color:var(--navy);line-height:1.22;margin-bottom:9px;}
+  .dbcard .ds{font-size:.9rem;color:#4A5263;line-height:1.5;flex:1;}
+  .dbcard .go{font-size:.78rem;font-weight:600;color:var(--rust);margin-top:15px;}
+  .dbcard.placeholder{justify-content:center;align-items:center;text-align:center;background:transparent;border:1px dashed #BFB39C;color:var(--muted-2);min-height:150px;}
+  .dbcard.placeholder .nm{color:var(--muted);margin-bottom:6px;}
+  .method{display:flex;gap:16px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-radius:2px;padding:22px;text-decoration:none;color:inherit;transition:.18s;}
+  .method:hover{box-shadow:0 12px 30px rgba(12,27,51,.12);transform:translateY(-3px);}
+  .method .ico{flex:none;width:42px;height:42px;border-radius:2px;background:var(--panel);display:flex;align-items:center;justify-content:center;border:1px solid var(--line);}
+  .method .kind{font-size:.62rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--rust);margin-bottom:6px;}
+  .method .mt{font-family:"Spectral",serif;font-size:1.06rem;font-weight:600;color:var(--navy);line-height:1.22;margin-bottom:7px;}
+  .method .md{font-size:.88rem;color:#4A5263;line-height:1.5;}
+  .method .meta{font-size:.74rem;color:#8A8470;margin-top:11px;}
 
   /* journal band */
-  .journal{background:var(--pine);color:#e9ede8;}
-  .journal .wrap{display:grid;grid-template-columns:1fr 1fr;gap:54px;align-items:center;padding:84px 32px;}
-  .journal .kicker{color:var(--brass-soft);}
+  .journal{background:var(--navy);color:#E9EDF4;}
+  .journal .wrap{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:54px;align-items:center;padding:88px 32px;}
+  .journal .kicker{color:var(--sand);}
   .journal h2{color:#fff;}
-  .journal .rule{background:var(--brass-soft);}
-  .journal p{color:#cdd5cd;margin:0 0 26px;}
-  .journal .btn-primary{background:var(--brass);border-color:var(--brass);}
-  .journal .btn-primary:hover{background:#876a30;border-color:#876a30;}
+  .journal .rule{background:var(--sand);}
+  .journal p{color:var(--on-navy);margin:18px 0 28px;max-width:52ch;}
   .jcard{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.18);border-radius:3px;padding:34px;}
-  .jcard .pub{font-size:.66rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--brass-soft);margin-bottom:14px;}
-  .jcard .jt{font-family:"Spectral",serif;font-size:1.7rem;font-weight:500;color:#fff;line-height:1.12;margin-bottom:12px;}
-  .jcard .jd{font-size:.95rem;color:#cdd5cd;margin:0;}
-  .jcard .meta{display:flex;gap:28px;flex-wrap:wrap;margin-top:22px;border-top:1px solid rgba(255,255,255,.15);padding-top:18px;}
-  .jcard .meta .k{font-size:.6rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--brass-soft);display:block;margin-bottom:4px;}
+  .jcard .pub{font-size:.64rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--sand);margin-bottom:14px;}
+  .jcard .jt{font-family:"Spectral",serif;font-size:1.6rem;font-weight:500;color:#fff;line-height:1.14;margin-bottom:12px;}
+  .jcard .jd{font-size:.95rem;color:var(--on-navy);margin:0;}
+  .jcard .meta{display:flex;gap:28px;flex-wrap:wrap;margin-top:24px;border-top:1px solid rgba(255,255,255,.15);padding-top:20px;}
+  .jcard .meta .k{font-size:.6rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--sand);display:block;margin-bottom:5px;}
   .jcard .meta .v{font-family:"Spectral",serif;color:#fff;font-size:1rem;}
 
-  /* membership */
-  .tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:10px;border:1px solid var(--line);border-radius:2px;overflow:hidden;background:#fff;}
-  .tier{padding:28px;border-right:1px solid var(--line);}
-  .tier:last-child{border-right:0;}
-  .tier .tl{font-size:.68rem;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--brass);margin-bottom:10px;}
-  .tier h3{font-size:1.2rem;margin-bottom:8px;}
-  .tier p{font-size:.92rem;color:#43473e;margin:0;}
+  /* news */
+  .news-list{border-top:1px solid var(--line);margin-top:30px;}
+  .news-item{display:grid;grid-template-columns:minmax(140px,160px) 1fr;gap:30px;padding:28px 0;border-bottom:1px solid var(--line);}
+  .news-item .date{font-size:.82rem;font-weight:600;color:var(--muted);}
+  .news-item .cat{align-self:flex-start;font-size:.6rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--rust);border:1px solid var(--rust);border-radius:1px;padding:4px 10px;margin-top:10px;display:inline-block;}
+  .news-item h3{font-size:1.3rem;margin:0 0 8px;}
+  .news-item p{font-size:.98rem;color:#43473E;margin:0 0 12px;max-width:64ch;}
+  .news-item a.more{font-size:.84rem;font-weight:600;color:var(--rust);text-decoration:none;border-bottom:1px solid var(--rust);padding-bottom:2px;}
+
+  /* membership CTA */
+  .mcta .wrap{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:40px;align-items:center;}
+  .mcta p{font-size:1.02rem;color:#3C4250;margin:14px 0 0;max-width:50ch;}
+  .mcta .actions{display:flex;gap:14px;flex-wrap:wrap;}
 
   /* footer */
-  footer{background:var(--pine-deep);color:#c4cdc4;padding:66px 0 30px;}
-  footer .grid{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:44px;}
-  footer h4{font-size:.66rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--brass-soft);margin:0 0 16px;font-family:"Source Sans 3",sans-serif;}
-  footer a{color:#c4cdc4;text-decoration:none;display:block;margin-bottom:9px;font-size:.92rem;}
+  footer{background:var(--navy-deep);color:var(--foot);padding:62px 0 28px;}
+  footer .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:44px;}
+  footer h4{font-size:.66rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--sand);margin:0 0 16px;font-family:"Source Sans 3",sans-serif;}
+  footer a{color:var(--foot);text-decoration:none;display:block;margin-bottom:9px;font-size:.92rem;}
   footer a:hover{color:#fff;}
-  footer .own{font-size:.92rem;line-height:1.7;color:#aab4aa;}
-  footer .own strong{color:#fff;font-family:"Spectral",serif;font-weight:500;font-size:1.05rem;}
-  .footnote{border-top:1px solid rgba(255,255,255,.13);margin-top:46px;padding-top:22px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;font-size:.8rem;color:#8d978d;}
+  footer .own{font-size:.92rem;line-height:1.7;color:var(--foot);}
+  footer .own strong{color:#fff;font-family:"Spectral",serif;font-weight:500;font-size:1.04rem;}
+  footer .addr{display:block;font-size:.92rem;line-height:1.7;color:var(--foot);}
+  .footnote{border-top:1px solid rgba(255,255,255,.12);margin-top:44px;padding-top:22px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;font-size:.8rem;color:#6E7C92;}
 
-  @media (max-width:880px){
-    .lead{grid-template-columns:1fr;gap:24px;}
-    .obj,.res,.tiers{grid-template-columns:1fr;}
-    .tier{border-right:0;border-bottom:1px solid var(--line);}.tier:last-child{border-bottom:0;}
-    .facts .wrap{grid-template-columns:1fr;}
-    .fact{border-right:0;border-bottom:1px solid rgba(255,255,255,.13);}.fact:last-child{border-bottom:0;}
-    .journal .wrap{grid-template-columns:1fr;}
-    .members .ma{max-width:50%;}
-    footer .grid{grid-template-columns:1fr;}
-    nav.main{display:none;position:absolute;top:70px;left:0;right:0;background:#fff;flex-direction:column;align-items:flex-start;padding:20px 32px;border-bottom:1px solid var(--line);gap:18px;}
+  @media (max-width:920px){
+    nav.main{display:none;position:absolute;top:78px;left:0;right:0;background:var(--navy);flex-direction:column;align-items:flex-start;padding:20px 32px;border-bottom:1px solid rgba(255,255,255,.10);gap:18px;}
     nav.main.open{display:flex;}
     .menu-toggle{display:block;}
   }
-  @media (max-width:560px){.res{grid-template-columns:1fr;}.members li{flex-direction:column;gap:4px;}.members .ma{text-align:left;max-width:100%;}}
+  @media (max-width:600px){.news-item{grid-template-columns:1fr;gap:12px;}.members li{flex-direction:column;gap:4px;}.members .ma{text-align:left;max-width:100%;}}
   @media (prefers-reduced-motion:reduce){*{transition:none!important;}}
-  :focus-visible{outline:2px solid var(--brass);outline-offset:3px;}
-
-  /* membership modal + form */
-  .modal-overlay{position:fixed;inset:0;background:rgba(21,48,42,.55);display:none;align-items:flex-start;justify-content:center;padding:40px 20px;z-index:100;overflow-y:auto;}
-  .modal-overlay.open{display:flex;}
-  .modal{background:#fff;max-width:640px;width:100%;border-radius:3px;border-top:4px solid var(--brass);box-shadow:0 24px 60px rgba(0,0,0,.28);}
-  .modal-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;padding:28px 30px 0;}
-  .modal-head h3{font-size:1.55rem;color:var(--pine);}
-  .modal-head p{font-size:.92rem;color:var(--muted);margin:6px 0 0;}
-  .modal-close{background:none;border:0;font-size:1.7rem;line-height:1;color:var(--muted);cursor:pointer;padding:0 4px;}
-  .modal-close:hover{color:var(--pine);}
-  .mform{padding:20px 30px 30px;}
-  .frow{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
-  .field{margin-bottom:16px;}
-  .field.full{grid-column:1/-1;}
-  .field label{display:block;font-size:.8rem;font-weight:600;color:var(--pine);margin-bottom:6px;}
-  .field label .req{color:var(--brass);}
-  .field input,.field select,.field textarea{width:100%;font-family:"Source Sans 3",sans-serif;font-size:.95rem;color:var(--text);padding:11px 13px;border:1px solid var(--line);border-radius:2px;background:#fff;transition:.15s;}
-  .field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--pine);box-shadow:0 0 0 3px rgba(34,67,58,.12);}
-  .field textarea{resize:vertical;min-height:82px;}
-  .mform .actions{margin-top:6px;display:flex;align-items:center;gap:14px;}
-  .mform .actions .btn{cursor:pointer;}
-  .form-note{font-size:.8rem;color:var(--muted);margin-top:14px;}
-  .form-msg{display:none;padding:14px 16px;border-radius:2px;font-size:.92rem;margin-bottom:16px;}
-  .form-msg.show{display:block;}
-  .form-msg.success{background:#eef3ec;border:1px solid #9fb6a3;color:#2c4a39;}
-  .form-msg.error{background:#f6ece6;border:1px solid #c9a48c;color:#8a4b2c;}
-  .hide{display:none!important;}
-  @media (max-width:560px){.frow{grid-template-columns:1fr;}}
 </style>
+<link rel="stylesheet" href="assets/site.css">
 </head>
 <body>
 
-<!-- TOP BAR -->
+<!-- UTILITY BAR -->
+<div class="utilitybar">
+  <div class="wrap">
+    <span class="ub-tag">An international learned society &middot; Founded 2026</span>
+    <span class="ub-links">
+      <a href="journal.html">Submit research</a>
+      <a href="#news">News</a>
+      <a href="contact.html">Contact</a>
+    </span>
+  </div>
+</div>
+
+<!-- HEADER -->
 <header class="topbar">
   <div class="wrap">
-    <div class="lockup">
-      <svg width="40" height="40" viewBox="0 0 40 40" aria-hidden="true">
-        <circle cx="20" cy="20" r="18.5" fill="none" stroke="#22433A" stroke-width="1.3"/>
-        <circle cx="20" cy="20" r="15" fill="none" stroke="#9A7B3C" stroke-width="0.8"/>
-        <g fill="none" stroke="#22433A" stroke-width="1.1" opacity="0.72">
+    <a class="lockup" href="index.html">
+      <svg width="42" height="42" viewBox="0 0 40 40" aria-hidden="true" style="flex:none;">
+        <circle cx="20" cy="20" r="18.5" fill="none" stroke="#E7C9A6" stroke-width="1.2"/>
+        <circle cx="20" cy="20" r="15" fill="none" stroke="rgba(231,201,166,.45)" stroke-width="0.7"/>
+        <g fill="none" stroke="#9FB0CC" stroke-width="1" opacity="0.8">
           <path d="M14.9,22.8 L18.1,16.3"/><path d="M18.1,16.3 L24.2,14.9"/><path d="M24.2,14.9 L26.1,20.9"/>
           <path d="M26.1,20.9 L21.9,25.1"/><path d="M21.9,25.1 L14.9,22.8"/>
-          <path d="M20,20 L18.1,16.3"/><path d="M20,20 L24.2,14.9"/><path d="M20,20 L21.9,25.1"/>
-          <path d="M14.9,22.8 L24.2,14.9"/>
+          <path d="M20,20 L18.1,16.3"/><path d="M20,20 L24.2,14.9"/><path d="M20,20 L21.9,25.1"/><path d="M14.9,22.8 L24.2,14.9"/>
         </g>
-        <circle cx="18.1" cy="16.3" r="1.5" fill="#22433A"/>
-        <circle cx="24.2" cy="14.9" r="2" fill="#9A7B3C"/>
-        <circle cx="26.1" cy="20.9" r="1.5" fill="#22433A"/>
-        <circle cx="21.9" cy="25.1" r="1.5" fill="#22433A"/>
-        <circle cx="14.9" cy="22.8" r="1.5" fill="#22433A"/>
-        <circle cx="20" cy="20" r="1.7" fill="#9A7B3C"/>
+        <circle cx="18.1" cy="16.3" r="1.5" fill="#9FB0CC"/><circle cx="24.2" cy="14.9" r="2" fill="#C4764A"/>
+        <circle cx="26.1" cy="20.9" r="1.5" fill="#9FB0CC"/><circle cx="21.9" cy="25.1" r="1.5" fill="#9FB0CC"/>
+        <circle cx="14.9" cy="22.8" r="1.5" fill="#9FB0CC"/><circle cx="20" cy="20" r="1.8" fill="#C4764A"/>
       </svg>
       <span class="nm">Society for Economic &amp;<br>Regional Policy Interactions</span>
-    </div>
+    </a>
     <button class="menu-toggle" aria-label="Toggle menu" onclick="document.getElementById('nav').classList.toggle('open')">&#9776;</button>
     <nav class="main" id="nav">
       <a href="#about">About</a>
-      <a href="#objectives">Objectives</a>
-      <a href="#governance">Governance</a>
-      <a href="#resources">Resources</a>
-      <a href="#journal">Journal</a>
+      <a href="membership.html">Membership</a>
+      <a href="journal.html">Journals &amp; Publications</a>
+      <a href="#resources">Resources for Economists</a>
       <a href="#news">News</a>
-      <a class="btn btn-primary" href="#membership" onclick="openJoin(event)">Join the Society</a>
+      <a class="btn btn-primary" href="membership.html">Join the Society</a>
     </nav>
   </div>
 </header>
 
 <!-- HERO -->
 <section class="hero">
-  <div class="wrap">
-    <!-- formal society seal -->
-    <svg class="seal" viewBox="0 0 200 200" role="img" aria-label="Seal of the Society for Economic and Regional Policy Interactions">
-      <defs>
-        <path id="sealTop" d="M24,100 A76,76 0 0 0 176,100"/>
-        <path id="sealBot" d="M34,100 A66,66 0 0 1 166,100"/>
-      </defs>
-      <circle cx="100" cy="100" r="94" fill="none" stroke="#22433A" stroke-width="1.4"/>
-      <circle cx="100" cy="100" r="88" fill="none" stroke="#9A7B3C" stroke-width="0.8"/>
-      <circle cx="100" cy="100" r="58" fill="none" stroke="#22433A" stroke-width="1"/>
-      <text font-family="Source Sans 3, sans-serif" font-size="6" font-weight="600" letter-spacing="0.2" fill="#22433A">
-        <textPath href="#sealTop" startOffset="50%" text-anchor="middle">SOCIETY FOR ECONOMIC AND REGIONAL POLICY INTERACTIONS</textPath>
-      </text>
-      <text font-family="Source Sans 3, sans-serif" font-size="9.5" font-weight="700" letter-spacing="2.5" fill="#9A7B3C">
-        <textPath href="#sealBot" startOffset="50%" text-anchor="middle">&#8226;&#160;&#160;&#160;SERPI&#160;&#160;&#160;&#8226;</textPath>
-      </text>
-      <!-- central network emblem (matches header mark) -->
-      <g fill="none" stroke="#22433A" stroke-width="1.4" opacity="0.7">
-        <path d="M78,112 L92,84"/><path d="M92,84 L118,78"/><path d="M118,78 L126,104"/>
-        <path d="M126,104 L108,122"/><path d="M108,122 L78,112"/>
-        <path d="M100,100 L92,84"/><path d="M100,100 L118,78"/><path d="M100,100 L108,122"/>
-        <path d="M78,112 L118,78"/>
-      </g>
-      <circle cx="92" cy="84" r="3.2" fill="#22433A"/>
-      <circle cx="118" cy="78" r="4.4" fill="#9A7B3C"/>
-      <circle cx="126" cy="104" r="3.2" fill="#22433A"/>
-      <circle cx="108" cy="122" r="3.2" fill="#22433A"/>
-      <circle cx="78" cy="112" r="3.2" fill="#22433A"/>
-      <circle cx="100" cy="100" r="3.6" fill="#9A7B3C"/>
-    </svg>
-
-    <h1>Society for Economic and Regional Policy Interactions</h1>
-    <p class="lede">A learned society advancing research at the intersection of modern economics and regional economics — and the policy questions that live between the two.</p>
-    <div class="hero-cta">
-      <a class="btn btn-primary" href="journal.html">Explore the Journal</a>
-      <a class="btn btn-ghost" href="#about">About the Society</a>
+  <canvas id="serpiNet"></canvas>
+  <div class="veil"></div>
+  <div class="inner">
+    <div class="col">
+      <div class="kicker">A learned society for economic &amp; regional policy</div>
+      <h1>Where modern economics and regional policy meet.</h1>
+      <p class="lede">An independent academic society advancing rigorous research at the intersection of economics and regional policy &mdash; and the questions that live between the two.</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="#resources">Resources for Economists</a>
+        <a class="btn btn-ghost-navy" href="journal.html">Explore the Journal</a>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- FACTS BAND (legal status removed) -->
+<!-- FACTS -->
 <div class="facts">
   <div class="wrap">
     <div class="fact"><div class="k">Founded</div><div class="v">2026</div></div>
     <div class="fact"><div class="k">Flagship journal</div><div class="v">Economic &amp; Regional Policy Interactions</div></div>
-    <div class="fact"><div class="k">Field</div><div class="v">Economic &amp; regional policy</div></div>
+    <div class="fact"><div class="k">Access</div><div class="v">Open access &middot; CC BY 4.0</div></div>
   </div>
 </div>
 
@@ -286,34 +230,25 @@
     <div class="lead">
       <div>
         <div class="kicker">About the Society</div>
-        <h2>A responsible home for serious scholarship.</h2>
+        <h2 style="max-width:18ch;">A responsible home for serious scholarship.</h2>
         <hr class="rule">
       </div>
       <div class="prose">
-        <p>The Society for Economic and Regional Policy Interactions exists to advance research where modern economics and regional economics meet, and to apply that research to real policy questions.</p>
-        <p>As an academic society, we are the responsible body behind our journal: we own and govern the publication, uphold its ethical standards, and protect its editorial independence and long-term continuity — independent of any single individual.</p>
+        <p>The Society for Economic and Regional Policy Interactions exists to advance research where modern economics and regional economics meet, and to bring that research to bear on real policy questions.</p>
+        <p>As an academic society, we are the responsible body behind our journal &mdash; we own and govern the publication, uphold its ethical standards, and protect its editorial independence and long-term continuity, independent of any single individual.</p>
         <p>We are building a community of scholars across institutions and countries who share an interest in how regions, economies, and policy shape one another.</p>
+        <div class="mini">
+          <div class="m"><h3>Publish</h3><p>A rigorous, transparent, peer-reviewed journal.</p></div>
+          <div class="m"><h3>Convene</h3><p>Seminars, working papers and special issues.</p></div>
+          <div class="m"><h3>Uphold</h3><p>Research integrity and open scholarship.</p></div>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- OBJECTIVES -->
-<section class="block alt" id="objectives">
-  <div class="wrap">
-    <div class="kicker">Our Objectives</div>
-    <h2>What the Society sets out to do.</h2>
-    <hr class="rule">
-    <div class="obj">
-      <div class="o"><h3>Publish</h3><p>Maintain a rigorous, transparent, peer-reviewed journal bridging economic and regional policy research.</p></div>
-      <div class="o"><h3>Convene</h3><p>Bring scholars together through seminars, working papers, and — in time — conferences and special issues.</p></div>
-      <div class="o"><h3>Uphold standards</h3><p>Champion research integrity, ethical publishing, and open scholarship across everything we do.</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- GOVERNANCE (Founder + Advisory Board) -->
-<section class="block" id="governance">
+<!-- GOVERNANCE -->
+<section class="block alt" id="governance">
   <div class="wrap">
     <div class="kicker">Governance &amp; Leadership</div>
     <h2>Founded with purpose, guided by an advisory board.</h2>
@@ -321,12 +256,12 @@
 
     <div class="founder">
       <svg class="badge" viewBox="0 0 40 40" aria-hidden="true">
-        <circle cx="20" cy="20" r="18.5" fill="none" stroke="#22433A" stroke-width="1.3"/>
-        <circle cx="20" cy="20" r="14.5" fill="none" stroke="#9A7B3C" stroke-width="0.8"/>
-        <circle cx="20" cy="20" r="3.4" fill="#9A7B3C"/>
-        <circle cx="13" cy="16" r="2" fill="#22433A"/><circle cx="27" cy="16" r="2" fill="#22433A"/>
-        <circle cx="20" cy="28" r="2" fill="#22433A"/>
-        <g stroke="#22433A" stroke-width="0.9" opacity="0.7" fill="none"><path d="M13,16 L20,20 L27,16 M20,20 L20,28"/></g>
+        <circle cx="20" cy="20" r="18.5" fill="none" stroke="#0C1B33" stroke-width="1.3"/>
+        <circle cx="20" cy="20" r="14.5" fill="none" stroke="#A8502E" stroke-width="0.8"/>
+        <circle cx="20" cy="20" r="3.4" fill="#A8502E"/>
+        <circle cx="13" cy="16" r="2" fill="#0C1B33"/><circle cx="27" cy="16" r="2" fill="#0C1B33"/>
+        <circle cx="20" cy="28" r="2" fill="#0C1B33"/>
+        <g stroke="#0C1B33" stroke-width="0.9" opacity="0.7" fill="none"><path d="M13,16 L20,20 L27,16 M20,20 L20,28"/></g>
       </svg>
       <div>
         <div class="role">Founder</div>
@@ -339,10 +274,10 @@
       <h3 class="sub">Advisory Board</h3>
       <p class="note">Distinguished scholars advising on the Society's academic direction and standards.</p>
       <ul class="members">
-        <li><span class="mn"><span class="ph">Muhammad Shoaib Asghar Kahut, Shandong University, China</span></span><span class="ma">Macroeconomics, Regional environmental policy</li>
-        <li><span class="mn"><span class="ph">Muhammad Mujahid Iqbal, Pakistan Institute of Development Economics, Pakistan</span></span><span class="ma">Social saftey nets, Fiscal &amp; monetary policy</li>
-        <li><span class="mn"><span class="ph">Hongru Sha, Business School, Nanjing University, China</span></span><span class="ma">Innovation networks, Regional development</li>
-        <li><span class="mn"><span class="ph">Muhammad Ayyoub, Government College Women University, Pakistan; University of Sahiwal, Pakistan</span></span><span class="ma">Macroeconomics, Monetary policy</li>
+        <li><span class="mn"><span class="ph">Muhammad Shoaib Asghar Kahut, Shandong University, China</span></span><span class="ma">Macroeconomics, Regional environmental policy</span></li>
+        <li><span class="mn"><span class="ph">Muhammad Mujahid Iqbal, Pakistan Institute of Development Economics, Pakistan</span></span><span class="ma">Social safety nets, Fiscal &amp; monetary policy</span></li>
+        <li><span class="mn"><span class="ph">Hongru Sha, Business School, Nanjing University, China</span></span><span class="ma">Innovation networks, Regional development</span></li>
+        <li><span class="mn"><span class="ph">Muhammad Ayyoub, Government College Women University &amp; University of Sahiwal, Pakistan</span></span><span class="ma">Macroeconomics, Monetary policy</span></li>
         <li><span class="mn"><span class="ph">[Advisory member]</span></span><span class="ma">Trade &amp; regional integration &middot; <span class="ph">[University, Country]</span></span></li>
       </ul>
       <p class="caption">Advisory appointments in progress.</p>
@@ -350,61 +285,51 @@
   </div>
 </section>
 
-<!-- ACADEMIC RESOURCES -->
-<section class="block alt" id="resources">
+<!-- RESOURCES FOR ECONOMISTS -->
+<section class="block" id="resources">
   <div class="wrap">
-    <div class="kicker">Academic Resources</div>
-    <h2>Tools and references for our research community.</h2>
-    <hr class="rule">
-    <div class="res">
-      <div class="rcard">
-        <div class="rl">Classification</div>
-        <h3>JEL Classification Codes</h3>
-        <p>The Journal of Economic Literature codes used to classify economics research — required for our submissions and for indexing in EconLit and RePEc.</p>
-        <a class="lnk" href="https://www.aeaweb.org/econlit/jelCodes.php" target="_blank" rel="noopener">View JEL codes &rarr;</a>
-      </div>
-      <div class="rcard">
-        <div class="rl">Discovery</div>
-        <h3>RePEc &amp; IDEAS</h3>
-        <p>The economics discipline's open bibliographic network, where economists discover working papers, articles, and author profiles.</p>
-        <a class="lnk" href="https://ideas.repec.org/" target="_blank" rel="noopener">Browse RePEc &rarr;</a>
-      </div>
-      <div class="rcard">
-        <div class="rl">Integrity</div>
-        <h3>Research &amp; Publication Ethics</h3>
-        <p>The Committee on Publication Ethics (COPE) guidelines that govern authorship, peer review, corrections, and misconduct.</p>
-        <a class="lnk" href="https://publicationethics.org/" target="_blank" rel="noopener">COPE guidelines &rarr;</a>
-      </div>
-      <div class="rcard">
-        <div class="rl">Open access</div>
-        <h3>Licensing &amp; Author Rights</h3>
-        <p>How Creative Commons licensing works. Our journal publishes open access under CC BY 4.0, with authors retaining copyright.</p>
-        <a class="lnk" href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">About CC BY 4.0 &rarr;</a>
-      </div>
-      <div class="rcard">
-        <div class="rl">Identity</div>
-        <h3>ORCID for Researchers</h3>
-        <p>A free, persistent identifier that distinguishes you from every other researcher and links your work across databases.</p>
-        <a class="lnk" href="https://orcid.org/" target="_blank" rel="noopener">Register for ORCID &rarr;</a>
-      </div>
-      <div class="rcard">
-        <div class="rl">Authors</div>
-        <h3>Submission Guidance</h3>
-        <p>Author guidelines, manuscript structure, abstract and JEL requirements, and the referencing style for the Society's journal.</p>
-        <a class="lnk" href="#">Read guidelines &rarr; <span class="ph">[link to journal]</span></a>
-      </div>
+    <div class="res-intro">
+      <div class="kicker">Resources for Economists</div>
+      <h2>Data, databases and research methods, in one place.</h2>
+      <hr class="rule" style="margin:18px 0;">
+      <p>A curated, annotated gateway to the data sources economists rely on, alongside the Society's technical notes on research methods. Each link opens an external database maintained by its respective institution.</p>
+    </div>
+
+    <div class="sub-h">External databases &amp; data sources</div>
+    <div class="res-grid">
+      <a class="dbcard" href="https://fred.stlouisfed.org/" target="_blank" rel="noopener"><span class="tag">Macro &amp; time series</span><span class="nm">FRED — Federal Reserve Economic Data</span><span class="ds">Over 800,000 U.S. and international economic time series from 100+ sources — GDP, inflation, employment and rates — with charting and a full API.</span><span class="go">Open database &rarr;</span></a>
+      <a class="dbcard" href="https://data.worldbank.org/" target="_blank" rel="noopener"><span class="tag">Development</span><span class="nm">World Bank Open Data</span><span class="ds">Free, comprehensive development indicators for nearly every country, including the World Development Indicators (WDI) and Global Economic Monitor.</span><span class="go">Open database &rarr;</span></a>
+      <a class="dbcard" href="https://www.imf.org/en/Data" target="_blank" rel="noopener"><span class="tag">International finance</span><span class="nm">IMF Data</span><span class="ds">International Financial Statistics, World Economic Outlook, Balance of Payments, Government Finance Statistics and Direction of Trade.</span><span class="go">Open database &rarr;</span></a>
+      <a class="dbcard" href="https://data-explorer.oecd.org/" target="_blank" rel="noopener"><span class="tag">Cross-country</span><span class="nm">OECD Data Explorer</span><span class="ds">Harmonised indicators across OECD member and partner economies — productivity, labour, trade, taxation and well-being.</span><span class="go">Open database &rarr;</span></a>
+      <a class="dbcard" href="https://www.nber.org/research/data" target="_blank" rel="noopener"><span class="tag">Working papers</span><span class="nm">NBER</span><span class="ds">Working papers and public datasets from the National Bureau of Economic Research, including TAXSIM and macro-history files.</span><span class="go">Open database &rarr;</span></a>
+      <a class="dbcard" href="https://www.rug.nl/ggdc/productivity/pwt/" target="_blank" rel="noopener"><span class="tag">Comparable accounts</span><span class="nm">Penn World Table</span><span class="ds">Purchasing-power-parity national accounts for 180+ countries since 1950 — the standard for cross-country income and productivity comparisons.</span><span class="go">Open database &rarr;</span></a>
+      <a class="dbcard" href="https://ec.europa.eu/eurostat" target="_blank" rel="noopener"><span class="tag">Europe &amp; regions</span><span class="nm">Eurostat</span><span class="ds">Official EU statistics — regional (NUTS) accounts, demography, labour markets and trade at fine geographic resolution.</span><span class="go">Open database &rarr;</span></a>
+      <a class="dbcard" href="https://www.ipums.org/" target="_blank" rel="noopener"><span class="tag">Microdata</span><span class="nm">IPUMS</span><span class="ds">Harmonised census and survey microdata from the U.S. and 100+ countries — individual-level records for labour, demography and migration.</span><span class="go">Open database &rarr;</span></a>
+      <a class="dbcard" href="https://www.rug.nl/ggdc/historicaldevelopment/maddison/" target="_blank" rel="noopener"><span class="tag">Long-run history</span><span class="nm">Maddison Project Database</span><span class="ds">Historical estimates of GDP per capita across the world economy — the reference for long-run growth and divergence studies.</span><span class="go">Open database &rarr;</span></a>
+      <a class="dbcard" href="https://wid.world/" target="_blank" rel="noopener"><span class="tag">Inequality</span><span class="nm">World Inequality Database (WID)</span><span class="ds">The most extensive series on the historical evolution of income and wealth inequality, within and between countries.</span><span class="go">Open database &rarr;</span></a>
+      <a class="dbcard" href="https://comtradeplus.un.org/" target="_blank" rel="noopener"><span class="tag">Trade</span><span class="nm">UN Comtrade</span><span class="ds">Detailed bilateral international trade statistics by commodity and partner — the backbone of gravity and trade-policy research.</span><span class="go">Open database &rarr;</span></a>
+      <a class="dbcard" href="https://ideas.repec.org/" target="_blank" rel="noopener"><span class="tag">Discovery</span><span class="nm">RePEc / IDEAS</span><span class="ds">The discipline's open bibliographic network — working papers, articles, author rankings and citation data across economics.</span><span class="go">Open database &rarr;</span></a>
+      <div class="dbcard placeholder"><div class="nm">Add your own source</div><div style="font-size:.85rem;line-height:1.5;">Space reserved for additional databases, national statistics offices and field-specific archives.</div></div>
+    </div>
+
+    <div class="sub-h" style="margin-top:48px;">Technical notes &amp; research methods</div>
+    <div class="res-grid">
+      <a class="method" href="#"><span class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#A8502E" stroke-width="1.6"><path d="M14 3v5h5"/><path d="M19 21V8.5L13.5 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1z"/></svg></span><span><span class="kind">Technical note</span><span class="mt">Spatial Econometrics Primer</span><span class="md">Weights matrices, spatial lag and error models, and interpreting direct and indirect effects for regional data.</span><span class="meta">PDF &middot; placeholder</span></span></a>
+      <a class="method" href="#"><span class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#A8502E" stroke-width="1.6"><path d="M14 3v5h5"/><path d="M19 21V8.5L13.5 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1z"/></svg></span><span><span class="kind">Methods</span><span class="mt">Panel Data &amp; Fixed Effects</span><span class="md">Within, between and two-way fixed-effects estimators, clustering, and common pitfalls in regional panels.</span><span class="meta">PDF &middot; placeholder</span></span></a>
+      <a class="method" href="#"><span class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#A8502E" stroke-width="1.6"><path d="M14 3v5h5"/><path d="M19 21V8.5L13.5 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1z"/></svg></span><span><span class="kind">Methods</span><span class="mt">Difference-in-Differences</span><span class="md">Modern DiD with staggered adoption, event-study designs and recent robust estimators.</span><span class="meta">PDF &middot; placeholder</span></span></a>
+      <a class="method" href="#"><span class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#A8502E" stroke-width="1.6"><path d="M14 3v5h5"/><path d="M19 21V8.5L13.5 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1z"/></svg></span><span><span class="kind">Reproducibility</span><span class="mt">Replication &amp; Data Checklist</span><span class="md">The Society's checklist for replication packages, code and data citation accompanying submissions.</span><span class="meta">PDF &middot; placeholder</span></span></a>
     </div>
   </div>
 </section>
 
-<!-- JOURNAL -->
+<!-- JOURNAL BAND -->
 <section class="journal" id="journal">
   <div class="wrap">
     <div>
-      <div class="kicker">Our Flagship Journal</div>
+      <div class="kicker">Our flagship journal</div>
       <h2>Economic and Regional Policy Interactions</h2>
       <hr class="rule">
-      <p>A peer-reviewed, open-access journal publishing theoretical and empirical research, and reviews, that bridge modern economics and regional economics to answer policy-relevant questions. Published and governed by the Society.</p>
+      <p>A peer-reviewed, open-access journal publishing theoretical and empirical research that bridges modern economics and regional economics to answer policy-relevant questions. Published and governed by the Society.</p>
       <a class="btn btn-primary" href="journal.html">Visit the Journal</a>
     </div>
     <div class="jcard">
@@ -412,63 +337,62 @@
       <div class="jt">Economic &amp; Regional Policy Interactions</div>
       <p class="jd">Bridging the pillars of modern economics and regional economics for better policy.</p>
       <div class="meta">
-        <div><span class="k">Editor-in-Chief</span><span class="v">Ahmad Nawaz</span></div>
         <div><span class="k">Peer review</span><span class="v">Double-anonymized</span></div>
-        <div><span class="k">Access</span><span class="v">Open (CC BY)</span></div>
+        <div><span class="k">Access</span><span class="v">Open (CC BY 4.0)</span></div>
+        <div><span class="k">Indexing</span><span class="v">RePEc &middot; EconLit</span></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- NEWS & ANNOUNCEMENTS -->
-<section class="block alt" id="news">
+<!-- NEWS -->
+<section class="block" id="news">
   <div class="wrap">
     <div class="kicker">News &amp; Announcements</div>
     <h2>Latest from the Society.</h2>
     <hr class="rule">
     <div class="news-list">
       <article class="news-item">
-        <div class="meta"><span class="date">[Month 2026]</span><span class="cat">Call for Papers</span></div>
+        <div><span class="date">[Month 2026]</span><br><span class="cat">Call for Papers</span></div>
         <div>
           <h3>Inaugural issue &mdash; call for submissions</h3>
-          <p>The Society invites original research, empirical studies, and review articles bridging modern economics and regional economics for the inaugural issue of our journal.</p>
+          <p>The Society invites original research, empirical studies and review articles bridging modern economics and regional economics for the inaugural issue of our journal.</p>
           <a class="more" href="journal.html">Read submission details &rarr;</a>
         </div>
       </article>
       <article class="news-item">
-        <div class="meta"><span class="date">[Month 2026]</span><span class="cat">Editorial Board</span></div>
+        <div><span class="date">[Month 2026]</span><br><span class="cat">Editorial Board</span></div>
         <div>
           <h3>Applications open: editorial &amp; advisory board</h3>
-          <p>We welcome expressions of interest from scholars wishing to contribute as editorial board members, advisory board members, or reviewers for the Society's journal.</p>
-          <a class="more" href="#" onclick="openJoin(event)">Apply to join &rarr;</a>
+          <p>We welcome expressions of interest from scholars wishing to contribute as editorial board members, advisory board members, or reviewers for the journal.</p>
+          <a class="more" href="membership.html">Apply to join &rarr;</a>
         </div>
       </article>
       <article class="news-item">
-        <div class="meta"><span class="date">[Month 2026]</span><span class="cat">Society</span></div>
+        <div><span class="date">[Month 2026]</span><br><span class="cat">Society</span></div>
         <div>
           <h3>The Society is established</h3>
-          <p>The Society for Economic and Regional Policy Interactions is founded to advance research at the intersection of economics and regional policy, and to publish a transparent, peer-reviewed, open-access journal.</p>
+          <p>SERPI is founded to advance research at the intersection of economics and regional policy, and to publish a transparent, peer-reviewed, open-access journal.</p>
           <a class="more" href="#about">About the Society &rarr;</a>
         </div>
       </article>
     </div>
-    <p class="caption">Announcement dates and details are placeholders &mdash; replace with your real updates.</p>
+    <p class="caption">Announcement dates and details are placeholders &mdash; replace with the Society's real updates.</p>
   </div>
 </section>
 
-<!-- MEMBERSHIP -->
-<section class="block" id="membership">
+<!-- MEMBERSHIP CTA -->
+<section class="block alt mcta" id="membership">
   <div class="wrap">
-    <div class="kicker">Membership</div>
-    <h2>Become part of the community.</h2>
-    <hr class="rule">
-    <p class="prose" style="max-width:60ch;">Membership will connect researchers working across economics and regional policy. Structure and benefits are being finalised.</p>
-    <div class="tiers">
-      <div class="tier"><div class="tl">Individual</div><h3>Researcher</h3><p>For faculty, researchers, and practitioners — updates, participation, and reduced fees for Society events.</p></div>
-      <div class="tier"><div class="tl">Student</div><h3>Early-career</h3><p>For graduate students and early-career scholars, at a concessional rate.</p></div>
-      <div class="tier"><div class="tl">Institutional</div><h3>Institution</h3><p>For departments and institutes wishing to support the Society's mission.</p></div>
+    <div>
+      <div class="kicker">Membership</div>
+      <h2>Become part of the community.</h2>
+      <p>Membership connects researchers working across economics and regional policy &mdash; with updates, participation in Society activities, and reduced fees for events.</p>
     </div>
-    <div style="margin-top:30px;"><a class="btn btn-primary" href="#" onclick="openJoin(event)">Apply for membership</a></div>
+    <div class="actions">
+      <a class="btn btn-primary" href="membership.html">Apply for membership</a>
+      <a class="btn btn-ghost" href="#about">About the Society</a>
+    </div>
   </div>
 </section>
 
@@ -476,24 +400,27 @@
 <footer>
   <div class="wrap">
     <div class="grid">
-      <div>
+      <div style="max-width:34ch;">
         <h4>The Society</h4>
-        <p class="own"><strong>Society for Economic and Regional Policy Interactions</strong><br>
-        Established 2026. The responsible body governing the journal Economic and Regional Policy Interactions.</p>
+        <p class="own"><strong>Society for Economic and Regional Policy Interactions</strong><br>Established 2026. The responsible body governing the journal <em>Economic and Regional Policy Interactions</em>.</p>
       </div>
       <div>
         <h4>Explore</h4>
         <a href="#about">About</a>
-        <a href="#objectives">Objectives</a>
-        <a href="#governance">Governance</a>
-        <a href="#resources">Academic Resources</a>
-        <a href="journal.html">The Journal</a>
+        <a href="membership.html">Membership</a>
+        <a href="journal.html">Journals &amp; Publications</a>
+        <a href="#news">News</a>
+      </div>
+      <div>
+        <h4>Resources</h4>
+        <a href="#resources">Databases &amp; data sources</a>
+        <a href="#resources">Technical notes</a>
+        <a href="https://ideas.repec.org/" target="_blank" rel="noopener">RePEc / IDEAS</a>
       </div>
       <div>
         <h4>Contact</h4>
         <a href="contact.html">Contact the editorial team</a>
-        <a href="#">Academic block I, Department of Economics, University of Sahiwal, Sahiwal 57000</a>
-        <a href="#">Pakistan</a>
+        <span class="addr">Department of Economics, University of Sahiwal, Sahiwal 57000, Pakistan</span>
       </div>
     </div>
     <div class="footnote">
@@ -503,291 +430,52 @@
   </div>
 </footer>
 
-<!-- MEMBERSHIP MODAL -->
-<div class="modal-overlay" id="joinModal" role="dialog" aria-modal="true" aria-labelledby="joinTitle">
-  <div class="modal">
-    <div class="modal-head">
-      <div>
-        <div class="kicker">Membership</div>
-        <h3 id="joinTitle">Join the Society</h3>
-        <p>Complete the form below to apply. We'll be in touch by email.</p>
-      </div>
-      <button class="modal-close" aria-label="Close" onclick="closeJoin()">&times;</button>
-    </div>
-    <form class="mform" id="joinForm">
-      <!-- Web3Forms: replace the value below with your own access key from web3forms.com -->
-      <input type="hidden" name="access_key" value="c44bae92-98ff-4e68-acb2-922600d0d4b3">
-      <input type="hidden" name="subject" value="New SERPI Membership Application">
-      <input type="hidden" name="from_name" value="SERPI Website">
-      <input type="checkbox" name="botcheck" class="hide" style="display:none" tabindex="-1" autocomplete="off">
-
-      <div class="form-msg" id="formMsg"></div>
-
-      <div class="frow">
-        <div class="field"><label>First name <span class="req">*</span></label><input type="text" name="First name" required></div>
-        <div class="field"><label>Last name <span class="req">*</span></label><input type="text" name="Last name" required></div>
-      </div>
-      <div class="field full"><label>Email <span class="req">*</span></label><input type="email" name="Email" required></div>
-      <div class="frow">
-        <div class="field"><label>Gender</label>
-          <select name="Gender">
-            <option value="">Select&hellip;</option>
-            <option>Male</option>
-            <option>Female</option>
-            <option>Prefer not to say</option>
-            <option>Other</option>
-          </select>
-        </div>
-        <div class="field"><label>Country</label><input type="text" name="Country"></div>
-      </div>
-      <div class="field full"><label>Affiliation</label>
-        <select name="Affiliation" id="affilSelect" onchange="toggleAffilOther()">
-          <option value="">Select your institution&hellip;</option>
-          <optgroup label="Islamabad / Federal">
-            <option>Quaid-i-Azam University, Islamabad</option>
-            <option>National University of Sciences &amp; Technology (NUST), Islamabad</option>
-            <option>COMSATS University Islamabad</option>
-            <option>International Islamic University, Islamabad</option>
-            <option>Allama Iqbal Open University, Islamabad</option>
-            <option>National University of Modern Languages (NUML), Islamabad</option>
-            <option>Air University, Islamabad</option>
-            <option>Bahria University, Islamabad</option>
-            <option>Federal Urdu University of Arts, Science &amp; Technology, Islamabad</option>
-            <option>Pakistan Institute of Development Economics (PIDE), Islamabad</option>
-            <option>Pakistan Institute of Engineering &amp; Applied Sciences (PIEAS), Islamabad</option>
-            <option>Capital University of Science &amp; Technology (CUST), Islamabad</option>
-            <option>Riphah International University, Islamabad</option>
-            <option>Institute of Space Technology, Islamabad</option>
-            <option>National University of Medical Sciences (NUMS), Rawalpindi</option>
-            <option>National University of Technology (NUTECH), Islamabad</option>
-          </optgroup>
-          <optgroup label="Punjab">
-            <option>University of the Punjab, Lahore</option>
-            <option>University of Engineering &amp; Technology (UET), Lahore</option>
-            <option>Lahore University of Management Sciences (LUMS)</option>
-            <option>Government College University (GCU), Lahore</option>
-            <option>University of Health Sciences, Lahore</option>
-            <option>University of Veterinary &amp; Animal Sciences (UVAS), Lahore</option>
-            <option>Information Technology University (ITU), Lahore</option>
-            <option>University of Education, Lahore</option>
-            <option>Lahore College for Women University</option>
-            <option>Kinnaird College for Women University, Lahore</option>
-            <option>University of Management &amp; Technology (UMT), Lahore</option>
-            <option>University of Central Punjab (UCP), Lahore</option>
-            <option>The University of Lahore</option>
-            <option>Forman Christian College (FCCU), Lahore</option>
-            <option>Beaconhouse National University, Lahore</option>
-            <option>Superior University, Lahore</option>
-            <option>University of Agriculture, Faisalabad</option>
-            <option>Government College University, Faisalabad</option>
-            <option>National Textile University, Faisalabad</option>
-            <option>University of Sargodha</option>
-            <option>Bahauddin Zakariya University, Multan</option>
-            <option>The Islamia University of Bahawalpur</option>
-            <option>University of Sahiwal</option>
-            <option>University of Gujrat</option>
-            <option>University of Okara</option>
-            <option>University of Engineering &amp; Technology, Taxila</option>
-            <option>PMAS Arid Agriculture University, Rawalpindi</option>
-            <option>Fatima Jinnah Women University, Rawalpindi</option>
-            <option>Khwaja Fareed University of Engineering &amp; IT, Rahim Yar Khan</option>
-            <option>MNS University of Agriculture, Multan</option>
-            <option>The Women University, Multan</option>
-            <option>Ghazi University, Dera Ghazi Khan</option>
-            <option>Government College Women University, Sialkot</option>
-            <option>Government College Women University, Faisalabad</option>
-            <option>University of Sialkot</option>
-            <option>University of Jhang</option>
-            <option>University of Narowal</option>
-            <option>Thal University, Bhakkar</option>
-            <option>Emerson University, Multan</option>
-            <option>University of Mianwali</option>
-            <option>University of Chakwal</option>
-          </optgroup>
-          <optgroup label="Sindh">
-            <option>University of Karachi</option>
-            <option>NED University of Engineering &amp; Technology, Karachi</option>
-            <option>Mehran University of Engineering &amp; Technology, Jamshoro</option>
-            <option>University of Sindh, Jamshoro</option>
-            <option>Aga Khan University, Karachi</option>
-            <option>Institute of Business Administration (IBA), Karachi</option>
-            <option>Dow University of Health Sciences, Karachi</option>
-            <option>Sindh Agriculture University, Tandojam</option>
-            <option>Shah Abdul Latif University, Khairpur</option>
-            <option>Quaid-e-Awam University of Engineering, Science &amp; Technology, Nawabshah</option>
-            <option>Sukkur IBA University</option>
-            <option>Liaquat University of Medical &amp; Health Sciences, Jamshoro</option>
-            <option>Hamdard University, Karachi</option>
-            <option>Iqra University, Karachi</option>
-            <option>Bahria University, Karachi</option>
-            <option>DHA Suffa University, Karachi</option>
-            <option>Habib University, Karachi</option>
-            <option>Ziauddin University, Karachi</option>
-            <option>Jinnah Sindh Medical University, Karachi</option>
-            <option>Shaheed Benazir Bhutto University, Shaheed Benazirabad</option>
-            <option>Benazir Bhutto Shaheed University Lyari, Karachi</option>
-            <option>Federal Urdu University, Karachi</option>
-            <option>Begum Nusrat Bhutto Women University, Sukkur</option>
-          </optgroup>
-          <optgroup label="Khyber Pakhtunkhwa">
-            <option>University of Peshawar</option>
-            <option>University of Engineering &amp; Technology, Peshawar</option>
-            <option>Khyber Medical University, Peshawar</option>
-            <option>Islamia College University, Peshawar</option>
-            <option>Abdul Wali Khan University, Mardan</option>
-            <option>University of Malakand</option>
-            <option>University of Swat</option>
-            <option>Hazara University, Mansehra</option>
-            <option>Gomal University, Dera Ismail Khan</option>
-            <option>Kohat University of Science &amp; Technology</option>
-            <option>Bacha Khan University, Charsadda</option>
-            <option>The University of Agriculture, Peshawar</option>
-            <option>University of Haripur</option>
-            <option>Shaheed Benazir Bhutto University, Sheringal</option>
-            <option>University of Science &amp; Technology, Bannu</option>
-            <option>Abbottabad University of Science &amp; Technology</option>
-            <option>Pak-Austria Fachhochschule, Haripur</option>
-            <option>Women University Swabi</option>
-            <option>University of Buner</option>
-            <option>University of Lakki Marwat</option>
-            <option>University of Swabi</option>
-          </optgroup>
-          <optgroup label="Balochistan">
-            <option>University of Balochistan, Quetta</option>
-            <option>Balochistan University of Engineering &amp; Technology, Khuzdar</option>
-            <option>BUITEMS, Quetta</option>
-            <option>Lasbela University of Agriculture, Water &amp; Marine Sciences</option>
-            <option>Sardar Bahadur Khan Women's University, Quetta</option>
-            <option>University of Turbat</option>
-            <option>University of Loralai</option>
-            <option>University of Gwadar</option>
-          </optgroup>
-          <optgroup label="Azad Jammu &amp; Kashmir / Gilgit-Baltistan">
-            <option>University of Azad Jammu &amp; Kashmir, Muzaffarabad</option>
-            <option>Mirpur University of Science &amp; Technology (MUST), Mirpur</option>
-            <option>University of Poonch, Rawalakot</option>
-            <option>Women University of Azad Jammu &amp; Kashmir, Bagh</option>
-            <option>Karakoram International University, Gilgit</option>
-            <option>University of Baltistan, Skardu</option>
-          </optgroup>
-          <option value="Other">Other (not listed)</option>
-        </select>
-      </div>
-      <div class="field full hide" id="affilOtherWrap"><label>Please specify your affiliation</label><input type="text" name="Affiliation (other)" id="affilOther"></div>
-      <div class="frow">
-        <div class="field"><label>Intended role</label>
-          <select name="Intended role">
-            <option value="">Select&hellip;</option>
-            <option>Member</option>
-            <option>Reviewer</option>
-            <option>Editorial board member</option>
-            <option>Advisory board member</option>
-          </select>
-        </div>
-        <div class="field"><label>Academic qualification</label>
-          <select name="Academic qualification" id="qualSelect" onchange="toggleQualOther()">
-            <option value="">Select&hellip;</option>
-            <option>Bachelors</option>
-            <option>Masters</option>
-            <option>Doctoral</option>
-            <option>Faculty member</option>
-            <option value="Other">Other (specify)</option>
-          </select>
-        </div>
-      </div>
-      <div class="field full hide" id="qualOtherWrap"><label>Please specify your qualification</label><input type="text" name="Qualification (other)" id="qualOther"></div>
-      <div class="field full"><label>Primary subject area (JEL)</label>
-        <select name="Primary subject area">
-          <option value="">Select&hellip;</option>
-          <option>A &mdash; General Economics &amp; Teaching</option>
-          <option>B &mdash; History of Economic Thought &amp; Methodology</option>
-          <option>C &mdash; Mathematical &amp; Quantitative Methods</option>
-          <option>D &mdash; Microeconomics</option>
-          <option>E &mdash; Macroeconomics &amp; Monetary Economics</option>
-          <option>F &mdash; International Economics</option>
-          <option>G &mdash; Financial Economics</option>
-          <option>H &mdash; Public Economics</option>
-          <option>I &mdash; Health, Education &amp; Welfare</option>
-          <option>J &mdash; Labor &amp; Demographic Economics</option>
-          <option>K &mdash; Law &amp; Economics</option>
-          <option>L &mdash; Industrial Organization</option>
-          <option>M &mdash; Business Administration, Marketing &amp; Accounting</option>
-          <option>N &mdash; Economic History</option>
-          <option>O &mdash; Economic Development, Innovation &amp; Growth</option>
-          <option>P &mdash; Economic Systems</option>
-          <option>Q &mdash; Agricultural, Natural Resource &amp; Environmental Economics</option>
-          <option>R &mdash; Urban, Rural, Regional &amp; Transportation Economics</option>
-          <option>Y &mdash; Miscellaneous Categories</option>
-          <option>Z &mdash; Other Special Topics</option>
-        </select>
-      </div>
-      <div class="field full"><label>Research interests (optional)</label><textarea name="Research interests" placeholder="e.g. regional development, monetary policy, spatial econometrics"></textarea></div>
-
-      <div class="actions">
-        <button type="submit" class="btn btn-primary" id="joinSubmit">Submit application</button>
-        <button type="button" class="btn btn-ghost" onclick="closeJoin()">Cancel</button>
-      </div>
-      <p class="form-note">Your details are sent securely to the Society and used only to process your membership.</p>
-    </form>
-  </div>
-</div>
-
 <script>
-  // mobile nav close
+  // mobile nav close on click
   document.querySelectorAll('#nav a').forEach(function(a){a.addEventListener('click',function(){document.getElementById('nav').classList.remove('open');});});
 
-  // membership modal
-  var joinModal=document.getElementById('joinModal');
-  function openJoin(e){ if(e){e.preventDefault();} joinModal.classList.add('open'); document.body.style.overflow='hidden'; }
-  function closeJoin(){ joinModal.classList.remove('open'); document.body.style.overflow=''; }
-  joinModal.addEventListener('click',function(e){ if(e.target===joinModal){ closeJoin(); } });
-  document.addEventListener('keydown',function(e){ if(e.key==='Escape'){ closeJoin(); } });
-  function toggleQualOther(){
-    var v=document.getElementById('qualSelect').value;
-    var wrap=document.getElementById('qualOtherWrap');
-    var inp=document.getElementById('qualOther');
-    if(v==='Other'){ wrap.classList.remove('hide'); inp.required=true; }
-    else{ wrap.classList.add('hide'); inp.required=false; inp.value=''; }
-  }
-  function toggleAffilOther(){
-    var v=document.getElementById('affilSelect').value;
-    var wrap=document.getElementById('affilOtherWrap');
-    var inp=document.getElementById('affilOther');
-    if(v==='Other'){ wrap.classList.remove('hide'); inp.required=true; }
-    else{ wrap.classList.add('hide'); inp.required=false; inp.value=''; }
-  }
-
-  // form submit -> Web3Forms
-  var joinForm=document.getElementById('joinForm');
-  var formMsg=document.getElementById('formMsg');
-  joinForm.addEventListener('submit',function(e){
-    e.preventDefault();
-    var btn=document.getElementById('joinSubmit');
-    btn.disabled=true; btn.textContent='Submitting\u2026';
-    formMsg.className='form-msg';
-    var formData=new FormData(joinForm);
-    fetch('https://api.web3forms.com/submit',{
-      method:'POST',
-      body:formData
-    }).then(function(r){return r.json();}).then(function(res){
-      if(res.success){
-        joinForm.reset();
-        document.getElementById('qualOtherWrap').classList.add('hide');
-        document.getElementById('affilOtherWrap').classList.add('hide');
-        formMsg.textContent='Thank you for applying to join the Society for Economic and Regional Policy Interactions. Your application has been received, and a member of our team will be in touch by email regarding the next steps.';
-        formMsg.className='form-msg success show';
-      } else {
-        formMsg.textContent=(res && res.message) ? ('Could not submit \u2014 '+res.message) : 'Sorry, something went wrong. Please try again, or email the Society directly.';
-        formMsg.className='form-msg error show';
+  // hero network graph
+  (function(){
+    var cv = document.getElementById('serpiNet');
+    if(!cv) return;
+    var ctx = cv.getContext('2d');
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var accent = '#C4764A';
+    var w=0,h=0,nodes=[],raf=null;
+    function resize(){
+      var dpr=Math.min(window.devicePixelRatio||1,2);
+      w=cv.clientWidth; h=cv.clientHeight||480;
+      cv.width=w*dpr; cv.height=h*dpr;
+      ctx.setTransform(dpr,0,0,dpr,0,0);
+    }
+    function init(){
+      var count=Math.max(34,Math.min(120,Math.round(w*h/13000)));
+      nodes=[];
+      for(var i=0;i<count;i++) nodes.push({x:Math.random()*w,y:Math.random()*h,vx:(Math.random()-0.5)*0.18,vy:(Math.random()-0.5)*0.18,r:Math.random()*1.8+1.3,big:Math.random()>0.82});
+    }
+    function draw(){
+      ctx.clearRect(0,0,w,h);
+      for(var i=0;i<nodes.length;i++){
+        var a=nodes[i];
+        a.x+=a.vx; a.y+=a.vy;
+        if(a.x<0||a.x>w) a.vx*=-1;
+        if(a.y<0||a.y>h) a.vy*=-1;
+        for(var j=i+1;j<nodes.length;j++){
+          var b=nodes[j], dx=a.x-b.x, dy=a.y-b.y, d=Math.sqrt(dx*dx+dy*dy);
+          if(d<138){ ctx.strokeStyle='rgba(159,176,204,'+((1-d/138)*0.42)+')'; ctx.lineWidth=0.7; ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke(); }
+        }
       }
-    }).catch(function(){
-      formMsg.textContent='Network error. Please check your connection and try again.';
-      formMsg.className='form-msg error show';
-    }).finally(function(){
-      btn.disabled=false; btn.textContent='Submit application';
-      formMsg.scrollIntoView({behavior:'smooth',block:'nearest'});
-    });
-  });
+      for(var k=0;k<nodes.length;k++){
+        var n=nodes[k];
+        ctx.beginPath(); ctx.arc(n.x,n.y,n.big?n.r+1.4:n.r,0,6.2832);
+        ctx.fillStyle=n.big?accent:'rgba(214,222,236,0.85)';
+        ctx.fill();
+      }
+      if(!reduce) raf=requestAnimationFrame(draw);
+    }
+    resize(); init(); draw();
+    window.addEventListener('resize',function(){ resize(); init(); if(reduce) draw(); });
+  })();
 </script>
 </body>
 </html>
