@@ -96,13 +96,6 @@
   .dbcard .go{font-size:.78rem;font-weight:600;color:var(--rust);margin-top:15px;}
   .dbcard.placeholder{justify-content:center;align-items:center;text-align:center;background:transparent;border:1px dashed #BFB39C;color:var(--muted-2);min-height:150px;}
   .dbcard.placeholder .nm{color:var(--muted);margin-bottom:6px;}
-  .method{display:flex;gap:16px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-radius:2px;padding:22px;text-decoration:none;color:inherit;transition:.18s;}
-  .method:hover{box-shadow:0 12px 30px rgba(12,27,51,.12);transform:translateY(-3px);}
-  .method .ico{flex:none;width:42px;height:42px;border-radius:2px;background:var(--panel);display:flex;align-items:center;justify-content:center;border:1px solid var(--line);}
-  .method .kind{font-size:.62rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--rust);margin-bottom:6px;}
-  .method .mt{font-family:"Spectral",serif;font-size:1.06rem;font-weight:600;color:var(--navy);line-height:1.22;margin-bottom:7px;}
-  .method .md{font-size:.88rem;color:#4A5263;line-height:1.5;}
-  .method .meta{font-size:.74rem;color:#8A8470;margin-top:11px;}
 
   /* journal band */
   .journal{background:var(--navy);color:#E9EDF4;}
@@ -291,9 +284,9 @@
   <div class="wrap">
     <div class="res-intro">
       <div class="kicker">Resources for Economists</div>
-      <h2>Data, databases and research methods, in one place.</h2>
+      <h2>The data economists rely on, in one place.</h2>
       <hr class="rule" style="margin:18px 0;">
-      <p>A curated, annotated gateway to the data sources economists rely on, alongside the Society's technical notes on research methods. Each link opens an external database maintained by its respective institution.</p>
+      <p>A curated, annotated gateway to the data sources economists rely on, alongside the Society's own interactive economic dashboard. Each link opens an external database maintained by its respective institution.</p>
     </div>
 
     <a href="dashboard.html" style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px;background:#fff;border:1px solid var(--line);border-left:4px solid var(--rust);border-radius:2px;padding:24px 26px;text-decoration:none;color:inherit;margin-bottom:30px;">
@@ -318,14 +311,7 @@
       <a class="dbcard" href="https://www.rug.nl/ggdc/historicaldevelopment/maddison/" target="_blank" rel="noopener"><span class="tag">Long-run history</span><span class="nm">Maddison Project Database</span><span class="ds">Historical estimates of GDP per capita across the world economy — the reference for long-run growth and divergence studies.</span><span class="go">Open database &rarr;</span></a>
       <a class="dbcard" href="https://wid.world/" target="_blank" rel="noopener"><span class="tag">Inequality</span><span class="nm">World Inequality Database (WID)</span><span class="ds">The most extensive series on the historical evolution of income and wealth inequality, within and between countries.</span><span class="go">Open database &rarr;</span></a>
       <a class="dbcard" href="https://comtradeplus.un.org/" target="_blank" rel="noopener"><span class="tag">Trade</span><span class="nm">UN Comtrade</span><span class="ds">Detailed bilateral international trade statistics by commodity and partner — the backbone of gravity and trade-policy research.</span><span class="go">Open database &rarr;</span></a>
-      <a class="dbcard" href="https:easydata.sbp.org.pk/" target="_blank" rel="noopener"><span class="tag">Discovery</span><span class="nm">EasyData / SBP</span><span class="ds">Explore the Pakistan's macroeconomic database, search and visualize a variable or download datasets of your interest.</span><span class="go">Open database &rarr;</span></a>
-
-    <div class="sub-h" style="margin-top:48px;">Technical notes &amp; research methods</div>
-    <div class="res-grid">
-      <a class="method" href="#"><span class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#A8502E" stroke-width="1.6"><path d="M14 3v5h5"/><path d="M19 21V8.5L13.5 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1z"/></svg></span><span><span class="kind">Technical note</span><span class="mt">Spatial Econometrics Primer</span><span class="md">Weights matrices, spatial lag and error models, and interpreting direct and indirect effects for regional data.</span><span class="meta">PDF &middot; placeholder</span></span></a>
-      <a class="method" href="#"><span class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#A8502E" stroke-width="1.6"><path d="M14 3v5h5"/><path d="M19 21V8.5L13.5 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1z"/></svg></span><span><span class="kind">Methods</span><span class="mt">Panel Data &amp; Fixed Effects</span><span class="md">Within, between and two-way fixed-effects estimators, clustering, and common pitfalls in regional panels.</span><span class="meta">PDF &middot; placeholder</span></span></a>
-      <a class="method" href="#"><span class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#A8502E" stroke-width="1.6"><path d="M14 3v5h5"/><path d="M19 21V8.5L13.5 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1z"/></svg></span><span><span class="kind">Methods</span><span class="mt">Difference-in-Differences</span><span class="md">Modern DiD with staggered adoption, event-study designs and recent robust estimators.</span><span class="meta">PDF &middot; placeholder</span></span></a>
-      <a class="method" href="#"><span class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#A8502E" stroke-width="1.6"><path d="M14 3v5h5"/><path d="M19 21V8.5L13.5 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1z"/></svg></span><span><span class="kind">Reproducibility</span><span class="mt">Replication &amp; Data Checklist</span><span class="md">The Society's checklist for replication packages, code and data citation accompanying submissions.</span><span class="meta">PDF &middot; placeholder</span></span></a>
+      <a class="dbcard" href="https://easydata.sbp.org.pk/" target="_blank" rel="noopener"><span class="tag">Discovery</span><span class="nm">EasyData / SBP</span><span class="ds">Explore the Pakistan's macroeconomic database, search and visualize a variable or download datasets of your interest.</span><span class="go">Open database &rarr;</span></a>
     </div>
   </div>
 </section>
@@ -423,7 +409,7 @@
       <div>
         <h4>Resources</h4>
         <a href="#resources">Databases &amp; data sources</a>
-        <a href="#resources">Technical notes</a>
+        <a href="dashboard.html">Economy Dashboard</a>
         <a href="https://ideas.repec.org/" target="_blank" rel="noopener">RePEc / IDEAS</a>
       </div>
       <div>
