@@ -16,9 +16,12 @@ permissions:
   id-token: write
 
 # Allow one concurrent deployment; don't cancel an in-progress publish.
+# Serialize Pages deployments. cancel-in-progress: true so a newer push
+# supersedes an older still-running deploy instead of colliding at the
+# deploy API (which returns HTTP 400 "in progress deployment").
 concurrency:
   group: pages
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   deploy:
