@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Commentary — Society for Economic and Regional Policy Interactions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Source Sans 3",system-ui,sans-serif;font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased;}
+  a{color:var(--rust);}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 32px;}
+  h1,h2,h3,h4{font-family:"Spectral",Georgia,serif;font-weight:500;line-height:1.16;color:var(--navy);margin:0;}
+  .kicker{font-size:.74rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--rust);margin-bottom:14px;}
+  .rule{width:46px;height:2px;background:var(--rust);border:0;margin:18px 0 0;}
+
+  .btn{display:inline-block;font-family:"Source Sans 3";font-size:.9rem;font-weight:600;letter-spacing:.01em;text-decoration:none;padding:14px 26px;border:1px solid var(--navy);border-radius:1px;transition:.18s;cursor:pointer;}
+  .btn-primary{background:var(--rust);color:#fff;border-color:var(--rust);}
+  .btn-primary:hover{background:var(--rust-deep);border-color:var(--rust-deep);}
+  .btn-ghost{background:transparent;color:var(--navy);}
+  .btn-ghost:hover{background:var(--navy);color:#fff;}
+
+  /* header (site chrome) */
+  .topbar{background:var(--navy);border-bottom:1px solid rgba(255,255,255,.10);position:sticky;top:0;z-index:50;}
+  .topbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:24px;min-height:78px;flex-wrap:wrap;}
+  .lockup{display:flex;align-items:center;gap:14px;text-decoration:none;padding:14px 0;}
+  .lockup .nm{font-family:"Spectral",serif;font-weight:500;font-size:1.04rem;line-height:1.14;color:#fff;}
+  nav.main{display:flex;gap:26px;align-items:center;flex-wrap:wrap;}
+  nav.main a{font-size:.9rem;font-weight:500;text-decoration:none;color:var(--navlink);}
+  nav.main a:hover{color:var(--sand);}
+  nav.main a.active{color:var(--sand);}
+  nav.main a.btn-primary{color:#fff;font-size:.84rem;font-weight:600;padding:11px 20px;}
+  .menu-toggle{display:none;background:none;border:0;font-size:1.5rem;color:#fff;cursor:pointer;}
+
+  /* page intro */
+  .page-intro{padding:48px 0 8px;}
+  .page-intro h1{font-size:clamp(1.9rem,3.8vw,2.7rem);margin:6px 0 8px;}
+  .page-intro .lede{font-family:"Spectral",serif;font-size:1.12rem;color:#3C4250;max-width:62ch;margin:0;}
+
+  /* coming soon panel */
+  .soon-wrap{padding:34px 0 80px;}
+  .soon{max-width:620px;margin:0 auto;text-align:center;border:1px solid var(--line);background:var(--panel);border-radius:2px;padding:52px 40px;}
+  .soon .eyebrow{font-size:.7rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--rust);margin-bottom:12px;}
+  .soon h2{font-size:clamp(1.6rem,3vw,2.1rem);margin:0 0 14px;}
+  .soon p{font-size:1.02rem;color:var(--prose);max-width:48ch;margin:0 auto 26px;line-height:1.6;}
+
+  /* footer (site chrome) */
+  footer{background:var(--navy-deep);color:var(--foot);padding:62px 0 30px;}
+  footer .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:44px;}
+  footer h4{font-size:.66rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--sand);margin:0 0 16px;font-family:"Source Sans 3",sans-serif;}
+  footer a{color:var(--foot);text-decoration:none;display:block;margin-bottom:9px;font-size:.92rem;}
+  footer a:hover{color:#fff;}
+  footer .own{font-size:.92rem;line-height:1.7;color:var(--foot);}
+  footer .own strong{color:#fff;font-family:"Spectral",serif;font-weight:500;font-size:1.04rem;}
+  footer .addr{display:block;font-size:.92rem;line-height:1.7;color:var(--foot);}
+  .footnote{border-top:1px solid rgba(255,255,255,.12);margin-top:44px;padding-top:22px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;font-size:.8rem;color:#6E7C92;}
+
+  @media (max-width:920px){
+    nav.main{display:none;position:absolute;top:78px;left:0;right:0;background:var(--navy);flex-direction:column;align-items:flex-start;padding:20px 32px;border-bottom:1px solid rgba(255,255,255,.10);gap:18px;}
+    nav.main.open{display:flex;}
+    .menu-toggle{display:block;}
+  }
+  @media (max-width:560px){ .page-intro h1{font-size:25px;} .soon{padding:40px 24px;} }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;}}
+</style>
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+
+<!-- UTILITY BAR -->
+<div class="utilitybar">
+  <div class="wrap">
+    <span class="ub-tag">An international learned society &middot; Founded 2026</span>
+    <span class="ub-links"><a href="index.html">Society</a><a href="contact.html">Contact</a></span>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header class="topbar">
+  <div class="wrap">
+    <a class="lockup" href="index.html">
+      <svg width="42" height="42" viewBox="0 0 40 40" aria-hidden="true" style="flex:none;">
+        <circle cx="20" cy="20" r="18.5" fill="none" stroke="#E7C9A6" stroke-width="1.2"/>
+        <g fill="none" stroke="#9FB0CC" stroke-width="1" opacity="0.8"><path d="M14.9,22.8 L18.1,16.3"/><path d="M18.1,16.3 L24.2,14.9"/><path d="M24.2,14.9 L26.1,20.9"/><path d="M26.1,20.9 L21.9,25.1"/><path d="M21.9,25.1 L14.9,22.8"/><path d="M20,20 L18.1,16.3"/><path d="M20,20 L24.2,14.9"/><path d="M20,20 L21.9,25.1"/></g>
+        <circle cx="24.2" cy="14.9" r="2" fill="#C4764A"/><circle cx="20" cy="20" r="1.8" fill="#C4764A"/>
+        <circle cx="18.1" cy="16.3" r="1.4" fill="#9FB0CC"/><circle cx="26.1" cy="20.9" r="1.4" fill="#9FB0CC"/><circle cx="21.9" cy="25.1" r="1.4" fill="#9FB0CC"/><circle cx="14.9" cy="22.8" r="1.4" fill="#9FB0CC"/>
+      </svg>
+      <span class="nm">Society for Economic &amp;<br>Regional Policy Interactions</span>
+    </a>
+    <button class="menu-toggle" aria-label="Toggle menu" onclick="document.getElementById('nav').classList.toggle('open')">&#9776;</button>
+    <nav class="main" id="nav">
+      <a href="index.html#about">About</a>
+      <a href="membership.html">Membership</a>
+      <a href="journal.html">Journals &amp; Publications</a>
+      <a href="index.html#resources">Resources for Economists</a>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="commentary.html" class="active" aria-current="page">Commentary</a>
+      <a href="index.html#news">News</a>
+      <a class="btn btn-primary" href="membership.html">Join the Society</a>
+    </nav>
+  </div>
+</header>
+
+<!-- PAGE INTRO -->
+<div class="wrap page-intro">
+  <div class="kicker">SERPI &middot; Commentary</div>
+  <h1>Commentary</h1>
+  <hr class="rule">
+  <p class="lede" style="margin-top:18px;">Signed commentary on regional and economic policy from members and invited contributors.</p>
+</div>
+
+<!-- COMING SOON -->
+<div class="wrap soon-wrap">
+  <div class="soon">
+    <div class="eyebrow">Launch phase</div>
+    <h2>Coming soon</h2>
+    <p>The Society's commentary section is being prepared. During the launch phase we are curating our first pieces from members and invited contributors — please check back shortly.</p>
+    <a class="btn btn-ghost" href="index.html">Return to home</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="grid">
+      <div style="max-width:34ch;">
+        <h4>The Society</h4>
+        <p class="own"><strong>Society for Economic and Regional Policy Interactions</strong><br>Established 2026. The responsible body governing the journal <em>Economic and Regional Policy Interactions</em>.</p>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <a href="index.html#about">About</a>
+        <a href="membership.html">Membership</a>
+        <a href="journal.html">Journals &amp; Publications</a>
+        <a href="dashboard.html">Economy Dashboard</a>
+        <a href="commentary.html">Commentary</a>
+        <a href="index.html#news">News</a>
+      </div>
+      <div>
+        <h4>Resources</h4>
+        <a href="index.html#resources">Databases &amp; data sources</a>
+        <a href="dashboard.html">Economy Dashboard</a>
+        <a href="https://ideas.repec.org/" target="_blank" rel="noopener">RePEc / IDEAS</a>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <a href="contact.html">Contact the editorial team</a>
+        <span class="addr">Department of Economics, University of Sahiwal, Sahiwal 57000, Pakistan</span>
+      </div>
+    </div>
+    <div class="footnote">
+      <span>&copy; 2026 Society for Economic and Regional Policy Interactions. All rights reserved.</span>
+      <span>Advancing economic &amp; regional policy research</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // mobile nav close on click
+  document.querySelectorAll('#nav a').forEach(function(a){a.addEventListener('click',function(){document.getElementById('nav').classList.remove('open');});});
+</script>
+</body>
+</html>
