@@ -167,9 +167,10 @@
           </select>
         </div>
         <div class="field hide" id="affilOtherWrap"><label>Please specify your affiliation</label><input type="text" name="Affiliation (other)" id="affilOther"></div>
+        <div class="field"><label for="orcid">ORCID iD (optional)</label><input type="text" name="orcid" id="orcid" placeholder="0000-0000-0000-0000" pattern="(https?://orcid\.org/)?\d{4}-\d{4}-\d{4}-\d{3}[\dXx]"></div>
         <div class="frow">
           <div class="field"><label>Intended role</label>
-            <select name="Intended role"><option value="">Select&hellip;</option><option>Member</option><option>Reviewer</option><option>Editorial board member</option><option>Advisory board member</option></select>
+            <select name="Intended role"><option value="">Select&hellip;</option><optgroup label="Journal"><option value="Reviewer">Reviewer</option><option value="Editorial Board Member">Editorial Board Member</option><option value="Advisory Board Member">Advisory Board Member</option></optgroup><optgroup label="Society"><option value="Executive Member">Executive Member</option><option value="Economic Team Member">Economic Team Member</option></optgroup></select>
           </div>
           <div class="field"><label>Academic qualification</label>
             <select name="Academic qualification" id="qualSelect" onchange="toggleQualOther()"><option value="">Select&hellip;</option><option>Bachelors</option><option>Masters</option><option>Doctoral</option><option>Faculty member</option><option value="Other">Other (specify)</option></select>
